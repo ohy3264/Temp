@@ -418,7 +418,7 @@
               android:orientation="horizontal">
 
             <include
-                layout="@layout/week_selector"/>
+                layout="@layout/selector_week"/>
           </LinearLayout>
 
         </LinearLayout>

@@ -74,7 +74,7 @@
       android:layout_width="fill_parent"
       android:layout_height="wrap_content">
     <include
-        layout="@layout/duty_selector"/>
+        layout="@layout/selector_duty"/>
 
     <LinearLayout
         android:visibility="gone"

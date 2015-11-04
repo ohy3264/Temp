@@ -99,7 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-          <include layout="@layout/insurance_selector2"/>
+          <include layout="@layout/selector_insurance2"/>
 
 
         </LinearLayout>

@@ -123,6 +123,4 @@ public class GenderActivity extends Activity implements View.OnClickListener {
     }
 
   };
-
-
 }

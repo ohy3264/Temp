@@ -33,7 +33,7 @@ public class HYPreference extends Preference {
   public static final String KEY_CHECK_VERSION_STATUS = "check_version_status";
   //public static final String KEY_MONTH_PAY = "month_pay";
   public static final String KEY_PICKER_THEME = "picker_theme";
-  public static final String KEY_DUTY_SELECTOR = "duty_selector";
+  public static final String KEY_DUTY_SELECTOR = "selector_duty";
   public static final String KEY_DUTY_INPUT = "duty_input";
 
 

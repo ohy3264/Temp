@@ -648,7 +648,7 @@
                 android:orientation="horizontal"
                 android:paddingRight="15dp"
                 android:paddingLeft="15dp">
-              <include layout="@layout/sex_selector"/>
+              <include layout="@layout/selector_sex"/>
 
 
             </LinearLayout>
