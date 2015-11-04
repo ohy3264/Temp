@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    package="com.hw.oh.temp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <uses-permission android:name="android.permission.VIBRATE"/>
+  <uses-permission android:name="android.permission.INTERNET"/>
+
+  <uses-permission android:name="android.permission.CAMERA"/>
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+  <uses-permission android:name="android.permission.WAKE_LOCK"/>
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+
+  <!-- GCM permissions -->
+  <permission
+      android:name="com.hw.oh.temp.permission.C2D_MESSAGE"
+      android:protectionLevel="signature"/>
+
+  <uses-permission android:name="com.hw.oh.temp.permission.C2D_MESSAGE"/>
+  <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+
+  <!-- BILLING permissions -->
+  <uses-permission android:name="com.android.vending.BILLING"/>
+
+  <application
+      android:allowBackup="true"
+      android:icon="@drawable/app_icon"
+      android:label="@string/app_name"
+      android:theme="@style/AppTheme">
+    <activity
+        android:name="com.hw.oh.temp.IntroActivity"
+        android:label="@string/app_name"
+        android:screenOrientation="portrait">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+    </activity>
+    <activity
+        android:name="com.google.android.gms.ads.AdActivity"
+        android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
+
+    <meta-data
+        android:name="com.google.android.gms.version"
+        android:value="@integer/google_play_services_version"/>
+
+    <activity
+        android:name="com.hw.oh.temp.MainActivity"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
+    <activity
+        android:name="com.hw.oh.temp.GenderActivity"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name="com.hw.oh.temp.InsuranceActivity"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
+    <activity
+        android:name="com.hw.oh.temp.NewPostActivity"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
+    <activity
+        android:name="com.hw.oh.temp.CalculationActivity"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
+    <activity
+        android:name="com.hw.oh.temp.SettingActivity"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden"/>
+    <activity
+        android:name="com.hw.oh.temp.TalkActivity"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden"/>
+    <activity
+        android:name="com.hw.oh.temp.NewAlbaActivity"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
+    <activity
+        android:hardwareAccelerated="false"
+        android:name="com.hw.oh.temp.ImageClickActivity"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name="com.hw.oh.temp.DetailActivity"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
+    <activity
+        android:name="com.hw.oh.temp.NewWorkActivity"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
+    <activity
+        android:name="com.hw.oh.temp.CalendarActivity"
+        android:screenOrientation="portrait"/>
+    <activity android:name="com.hw.oh.temp.AlbaInfoActivity"/>
+    <activity
+        android:name="com.hw.oh.temp.CalculationCalendarActivity"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name="com.hw.oh.temp.PassActivity"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name="com.hw.oh.temp.NewCommentActivity"
+        android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
+    <activity
+        android:name=".BarChartsActivity"
+        android:screenOrientation="landscape"/>
+    <activity
+        android:name=".DutyActivity"
+        android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
+    <activity
+        android:name=".LocationSelectActivity">
+
+      <meta-data
+          android:name="android.app.default_searchable"
+          android:value=".SearchResultsActivity"/>
+    </activity>
+    <activity
+        android:name="com.hw.oh.dialog.AlarmPopupDialog"
+        android:theme="@style/AppCompatAlertDialogStyle"
+        />
+    <activity
+        android:name=".SearchResultsActivity">
+
+      <!-- to identify this activity as "searchable" -->
+      <intent-filter>
+        <action android:name="android.intent.action.SEARCH"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+      </intent-filter>
+
+      <meta-data
+          android:name="android.app.searchable"
+          android:resource="@xml/searchable"/>
+    </activity>
+
+    <activity
+        android:name=".PieChartsActivity"
+        android:screenOrientation="portrait"/>
+
+    <!-- GCM receiver, service 등록 -->
+    <receiver
+        android:name="com.google.android.gcm.GCMBroadcastReceiver"
+        android:permission="com.google.android.c2dm.permission.SEND">
+      <intent-filter>
+        <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+        <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
+
+        <category android:name="com.hw.oh.temp"/>
+      </intent-filter>
+    </receiver>
+
+    <service android:name="com.hw.oh.temp.GCMIntentService"/>
+    <service android:name="com.hw.oh.service.AlarmService"></service>
+    <service android:name="com.hw.oh.service.BoardListService"></service>
+    <service android:name="com.hw.oh.service.BoardDetailService"></service>
+
+    <meta-data
+        android:name="com.kakao.sdk.AppKey"
+        android:value="@string/kakao_app_key"/>
+  </application>
+
+</manifest>

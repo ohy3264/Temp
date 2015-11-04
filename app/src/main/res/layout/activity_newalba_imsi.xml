@@ -1,0 +1,1039 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/button_material_light"
+              android:orientation="vertical">
+  <android.support.v7.widget.Toolbar
+      android:id="@+id/toolbar"
+      android:minHeight="?android:attr/actionBarSize"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="?attr/colorPrimary">
+    <!-- Toolbar space -->
+  </android.support.v7.widget.Toolbar>
+
+  <ScrollView
+      android:focusableInTouchMode="true"
+      android:focusable="true"
+      android:layout_weight="9"
+      android:layout_width="fill_parent"
+      android:layout_height="0dp"
+      android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+      <LinearLayout
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:layout_marginTop="10dp"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:background="@drawable/circleview_newwork"
+          android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="3dp"
+            android:layout_height="fill_parent"
+            android:layout_margin="5dp"
+            android:background="#fffb695e"
+            android:orientation="horizontal"></LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="2"
+              android:text="알바명 "
+              android:textColor="@color/material_white_2"/>
+
+          <EditText
+              android:id="@+id/edtAlbaName"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_marginRight="10dp"
+              android:layout_weight="6"
+              android:ems="10"
+              android:gravity="center_vertical"
+              android:textColor="@color/material_white_2"/>
+
+          <TextView
+              android:visibility="invisible"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="2"
+              android:padding="10dp"
+              android:text="원 "
+              android:textColor="@color/material_white_2"
+              android:id="@+id/textView73"/>
+        </LinearLayout>
+
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+          android:background="@drawable/circleview_newwork"
+          android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="3dp"
+            android:layout_height="fill_parent"
+            android:layout_margin="5dp"
+            android:background="#fffb695e"
+            android:orientation="horizontal"/>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="2"
+              android:text="시급 "
+              android:textColor="@color/material_white_2"/>
+
+          <EditText
+              android:id="@+id/edtHourMoney"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_vertical"
+              android:layout_marginRight="10dp"
+              android:layout_weight="6"
+              android:ems="10"
+              android:inputType="number"
+              android:text="0"
+              android:textColor="@color/material_white_2"/>
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="2"
+              android:padding="10dp"
+              android:text="원 "
+              android:textColor="@color/material_white_2"
+              android:id="@+id/textView71"/>
+        </LinearLayout>
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:layout_marginTop="10dp"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center_vertical"
+          android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/circleview_newwork"
+            android:orientation="horizontal">
+
+          <com.balysv.materialripple.MaterialRippleLayout
+              android:id="@+id/ripple1"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:gravity="bottom">
+
+            <LinearLayout
+                android:id="@+id/linStartTime"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+              <LinearLayout
+                  android:layout_width="3dp"
+                  android:layout_height="fill_parent"
+                  android:layout_margin="5dp"
+                  android:background="#fffb695e"
+                  android:orientation="horizontal"/>
+
+              <LinearLayout
+                  android:layout_margin="10dp"
+                  android:layout_width="fill_parent"
+                  android:layout_height="fill_parent"
+                  android:gravity="center_vertical"
+                  android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txtStartDay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|right"
+                    android:text="시작"
+                    android:textColor="@color/material_white_2"/>
+
+
+                <TextView
+                    android:id="@+id/txtStartTime_hour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|right"
+                    android:text="9"
+                    android:textColor="@color/material_white_2"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|center"
+                    android:text="시"
+                    android:textColor="@color/material_white_2"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/txtStartTime_min"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|right"
+                    android:text="0"
+                    android:textColor="@color/material_white_2"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|center"
+                    android:text="분"
+                    android:textColor="@color/material_white_2"
+                    android:textSize="15sp"/>
+              </LinearLayout>
+
+            </LinearLayout>
+
+          </com.balysv.materialripple.MaterialRippleLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/circleview_newwork"
+            android:orientation="horizontal">
+
+          <com.balysv.materialripple.MaterialRippleLayout
+              android:id="@+id/ripple2"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:gravity="bottom">
+
+            <LinearLayout
+                android:id="@+id/linEndTime"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+              <LinearLayout
+                  android:layout_width="3dp"
+                  android:layout_height="fill_parent"
+                  android:layout_margin="5dp"
+                  android:background="#fffb695e"
+                  android:orientation="horizontal"/>
+
+              <LinearLayout
+                  android:layout_margin="10dp"
+                  android:layout_width="fill_parent"
+                  android:layout_height="fill_parent"
+                  android:gravity="center_vertical|center_horizontal"
+                  android:orientation="horizontal">
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:id="@+id/txtEndDay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|right"
+                    android:text="종료"
+                    android:textColor="@color/material_white_2"/>
+
+                <TextView
+                    android:id="@+id/txtEndTime_hour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|right"
+                    android:text="18"
+                    android:textColor="@color/material_white_2"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|center"
+                    android:text="시"
+                    android:textColor="@color/material_white_2"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/txtEndTime_min"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|right"
+                    android:text="0"
+                    android:textColor="@color/material_white_2"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|center"
+                    android:text="분"
+                    android:textColor="@color/material_white_2"
+                    android:textSize="15sp"/>
+              </LinearLayout>
+
+            </LinearLayout>
+
+          </com.balysv.materialripple.MaterialRippleLayout>
+        </LinearLayout>
+
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+          android:background="@drawable/circleview_newwork"
+          android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/linAlarmlebel"
+            android:layout_width="3dp"
+            android:layout_height="fill_parent"
+            android:layout_margin="5dp"
+            android:background="#fffb695e"
+            android:orientation="horizontal"/>
+
+        <LinearLayout
+
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+          <LinearLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:gravity="center_vertical"
+              android:orientation="horizontal">
+
+            <LinearLayout
+                android:padding="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+              <TextView
+                  android:paddingTop="10dp"
+                  android:paddingBottom="10dp"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="알림 "
+                  android:textColor="@color/material_white_2"/>
+
+              <CheckBox
+                  android:id="@+id/chk_Alaram"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:visibility="visible">
+
+              <TextView
+                  android:id="@+id/textView83"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="10dp"
+                  android:ellipsize="marquee"
+                  android:singleLine="true"
+                  android:text="알바 시작시간이 되면 알림"
+                  android:textColor="@color/material_white_2"
+                  android:textSize="12sp"/>
+
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="10dp"
+                  android:ellipsize="marquee"
+                  android:singleLine="true"
+                  android:text=""
+                  android:textColor="@color/material_white_2"
+                  android:textSize="10sp"/>
+            </LinearLayout>
+
+          </LinearLayout>
+
+          <LinearLayout
+              android:paddingRight="10dp"
+              android:paddingLeft="10dp"
+              android:paddingBottom="10dp"
+              android:id="@+id/linWeekSelector"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center_vertical"
+              android:orientation="horizontal">
+
+            <include
+                layout="@layout/week_selector"/>
+          </LinearLayout>
+
+        </LinearLayout>
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:layout_marginTop="10dp"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:background="@drawable/circleview_newwork"
+          android:gravity="center_vertical"
+          android:orientation="horizontal">
+
+        <com.balysv.materialripple.MaterialRippleLayout
+            android:id="@+id/ripple9"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:gravity="bottom">
+
+          <LinearLayout
+              android:id="@+id/linAddTime"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/linAddTimelebel"
+                android:background="@color/black_lebel"
+                android:layout_width="3dp"
+                android:layout_height="fill_parent"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+              <TextView
+                  android:paddingTop="10dp"
+                  android:paddingBottom="10dp"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="연장 "
+                  android:textColor="@color/material_white_2"/>
+
+              <CheckBox
+                  android:id="@+id/chk_addMoney"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+
+              <TextView
+                  android:id="@+id/txtAddMoney"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="10dp"
+                  android:ellipsize="marquee"
+                  android:singleLine="true"
+                  android:text="0"
+                  android:textColor="@color/material_white_2"
+                  android:textSize="12sp"/>
+
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="10dp"
+                  android:ellipsize="marquee"
+                  android:singleLine="true"
+                  android:text="원"
+                  android:textColor="@color/material_white_2"
+                  android:textSize="10sp"
+                  android:visibility="gone"/>
+
+            </LinearLayout>
+
+          </LinearLayout>
+        </com.balysv.materialripple.MaterialRippleLayout>
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+          android:background="@drawable/circleview_newwork"
+          android:orientation="vertical">
+
+        <com.balysv.materialripple.MaterialRippleLayout
+            android:id="@+id/ripple10"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:gravity="bottom">
+
+          <LinearLayout
+              android:id="@+id/linNightTime"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/linNightlebel"
+                android:background="@color/black_lebel"
+                android:layout_width="3dp"
+                android:layout_height="fill_parent"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+              <TextView
+                  android:paddingTop="10dp"
+                  android:paddingBottom="10dp"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="야간 "
+                  android:textColor="@color/material_white_2"/>
+
+              <CheckBox
+                  android:id="@+id/chk_nightMoney"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:visibility="visible">
+
+              <TextView
+                  android:id="@+id/txtNightMoney"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="10dp"
+                  android:ellipsize="marquee"
+                  android:singleLine="true"
+                  android:text="밤10시부터 익일 오전6시까지의 시급 0.5배"
+                  android:textColor="@color/material_white_2"
+                  android:textSize="12sp"/>
+
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="10dp"
+                  android:ellipsize="marquee"
+                  android:singleLine="true"
+                  android:text=""
+                  android:textColor="@color/material_white_2"
+                  android:textSize="10sp"/>
+
+            </LinearLayout>
+          </LinearLayout>
+
+        </com.balysv.materialripple.MaterialRippleLayout>
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:layout_marginTop="10dp"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:background="@drawable/circleview_newwork"
+          android:gravity="center_vertical"
+          android:orientation="horizontal">
+
+        <com.balysv.materialripple.MaterialRippleLayout
+            android:id="@+id/ripple8"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+
+            android:gravity="bottom">
+
+          <LinearLayout
+              android:id="@+id/linEtc"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/linEtclebel"
+                android:background="@color/black_lebel"
+                android:layout_width="3dp"
+                android:layout_height="fill_parent"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:paddingTop="10dp"
+                  android:paddingBottom="10dp"
+                  android:text="건당 "
+                  android:textColor="@color/material_white_2"/>
+
+              <CheckBox
+                  android:id="@+id/chk_etcMoney"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+
+              <LinearLayout
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txtEtcMoney"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:ellipsize="marquee"
+                    android:singleLine="true"
+                    android:text="0"
+                    android:textColor="@color/material_white_2"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:id="@+id/textView38"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:ellipsize="marquee"
+                    android:singleLine="true"
+                    android:text="원"
+                    android:textColor="@color/material_white_2"
+                    android:textSize="12sp"/>
+              </LinearLayout>
+
+            </LinearLayout>
+          </LinearLayout>
+
+        </com.balysv.materialripple.MaterialRippleLayout>
+
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:layout_marginTop="10dp"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@drawable/circleview_newwork"
+            android:orientation="vertical">
+
+          <com.balysv.materialripple.MaterialRippleLayout
+              android:id="@+id/ripple12"
+              android:layout_width="match_parent"
+              android:layout_height="fill_parent"
+              android:gravity="bottom">
+
+            <LinearLayout
+                android:id="@+id/linRefreshTime"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal">
+
+              <LinearLayout
+                  android:id="@+id/linRefreshlebel"
+                  android:background="@color/black_lebel"
+                  android:layout_width="3dp"
+                  android:layout_height="fill_parent"
+                  android:layout_margin="5dp"
+                  android:orientation="horizontal"/>
+
+              <LinearLayout
+                  android:layout_width="wrap_content"
+                  android:layout_height="fill_parent"
+                  android:gravity="center_vertical"
+                  android:orientation="horizontal"
+                  android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/textView29"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="휴식 "
+                    android:textColor="@color/material_white_2"/>
+
+                <CheckBox
+                    android:id="@+id/chk_refreshTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+              </LinearLayout>
+
+              <LinearLayout
+                  android:layout_width="wrap_content"
+                  android:layout_height="fill_parent"
+                  android:gravity="center_vertical"
+                  android:orientation="horizontal"
+                  android:paddingBottom="5dp"
+                  android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/txtRefreshView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:ellipsize="marquee"
+                    android:singleLine="true"
+                    android:text="4시간마다"
+                    android:textColor="@color/material_white_2"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:id="@+id/txtRefreshView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:ellipsize="marquee"
+                    android:singleLine="true"
+                    android:text="30분 휴식 "
+                    android:textColor="@color/material_white_2"
+                    android:textSize="12sp"/>
+              </LinearLayout>
+
+              <LinearLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:gravity="right"
+                  android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp">
+
+
+                </LinearLayout>
+              </LinearLayout>
+
+            </LinearLayout>
+
+          </com.balysv.materialripple.MaterialRippleLayout>
+        </LinearLayout>
+
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+          android:background="@drawable/circleview_newwork"
+          android:orientation="vertical">
+
+        <com.balysv.materialripple.MaterialRippleLayout
+            android:id="@+id/ripple11"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:gravity="bottom">
+
+          <LinearLayout
+              android:id="@+id/linWeek"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/linWeeklebel"
+                android:background="@color/black_lebel"
+                android:layout_width="3dp"
+                android:layout_height="fill_parent"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:paddingTop="10dp"
+                  android:paddingBottom="10dp"
+                  android:text="주휴 "
+                  android:textColor="@color/material_white_2"/>
+
+              <CheckBox
+
+
+                  android:id="@+id/chk_WeekMoney"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:checked="false"
+                  android:visibility="invisible"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+
+              <TextView
+                  android:id="@+id/txtWeekMoney"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="10dp"
+                  android:ellipsize="marquee"
+                  android:singleLine="true"
+                  android:text="0"
+                  android:textColor="@color/material_white_2"
+                  android:textSize="12sp"/>
+            </LinearLayout>
+          </LinearLayout>
+
+        </com.balysv.materialripple.MaterialRippleLayout>
+      </LinearLayout>
+      <LinearLayout
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+          android:background="@drawable/circleview_newwork"
+          android:orientation="vertical">
+
+        <com.balysv.materialripple.MaterialRippleLayout
+            android:id="@+id/ripple14"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:gravity="bottom">
+
+          <LinearLayout
+              android:id="@+id/linMonthPay"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="horizontal">
+
+            <LinearLayout
+                android:background="@color/black_lebel"
+                android:layout_width="3dp"
+                android:layout_height="fill_parent"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:paddingTop="10dp"
+                  android:paddingBottom="10dp"
+                  android:text="시작일 "
+                  android:textColor="@color/material_white_2"/>
+
+              <CheckBox
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:checked="false"
+                  android:visibility="invisible"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+
+              <TextView
+                  android:id="@+id/txtMonthPay"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:ellipsize="marquee"
+                  android:singleLine="true"
+                  android:text="시작일로 부터 한달간의 급여"
+                  android:textColor="@color/material_white_2"
+                  android:textSize="12sp"/>
+            </LinearLayout>
+          </LinearLayout>
+
+        </com.balysv.materialripple.MaterialRippleLayout>
+      </LinearLayout>
+
+
+      <LinearLayout
+          android:id="@+id/linMemo"
+          android:layout_width="fill_parent"
+          android:layout_height="120dp"
+          android:orientation="vertical"
+          android:padding="10dp">
+
+        <EditText
+            android:id="@+id/edtMemo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/edit_text_bg"
+            android:ems="10"
+            android:gravity="top"
+            android:hint="메모"
+            android:textColor="@color/background_floating_material_dark"
+            android:textColorHint="@color/gray"/>
+
+      </LinearLayout>
+
+
+      <LinearLayout
+          android:layout_width="fill_parent"
+          android:layout_height="80dp"
+          android:layout_margin="5dp"
+          android:background="@drawable/circleview_newwork"
+          android:gravity="bottom"
+          android:orientation="vertical"
+          android:visibility="gone">
+
+        <com.rey.material.widget.Button
+            android:id="@+id/btnSave"
+            style="@style/Material.App"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="저장하기"
+            android:visibility="gone"
+            app:rd_enable="true"/>
+
+        <com.balysv.materialripple.MaterialRippleLayout
+            android:id="@+id/ripple3"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="bottom">
+
+          <LinearLayout
+              android:id="@+id/linSave"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:gravity="center_vertical|center_horizontal"
+              android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|right"
+                android:text="저장하기"
+                android:textColor="@color/material_white_2"
+                android:textSize="16sp"/>
+
+          </LinearLayout>
+
+        </com.balysv.materialripple.MaterialRippleLayout>
+
+
+      </LinearLayout>
+    </LinearLayout>
+  </ScrollView>
+  <LinearLayout
+      android:visibility="gone"
+      android:id="@+id/mainLayout"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_gravity="center_horizontal"
+      android:layout_weight="1"
+      android:background="@color/material_white_1"
+      android:gravity="bottom"
+      android:orientation="vertical"/>
+
+</LinearLayout>

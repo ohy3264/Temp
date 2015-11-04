@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="@color/material_dialog_background"
+              android:padding="10dp">
+
+  <LinearLayout
+      android:gravity="center_vertical"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@drawable/app_icon"/>
+
+    <TextView
+        android:id="@+id/dig_txtStationName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:text="세금설정"
+        android:textSize="20sp"/>
+
+  </LinearLayout>
+
+  <TextView
+      android:padding="5dp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textAppearance="?android:attr/textAppearanceSmall"
+      android:text="계산하기 화면에서 소득세를 적용합니다"
+      android:id="@+id/textView"/>
+
+  <LinearLayout
+      android:layout_marginLeft="10dp"
+      android:layout_marginRight="10dp"
+      android:orientation="vertical"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content">
+
+    <Switch
+        android:layout_gravity="right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="미적용"
+        android:id="@+id/switchDuty"/>
+  </LinearLayout>
+
+  <LinearLayout
+      android:gravity="center_vertical|center"
+      android:padding="10dp"
+      android:orientation="vertical"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content">
+
+    <ImageView
+        android:src="@drawable/icon_duty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView14"/>
+  </LinearLayout>
+
+  <LinearLayout
+      android:visibility="gone"
+      android:id="@+id/dutySelector"
+      android:gravity="center_vertical|center"
+      android:padding="10dp"
+      android:orientation="vertical"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content">
+    <include
+        layout="@layout/duty_selector"/>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/dutyPerson"
+        android:gravity="center_vertical|center"
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+      <LinearLayout
+          android:gravity="center_vertical"
+          android:layout_weight="1"
+          android:orientation="horizontal"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:textColor="@color/material_white_2"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:text="공제대상 가족수(본인포함)"
+            android:id="@+id/textView76"/>
+
+        <Spinner
+
+            android:textSize="10sp"
+            android:textColor="@color/dark_gray"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner"/>
+
+      </LinearLayout>
+
+      <LinearLayout
+          android:gravity="center_vertical"
+          android:layout_weight="1"
+          android:orientation="horizontal"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:textColor="@color/material_white_2"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:text="공제대상 중 20세 이하 자녀"
+            android:id="@+id/textView77"/>
+
+        <Spinner
+            android:textColor="@color/dark_gray"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner2"/>
+
+      </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/dutyOnwer"
+        android:gravity="center_vertical|center"
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+      <LinearLayout
+          android:gravity="center_vertical"
+          android:layout_weight="1"
+          android:orientation="vertical"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:textColor="@color/material_white_2"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:text="급여의 3.3%를 원천징수 합니다."
+            android:id="@+id/textView66"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="horizontal">
+
+          <TextView
+              android:padding="10dp"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textAppearance="?android:attr/textAppearanceMedium"
+              android:text="소득세 3.0% + 지방소득세 0.3%"
+              android:id="@+id/textView68"/>
+        </LinearLayout>
+      </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/dutyCustom"
+        android:gravity="center_vertical|center"
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+      <LinearLayout
+          android:gravity="center_vertical"
+          android:layout_weight="1"
+          android:orientation="vertical"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:textColor="@color/material_white_2"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:text="입력한 세율만큼 월 급여에서 차감합니다."
+            android:id="@+id/textView69"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="horizontal">
+          <TextView
+              android:padding="10dp"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textAppearance="?android:attr/textAppearanceLarge"
+              android:text="세율"/>
+          <EditText
+              android:textColor="@color/dark_gray"
+              android:background="@drawable/edit_text_bg"
+              android:layout_width="60dp"
+              android:layout_height="wrap_content"
+              android:inputType="number"
+              android:ems="10"
+              android:text="0"
+              android:id="@+id/edtDuty"/>
+
+          <TextView
+              android:padding="10dp"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textAppearance="?android:attr/textAppearanceLarge"
+              android:text="%"
+              android:id="@+id/textView40"/>
+
+        </LinearLayout>
+
+      </LinearLayout>
+
+    </LinearLayout>
+  </LinearLayout>
+
+  <LinearLayout
+      android:gravity="right"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+    <com.balysv.materialripple.MaterialRippleLayout
+        android:layout_marginRight="10dp"
+        android:gravity="bottom"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:id="@+id/ripple"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+      <TextView
+
+          android:textColor="@color/accent_material_dark"
+          android:padding="15dp"
+          android:textSize="15dp"
+          android:gravity="center_vertical|right"
+          android:id="@+id/btnOk"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="확인"/>
+    </com.balysv.materialripple.MaterialRippleLayout>
+
+  </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.balysv.materialripple.MaterialRippleLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="2dp">
+
+  <LinearLayout
+      android:background="@color/button_material_light"
+      android:id="@+id/LinearLayout1"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+      <ImageView
+          android:id="@+id/imageView1"
+          android:layout_width="18.0dip"
+          android:layout_height="18.0dip"
+          android:src="@drawable/icon_from"/>
+
+      <TextView
+          android:layout_marginLeft="5dp"
+          android:id="@+id/txtRagDate"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textColor="@color/dark_gray"
+          android:text="1분 전"
+          android:textSize="11.0sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+      <ImageView
+          android:id="@+id/imgGender"
+          android:layout_width="30dp"
+          android:layout_height="30dp"
+          android:layout_marginRight="5.0dip"
+          android:src="@drawable/icon_man"/>
+
+
+      <TextView
+          android:layout_weight="8.5"
+          android:id="@+id/txtStrText"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:padding="12.0dip"
+          android:text="안녕하세요"
+          android:textAppearance="?android:textAppearanceMedium"
+          android:textColor="@color/dark_gray"
+          android:textSize="14.0sp"/>
+
+      <TextView
+          android:textAppearance="?android:attr/textAppearanceSmall"
+          android:layout_weight="1.5"
+          android:singleLine="true"
+          android:ellipsize="middle"
+          android:textColor="@color/link_text_material_dark"
+          android:gravity="right|bottom"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:id="@+id/txtUnique"/>
+
+
+    </LinearLayout>
+
+
+  </LinearLayout>
+</com.balysv.materialripple.MaterialRippleLayout>

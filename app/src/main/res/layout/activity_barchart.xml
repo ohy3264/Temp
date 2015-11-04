@@ -1,0 +1,48 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+  <include
+      android:id="@+id/toolbar"
+      layout="@layout/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"/>
+
+  <include
+      layout="@layout/header_barchart"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"/>
+
+  <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+              android:background="@color/material_white_2"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+      <com.github.mikephil.charting.charts.BarChart
+          android:layout_weight="8"
+          android:id="@+id/chart1"
+          android:layout_width="match_parent"
+          android:layout_height="280dp"
+          android:layout_below="@+id/toolbar"/>
+
+      <LinearLayout
+          android:gravity="center_vertical"
+          android:layout_width="match_parent"
+          android:layout_height="10dp"/>
+
+      <TextView
+          android:id="@+id/txt_Total"
+          android:layout_margin="3dp"
+          android:textColor="@color/dark_gray"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"/>
+    </LinearLayout>
+  </ScrollView>
+
+</LinearLayout>

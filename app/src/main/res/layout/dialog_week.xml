@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="@color/material_dialog_background"
+              android:padding="10dp">
+
+  <LinearLayout
+      android:gravity="center_vertical"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/icon_week"/>
+
+    <TextView
+        android:id="@+id/dig_txtStationName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:text="주휴수당 설정"
+        android:textSize="20sp"/>
+
+  </LinearLayout>
+
+
+  <LinearLayout
+      android:gravity="clip_horizontal"
+      android:paddingRight="10dp"
+      android:paddingLeft="10dp"
+      android:orientation="vertical"
+      android:layout_width="fill_parent"
+      android:layout_height="148dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+      <TextView
+          android:textSize="12sp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textAppearance="?android:attr/textAppearanceSmall"
+          android:text="❈ (1주간의 근로시간 / 40h) x 근로자의 시급 x 8h"
+          android:id="@+id/textView43"/>
+
+      <LinearLayout
+          android:id="@+id/linearLayout2"
+          android:gravity="center_vertical|center_horizontal"
+          android:orientation="horizontal"
+          android:layout_width="fill_parent"
+          android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:layout_height="fill_parent">
+
+          <LinearLayout
+              android:layout_marginRight="5dp"
+              android:layout_weight="1"
+              android:gravity="center_horizontal|bottom"
+              android:orientation="horizontal"
+              android:layout_width="100dp"
+              android:layout_height="wrap_content">
+
+            <EditText
+                android:textColor="@color/dark_gray"
+                android:background="@drawable/edit_text_bg"
+                android:inputType="numberDecimal"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_width="50dp"
+                android:text="15"
+                android:layout_height="wrap_content"
+                android:id="@+id/edtWeekHour"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="h"
+                android:id="@+id/textView45"/>
+
+
+          </LinearLayout>
+
+          <LinearLayout
+              android:layout_margin="5dp"
+              android:background="@color/material_white_2"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="3dp">
+          </LinearLayout>
+
+          <LinearLayout
+
+              android:layout_weight="1"
+              android:gravity="top|center_horizontal"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content">
+
+            <TextView
+                android:textColor="@color/material_white_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="40h"
+                android:id="@+id/textView44"/>
+          </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="6"
+            android:layout_height="fill_parent">
+
+          <LinearLayout
+              android:gravity="center_vertical|left"
+              android:orientation="horizontal"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent">
+
+            <TextView
+                android:padding="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text=" X "
+                android:id="@+id/textView42"/>
+
+            <EditText
+                android:textColor="@color/dark_gray"
+                android:background="@drawable/edit_text_bg"
+                android:text="0"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:inputType="number"
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/edtHourMoney"
+                android:layout_weight="1"/>
+            <TextView
+                android:padding="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text=" X "
+                android:id="@+id/textView41"/>
+            <TextView
+                android:padding="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="8h"/>
+
+          </LinearLayout>
+        </LinearLayout>
+
+      </LinearLayout>
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+  <CheckBox
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="1주동안 규정된 근무일수를 다채웠습니까?"
+      android:id="@+id/chk_weekrule1"/>
+
+  <CheckBox
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="한주간의 주휴발생일의 다음주에 출근합니까?"
+      android:id="@+id/chk_weekrule2"/>
+
+  <LinearLayout
+      android:gravity="right"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+    <com.balysv.materialripple.MaterialRippleLayout
+        android:layout_marginRight="10dp"
+        android:gravity="bottom"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:id="@+id/ripple"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+      <TextView
+
+          android:textColor="@color/accent_material_dark"
+          android:padding="15dp"
+          android:textSize="15dp"
+          android:gravity="center_vertical|right"
+          android:id="@+id/btnOk"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="확인"/>
+    </com.balysv.materialripple.MaterialRippleLayout>
+
+  </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="@color/material_dialog_background"
+              android:padding="10dp">
+
+  <LinearLayout
+      android:gravity="center_vertical"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/icon_gabulvalue"/>
+
+    <TextView
+        android:id="@+id/dig_txtStationName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:text="월급일 설정"
+        android:textSize="20sp"/>
+
+  </LinearLayout>
+
+  <LinearLayout
+      android:paddingRight="10dp"
+      android:paddingLeft="10dp"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center_vertical|center_horizontal"
+          android:orientation="horizontal">
+        <TextView
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="매달"/>
+        <EditText
+            android:textColor="@color/dark_gray"
+            android:background="@drawable/edit_text_bg"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/edtMonthDay"/>
+
+        <TextView
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="일"
+            android:id="@+id/textView40"/>
+
+      </LinearLayout>
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+  <LinearLayout
+      android:gravity="right"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+    <com.balysv.materialripple.MaterialRippleLayout
+        android:layout_marginRight="10dp"
+        android:gravity="bottom"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:id="@+id/ripple"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+      <TextView
+
+          android:textColor="@color/accent_material_dark"
+          android:padding="15dp"
+          android:textSize="15dp"
+          android:gravity="center_vertical|right"
+          android:id="@+id/btnOk"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="확인"/>
+    </com.balysv.materialripple.MaterialRippleLayout>
+
+  </LinearLayout>
+
+</LinearLayout>

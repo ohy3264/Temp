@@ -1,0 +1,51 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+  <include
+      android:id="@+id/toolbar"
+      layout="@layout/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"/>
+
+  <include
+      layout="@layout/header_piechart"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"/>
+  <LinearLayout
+      android:visibility="visible"
+      android:id="@+id/mainLayout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_horizontal"
+      android:background="@color/material_white_1"
+      android:gravity="bottom"
+      android:orientation="vertical"/>
+
+  <FrameLayout
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent">
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:paddingTop="5dp"
+        android:id="@+id/chart1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"/>
+
+    <LinearLayout
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+      <TextView
+          android:textColor="@color/gray"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textAppearance="?android:attr/textAppearanceMedium"
+          android:id="@+id/txtTotalMoney"/>
+    </LinearLayout>
+  </FrameLayout>
+
+</LinearLayout>

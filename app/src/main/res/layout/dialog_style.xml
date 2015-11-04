@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="@color/material_dialog_background"
+              android:padding="10dp">
+
+  <LinearLayout
+      android:gravity="center_vertical"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/icon_time"/>
+
+    <TextView
+        android:id="@+id/dig_txtStationName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:text="시간 스타일 설정"
+        android:textSize="20sp"/>
+
+  </LinearLayout>
+
+
+  <LinearLayout
+      android:paddingRight="10dp"
+      android:paddingLeft="10dp"
+      android:orientation="vertical"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content">
+
+    <RadioGroup
+        android:id="@+id/radioGroupStyle"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+      <RadioButton
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="아날로그(Meterial 디자인)"
+          android:id="@+id/radioAnalog"/>
+
+      <LinearLayout
+          android:id="@+id/linAnalog"
+          android:gravity="center"
+          android:orientation="vertical"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:src="@drawable/icon_analog"/>
+      </LinearLayout>
+
+      <RadioButton
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="디지털(HOLO 디자인)"
+          android:id="@+id/radioDigital"/>
+
+
+      <LinearLayout
+          android:id="@+id/linDigital"
+          android:gravity="center"
+          android:orientation="vertical"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+        <ImageView
+            android:src="@drawable/icon_digital"
+            android:layout_width="140dp"
+            android:layout_height="140dp"/>
+      </LinearLayout>
+      <RadioButton
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="디지털 24h(HOLO 디자인)"
+          android:id="@+id/radioDigital24"/>
+
+      <LinearLayout
+          android:id="@+id/linDigital24"
+          android:gravity="center"
+          android:orientation="vertical"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+        <ImageView
+            android:src="@drawable/icon_digital24"
+            android:layout_width="140dp"
+            android:layout_height="140dp"/>
+      </LinearLayout>
+
+    </RadioGroup>
+  </LinearLayout>
+
+  <LinearLayout
+      android:gravity="right"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+    <com.balysv.materialripple.MaterialRippleLayout
+        android:layout_marginRight="10dp"
+        android:gravity="bottom"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:id="@+id/ripple"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+      <TextView
+
+          android:textColor="@color/accent_material_dark"
+          android:padding="15dp"
+          android:textSize="15dp"
+          android:gravity="center_vertical|right"
+          android:id="@+id/btnOk"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="확인"/>
+    </com.balysv.materialripple.MaterialRippleLayout>
+
+  </LinearLayout>
+
+</LinearLayout>

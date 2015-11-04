@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/oil_container"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+
+  <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="40dp">
+
+    <CheckBox
+        android:id="@+id/chk_sun"
+        android:layout_width="0.0px"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.0"
+        android:background="@drawable/selector_check_box_left"
+        android:button="@null"
+        android:drawableLeft="@null"
+        android:gravity="center"
+        android:text="일"
+        android:textSize="13dp"
+        android:textColor="@color/red"/>
+
+    <CheckBox
+        android:id="@+id/chk_mon"
+        android:layout_width="0.0px"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.0"
+        android:background="@drawable/selector_check_box_mid"
+        android:button="@null"
+        android:drawableLeft="@null"
+        android:gravity="center"
+        android:text="월"
+        android:textSize="13dp"
+        android:textColor="@drawable/selector_text_tab"/>
+
+    <CheckBox
+        android:id="@+id/chk_thu"
+        android:layout_width="0.0px"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.0"
+        android:background="@drawable/selector_check_box_mid"
+        android:button="@null"
+        android:drawableLeft="@null"
+        android:gravity="center"
+        android:text="화"
+        android:textSize="13dp"
+        android:textColor="@drawable/selector_text_tab"/>
+
+    <CheckBox
+        android:id="@+id/chk_wed"
+        android:layout_width="0.0px"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.0"
+        android:background="@drawable/selector_check_box_mid"
+        android:button="@null"
+        android:drawableLeft="@null"
+        android:gravity="center"
+        android:text="수"
+        android:textSize="13dp"
+        android:textColor="@drawable/selector_text_tab"/>
+
+    <CheckBox
+        android:id="@+id/chk_thur"
+        android:layout_width="0.0px"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.0"
+        android:background="@drawable/selector_check_box_mid"
+        android:button="@null"
+        android:drawableLeft="@null"
+        android:gravity="center"
+        android:text="목"
+        android:textSize="13dp"
+        android:textColor="@drawable/selector_text_tab"/>
+
+    <CheckBox
+        android:id="@+id/chk_fri"
+        android:layout_width="0.0px"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.0"
+        android:background="@drawable/selector_check_box_mid"
+        android:button="@null"
+        android:drawableLeft="@null"
+        android:gravity="center"
+        android:text="금"
+        android:textSize="13dp"
+        android:textColor="@drawable/selector_text_tab"/>
+
+    <CheckBox
+        android:id="@+id/chk_sat"
+        android:layout_width="0.0px"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.0"
+        android:background="@drawable/selector_check_box_mid"
+        android:button="@null"
+        android:drawableLeft="@null"
+        android:gravity="center"
+        android:text="토"
+        android:textSize="13dp"
+        android:textColor="@color/blue"/>
+  </LinearLayout>
+
+
+</LinearLayout>

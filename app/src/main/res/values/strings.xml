@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="kakao_app_key">03ae36457245d5c9dafb05bd562766ca</string>
+
+  <string name="search_hint">Type and Search</string>
+  <string name="menu_search">Search</string>
+
+  <string name="app_name">알바매니저</string>
+  <string name="app_sub_name">편리한 시급관리</string>
+  <string name="hello_world">Hello world!</string>
+  <string name="action_settings">Settings</string>
+  <string name="action_send">Send</string>
+  <!-- Calendar -->
+  <string name="sunday">일</string>
+  <string name="monday">월</string>
+  <string name="tuesday">화</string>
+  <string name="wednesday">수</string>
+  <string name="thursday">목</string>
+  <string name="friday">금</string>
+  <string name="saturday">토</string>
+  <string name="year">년</string>
+  <string name="month">월</string>
+  <string name="day">일</string>
+  <string name="day_of_the_week">요일</string>
+  <string name="select_day_delete">선택 날짜 모두 삭제</string>
+  <string name="movement">이동</string>
+  <string name="select_day_movement">선택 날짜 이동</string>
+  <string name="move_selection">선택 항목 이동</string>
+  <string name="prev">←</string>
+  <string name="next">→</string>
+  <!-- Calendar -->
+  <string name="January">1월</string>
+  <string name="Febuary">2월</string>
+  <string name="March">3월</string>
+  <string name="April">4월</string>
+  <string name="May">5월</string>
+  <string name="June">6월</string>
+  <string name="July">7월</string>
+  <string name="August">8월</string>
+  <string name="September">9월</string>
+  <string name="October">10월</string>
+  <string name="November">11월</string>
+  <string name="December">12월</string>
+
+
+  <string name="delete">삭제하기</string>
+  <string name="report">신고하기</string>
+
+  <!-- Font -->
+  <string name="roboto">fonts/Roboto-Light.ttf</string>
+  <string name="sangsang">fonts/SangSangTitle.ttf</string>
+  <string name="godo">fonts/GodoM.ttf</string>
+
+  <!-- InApp -->
+  <string name="base64EncodedPublicKey">
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgtLVWW8zziBSgEAjKoEfyUOVJ3jyhG4sCNbngSZdF3/xYrTMDu5yF0zZW+0UeHWT60HcHXuadfmE2IFJJUUqvTpFSAm1Y/28nTQyHA/+BbqcXZPuFGCE/PmiZsCMRNTSatFFzrdSutyl3DU9sjugu/sbPjRXRdae46L8e463uUKBXJNFYNxCPRO/QGCasBNAZvFh7h4H4EBy48HHMw+07BmOVrHTWgY6iGBu9q+1T7U4M+KeWYMwzXJamMViIosQH9XAPjD6rtdgyAwWBR5R8mhMfw0kYg9WmIIqbFzl176WiJNecB/2sZ9Blapm90pGGRBXtBD+QORTW8f1dnEn4QIDAQAB
+  </string>
+
+  <!-- 최저시급관련 -->
+  <string name="hourpayinfo0_str1">최저임금제란 국가가 노·사간의 임금결정과정에 개입하여 임금의 최저수준을 정하고, 사용자에게 이 수준 이상의 임금을
+    지급하도록 법으로 강제함으로써 저임금 근로자를 보호하는 제도임
+  </string>
+  <string name="hourpayinfo0_str2">최저임금제는 근로자에 대하여 임금의 최저수준을 보장하여 근로자의 생활안정과 노동력의 질적향상을 꾀함으로써 국민경제의
+    건전한 발전에 이바지하게 함을 목적으로 함(최저임금법 제1조)
+  </string>
+  <string name="hourpayinfo0_str3">고용노동부 민원마당 홈페이지(http://minwon.moel.go.kr - 민원마당 - 신고센터 -
+    최저임금위반사례신고)에서 하실 수 있습니다.
+  </string>
+
+  <string name="hourpayinfo2_str1">사용자가 근로자에게 야간근로를 시킬 경우에 지급하는 수당으로, 통상임금의 100분의 50 이상을 가산하여 지급하여야
+    한다(근로기준법 제55조). 야근수당·심야수당이라고도 한다. 연장근로가 야간에 이루어진 경우에는 야간근로수당과 함께 연장근로수당을 중복하여 지급하여야 한다.
+  </string>
+  <string name="hourpayinfo2_str2">금일 오후 10시부터 익일 오전 6시까지의 근로를 의미하며 통상시급의 50%를 가산하여 지급</string>
+  <string name="hourpayinfo2_str3">고용노동부 민원마당 홈페이지(http://minwon.moel.go.kr - 민원마당 - 신고센터 -
+    최저임금위반사례신고)에서 하실 수 있습니다.
+  </string>
+
+  <string name="hourpayinfo3_str1">근로기준법 제55조에 따르면 사용자는 1주일 동안 소정의 근로일수를 개근한 노동자에게 1주일에 평균 1회 이상의
+    유급휴일을 주어야 하며, 이를 주휴일이라 한다. 주휴수당은 이 주휴일에 하루치 임금을 별도 산정하여 지급해야 하는 수당을 말한다. 주휴일은 상시근로자 또는 단기간 근로자에
+    관계 없이 일주일에 15시간 이상 근무한 모든 근로자가 적용대상이 된다.
+  </string>
+  <string name="hourpayinfo3_str2">주휴수당 = (1주 근로시간/40h) * 근로자의 시급 * 8h</string>
+
+  <string name="app_notice">공지사항</string>
+  <!-- 공지사항
+  <string name="app_notice_update">Ver. 1.28 \n - 휴게시간 적용 시 총 일한시간에서 휴게시간 만큼의 시간이 감소됩니다. \n(기 버전에서는 휴게적용 시 급여만 감소 하였습니다) \n\n기존 휴게시간과 함께 야간, 연장을 적용해 오신분들은 저장된 일급을 다시 수정저장 해주셔야 정상적으로 계산됩니다. \n\n잘못된 계산방식으로 인해 불편함을 드려 죄송합니다  </string>
+
+  <string name="app_notice_update">Ver. 1.30 \n - 광고제거를 위한 기능을 테스트중입니다. \n\n 이메일 또는 게시판에 요청하신 내용들은 검토 후 순차적으로 적용됩니다. </string>
+
+  <string name="app_notice_update">Ver. 1.31 \n - 연장근무의 적용범위를 설정할 수 있습니다. \n\n 해당 기능은 주말근무가 모두 연장근로에 해당하시는 분들을 위한 기능입니다. \n\n 광고제거를 위한 기능을 테스트중입니다. \n\n 이메일 또는 게시판에 요청하신 내용들은 검토 후 순차적으로 적용됩니다. </string>
+
+  <string name="app_notice_update">Ver. 1.33 \n - 주휴수당에서 분단위를 소수점단위를 통해 적용할 수 있습니다. \n\n ex) 한주간의 근로시간이 총 32시간 30분 일 경우 32.5 입력 . \n\n 광고제거를 위한 기능을 테스트중입니다. \n\n 이메일 또는 게시판에 요청하신 내용들은 검토 후 순차적으로 적용됩니다. </string>
+
+  <string name="app_notice_update">Ver. 1.34 \n - 주휴수당에서 분단위를 소수점단위를 통해 적용할 수 있습니다. \n\n ex) 한주간의 근로시간이 총 32시간 30분 일 경우 32.5 입력 . \n\n 광고제거를 위한 기능을 테스트중입니다. \n\n 앱실행이 안되는 오류를 수정하였습니다. </string>
+ <string name="app_notice_update">Ver. 1.36 \n - 현재 일부기기에서 실행이 안되는 오류가 있습니다. \n\n 이메일이나 카톡으로 문의를 주시면 좀더 빠른개선이 가능합니다. 감사합니다\n\n 알바톡 일부 기능개선 \n\n  광고제거를 위한 기능 테스트 \n\n </string>
+
+  <string name="app_notice_update">Ver. 1.42 \n - 설정 인터페이스 일부 변경, 월급날 지정기능 준비 \n\n 오류발생 시 이메일이나 카톡으로 문의를 주시면 좀더 빠른개선이 가능합니다. 감사합니다 \n\n  광고제거를 위한 기능 테스트 \n\n </string>
+
+  <string name="app_notice_update">Ver. 1.43 \n - 월급날 지정기능 추가 \n\n 앞으로 계산화면과 월별 그래프화면에서 지정한 월급날 기준으로 계산됩니다.\n\n 오류발생 시 이메일이나 카톡으로 문의를 주시면 좀더 빠른개선이 가능합니다. 감사합니다 \n\n  광고제거를 위한 기능 테스트 \n\n </string>
+
+  <string name="app_notice_update">Ver. 1.44 \n - 시간 팝업스타일 변경 (아날로그, 디지털, 디지털24h) \n\n 시급저장화면 캡쳐 후 카톡공유 기능 추가 \n\n오류발생 시 이메일이나 카톡으로 문의를 주시면 좀더 빠른개선이 가능합니다. 감사합니다 \n\n  광고제거를 위한 기능 테스트 \n\n </string>
+
+  <string name="app_notice_update">Ver. 1.45 \n - 삭제, 백업, 시간 관련 오류 정정 \n\n 급여 캡쳐 후 카톡공유 기능 추가 \n\n  오류발생 시 이메일이나 카톡으로 문의를 주시면 좀더 빠른개선이 가능합니다. 감사합니다 \n\n  광고제거를 위한 기능 테스트 \n\n </string>
+
+  <string name="app_notice_update">Ver. 1.46 \n - 급여계산에서 기간설정 자동, 수동 옵션 추가 \n\n 4대보험 모의계산 추가 \n\n  오류발생 시 이메일이나 카톡으로 문의를 주시면 좀더 빠른개선이 가능합니다. 감사합니다 \n\n </string>
+
+  <string name="app_notice_update">Ver. 1.47 \n - 급여계산에서 4대보험, 근로소득세 적용 추가 \n\n 근로소득세 모의계산 추가 \n\n  오류발생 시 이메일이나 카톡으로 문의를 주시면 좀더 빠른개선이 가능합니다. 감사합니다 \n\n </string>
+
+  <string name="app_notice_update">Ver. 1.48 \n - 월급날 1일으로 설정 시 오류 수정 \n\n  오류발생 시 이메일이나 카톡으로 문의를 주시면 좀더 빠른개선이 가능합니다. 감사합니다 \n\n </string>
+ <string name="app_notice_update">Ver. 1.49 \n - 광고제거 기능 추가 \n\n  오류발생 시 이메일이나 카톡으로 문의를 주시면 좀더 빠른개선이 가능합니다. 감사합니다 \n\n </string>
+   <string name="app_notice_update">Ver. 1.50 \n - 달력 구조 변경 \n\n 오류발생 시 이메일이나 카톡으로 문의를 주시면 좀더 빠른개선이 가능합니다. 감사합니다 \n\n </string>
+    <string name="app_notice_update">Ver. 1.51 \n - 달력 구조 변경 \n\n 오류발생 시 이메일이나 카톡으로 문의를 주시면 좀더 빠른개선이 가능합니다. 감사합니다 \n\n </string>
+    <string name="app_notice_update">Ver. 1.52 \n - 달력화면에서 다중삭제 기능 추가 \n\n 일한날짜를 길게 클릭하면 삭제대기상태가 됩니다. \n\n 오류발생 시 이메일이나 카톡으로 문의를 주시면 좀더 빠른개선이 가능합니다. 감사합니다 \n\n </string>
+  -->
+  <string name="app_notice_update">Ver. 1.53 \n - 월급 시작날 개별 등록(설정화면->알바 첫 등록 시 설정) \n\n 알람기능 추가 \n\n
+    오류발생 시 이메일이나 카톡으로 문의를 주시면 좀더 빠른개선이 가능합니다. 감사합니다 \n\n
+  </string>
+
+</resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:id="@+id/popup_element">
+
+  <TextView
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:background="#3F0099"
+      android:text="레이아웃이 적용된 팝업창"
+      android:textColor="#FFFFFF"/>
+
+  <Button
+      android:id="@+id/btn_close_popup"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentLeft="false"
+      android:gravity="center_vertical|center_horizontal"
+      android:text="Close"/>
+</LinearLayout>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/material_red_light"
+             android:orientation="vertical">
+
+
+  <LinearLayout
+      android:gravity="center_vertical|center_horizontal"
+      android:orientation="vertical"
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      android:weightSum="1">
+
+    <ImageView
+        android:layout_marginTop="60dp"
+        android:src="@drawable/app_icon"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:id="@+id/imageView"/>
+  </LinearLayout>
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical">
+
+    <TextView
+        android:paddingBottom="140dp"
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:singleLine="true"
+        android:text="@string/app_name"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        android:typeface="sans"/>
+
+    <com.rey.material.widget.ProgressView
+        android:id="@+id/intro_progressBar"
+        app:pv_progressStyle="@style/ColorsCircularProgressDrawableStyle"
+        app:pv_progressMode="indeterminate"
+        app:pv_autostart="true"
+        app:pv_circular="true"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:indeterminate="false"/>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:shadowRadius="1"
+        android:text="@string/app_sub_name"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+      <TextView
+          android:id="@+id/textView2"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="COPYRIGHT (C) 2015 HWOH "
+          android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+      <ImageView
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:scaleType="fitXY"/>
+    </LinearLayout>
+  </RelativeLayout>
+
+</FrameLayout>

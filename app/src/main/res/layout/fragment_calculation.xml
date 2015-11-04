@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:background="@color/button_material_light"
+              android:orientation="vertical"
+              android:padding="10dp">
+
+  <LinearLayout
+      android:layout_marginBottom="10dp"
+      android:layout_marginTop="10dp"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="7.0dip"
+      android:layout_weight="10.0"
+      android:gravity="center">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="시급 "
+        android:textColor="#ff000000"/>
+
+    <EditText
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/textfield_normal"
+        android:id="@+id/edtTimeMoney"
+        android:layout_width="80.0dip"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        android:text="0"
+        android:textColor="#ff000000"
+        android:textSize="20.0dip">
+
+      <requestFocus/>
+    </EditText>
+
+    <TextView
+        android:layout_marginLeft="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="원을 "
+        android:textColor="#ff000000"/>
+
+    <Spinner
+
+        android:id="@+id/spChange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/dark_gray"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="으로"
+        android:textColor="#ff000000"/>
+  </LinearLayout>
+
+  <ImageView
+      android:layout_width="330.0dip"
+      android:layout_height="1.0dip"
+      android:layout_gravity="center_horizontal"
+      android:layout_marginBottom="10.0dip"
+      android:layout_weight="1.0"
+      android:background="@color/light_gray"/>
+
+  <LinearLayout
+      android:gravity="center_vertical"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="13.0dip"
+      android:layout_weight="10.0">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="18.0dip"
+        android:text="하루 근무시간"
+        android:textColor="#ff000000"/>
+
+    <Spinner
+        android:textColor="@color/dark_gray"
+        android:id="@+id/spDayHour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3.0dip"
+        android:layout_weight="0.0"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="시간"
+        android:textColor="#ff000000"/>
+
+    <Spinner
+        android:id="@+id/spDayMin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3.0dip"
+        android:layout_weight="0.0"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="분"
+        android:textColor="#ff000000"/>
+  </LinearLayout>
+
+  <LinearLayout
+      android:gravity="center_vertical"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="13.0dip"
+      android:layout_weight="10.0">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="18.0dip"
+        android:text="한달 근무일수"
+        android:textColor="#ff000000"/>
+
+    <Spinner
+        android:textColor="@color/dark_gray"
+        android:id="@+id/spMonthDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3.0dip"
+        android:layout_weight="0.0"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="일"
+        android:textColor="#ff000000"/>
+  </LinearLayout>
+
+  <LinearLayout
+      android:gravity="center_vertical"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="13.0dip"
+      android:layout_weight="10.0">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="18.0dip"
+        android:text="총근무 개월수"
+        android:textColor="#ff000000"/>
+
+    <Spinner
+        android:textColor="@color/dark_gray"
+        android:id="@+id/spYeatMonth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3.0dip"
+        android:layout_weight="0.0"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="개월"
+        android:textColor="#ff000000"/>
+  </LinearLayout>
+
+  <ImageView
+      android:layout_width="330.0dip"
+      android:layout_height="1.0dip"
+      android:layout_gravity="center_horizontal"
+      android:layout_marginTop="10.0dip"
+      android:layout_weight="1.0"
+      android:background="@color/light_gray"/>
+
+  <LinearLayout
+      android:padding="10dp"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="10.0"
+      android:gravity="center">
+
+    <Button
+        android:id="@+id/btnCalculation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="2.0dip"
+        android:text="계산하기"/>
+
+    <Button
+        android:id="@+id/btnReCal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2.0dip"
+        android:text="다시계산"/>
+  </LinearLayout>
+
+  <ImageView
+      android:layout_width="330.0dip"
+      android:layout_height="1.0dip"
+      android:layout_gravity="center_horizontal"
+      android:layout_weight="1.0"
+      android:background="@color/light_gray"/>
+
+  <LinearLayout
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="50.0"
+      android:gravity="center">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="예상 급여는"
+        android:textColor="#ff000000"
+        android:textSize="20.0dip"/>
+
+    <TextView
+        android:id="@+id/txtResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="18.0dip"
+        android:layout_marginRight="18.0dip"
+        android:text="0"
+        android:textColor="#ff13ca73"
+        android:textSize="25.0dip"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="원 입니다."
+        android:textColor="#ff000000"
+        android:textSize="20.0dip"/>
+  </LinearLayout>
+</LinearLayout>

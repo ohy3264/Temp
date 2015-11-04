@@ -1,0 +1,40 @@
+<resources>
+
+  <!-- Default screen margins, per the Android Design guidelines. -->
+  <dimen name="activity_horizontal_margin">16dp</dimen>
+  <dimen name="activity_vertical_margin">16dp</dimen>
+
+  <!-- FloatingActionButton -->
+  <dimen name="fab_size_normal">56dp</dimen>
+  <dimen name="fab_size_mini">40dp</dimen>
+  <dimen name="fab_shadow_size">8dp</dimen>
+  <dimen name="fab_mini_shadow_size">6dp</dimen>
+
+  <!-- images -->
+  <dimen name="image_small">24dp</dimen>
+  <dimen name="image_normal">32dp</dimen>
+  <dimen name="image_medium">48dp</dimen>
+  <dimen name="image_large">60dp</dimen>
+  <dimen name="image_extra_large">100dp</dimen>
+
+
+  <!-- margin -->
+  <dimen name="margin_extra_small">1dp</dimen>
+  <dimen name="margin_small">2dp</dimen>
+  <dimen name="margin_normal">5dp</dimen>
+  <dimen name="margin_large">8dp</dimen>
+  <dimen name="margin_extra_large">12dp</dimen>
+  <dimen name="margin_very_large">16dp</dimen>
+
+  <dimen name="diameter">48dp</dimen>
+  <dimen name="elevation_low">1dp</dimen>
+  <dimen name="elevation_high">4dp</dimen>
+  <dimen name="add_button_margin">16dp</dimen>
+
+  <dimen name="red_action_button_size">108dp</dimen>
+  <dimen name="red_action_button_margin">48dp</dimen>
+
+
+  <dimen name="red_action_button_content_size">16dp</dimen>
+  <dimen name="red_action_button_content_margin">36dp</dimen>
+</resources>

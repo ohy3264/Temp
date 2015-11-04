@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/refresh_container"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+  <RadioGroup
+      android:checkedButton="@+id/chk_duty1"
+      android:id="@+id/radioGroupDuty"
+      android:layout_width="match_parent"
+      android:layout_height="35.0dip"
+      android:orientation="horizontal"
+      android:paddingBottom="3.0dip"
+      android:paddingTop="2.0dip">
+
+    <RadioButton
+        android:id="@+id/chk_duty1"
+        android:layout_width="0.0px"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.0"
+        android:background="@drawable/selector_check_box_left"
+        android:button="@null"
+        android:drawableLeft="@null"
+        android:gravity="center"
+        android:text="근로소득자"
+        android:textSize="10sp"
+        android:textColor="@drawable/selector_text_tab"/>
+
+    <RadioButton
+        android:visibility="visible"
+        android:id="@+id/chk_duty2"
+        android:layout_width="0.0px"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.0"
+        android:background="@drawable/selector_check_box_mid"
+        android:button="@null"
+        android:drawableLeft="@null"
+        android:gravity="center"
+        android:text="사업소득자"
+        android:textSize="10sp"
+        android:textColor="@drawable/selector_text_tab"/>
+
+
+    <RadioButton
+        android:id="@+id/chk_duty3"
+        android:layout_width="0.0px"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.0"
+        android:background="@drawable/selector_check_box_right"
+        android:button="@null"
+        android:drawableLeft="@null"
+        android:gravity="center"
+        android:text="직접입력"
+        android:textSize="10sp"
+        android:textColor="@drawable/selector_text_tab"/>
+  </RadioGroup>
+
+</LinearLayout>

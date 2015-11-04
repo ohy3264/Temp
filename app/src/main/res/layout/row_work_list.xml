@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.balysv.materialripple.MaterialRippleLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="2dp">
+
+  <LinearLayout
+      android:background="@color/material_white_2"
+      android:orientation="vertical"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:elevation="5dp">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+      <LinearLayout
+          android:id="@+id/linGabulCheck"
+          android:layout_margin="5dp"
+          android:elevation="2dp"
+          android:gravity="center_vertical|center_horizontal"
+          android:background="@drawable/circleview"
+          android:orientation="horizontal"
+          android:layout_weight="2"
+          android:layout_width="0dp"
+          android:layout_height="fill_parent">
+
+        <TextView
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/material_white_1"
+            android:id="@+id/txtMonth"/>
+
+        <TextView
+            android:layout_marginLeft="1dp"
+            android:textSize="12sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="월"
+            android:textColor="@color/material_white_1"
+            android:id="@+id/textView15"/>
+
+        <TextView
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/material_white_1"
+            android:id="@+id/txtDay"/>
+
+        <TextView
+            android:layout_marginLeft="1dp"
+            android:textSize="12sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="일"
+            android:textColor="@color/material_white_1"/>
+
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_weight="8"
+          android:orientation="vertical"
+          android:layout_width="0dp"
+          android:layout_height="fill_parent"
+          android:layout_gravity="center_vertical">
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+          <LinearLayout
+              android:layout_weight="7"
+              android:gravity="center_vertical"
+              android:orientation="vertical"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content">
+            <TextView
+                android:paddingTop="10dp"
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="사장 전화번호 010-8504-3265"
+                android:textColor="@color/gray"
+                android:id="@+id/txtMemo"/>
+
+          </LinearLayout>
+
+          <LinearLayout
+              android:layout_weight="4"
+              android:padding="10dp"
+              android:gravity="center_vertical|right"
+              android:orientation="horizontal"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="500000"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textColor="@color/dark_gray"
+                android:id="@+id/txtTotalMoney"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="원"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textColor="@color/dark_gray"
+                android:id="@+id/textView3"/>
+
+          </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+          <LinearLayout
+              android:visibility="gone"
+              android:layout_marginTop="3dp"
+              android:layout_marginBottom="3dp"
+              android:layout_marginLeft="1dp"
+              android:gravity="left"
+              android:id="@+id/linRefreshTime"
+              android:orientation="horizontal"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@drawable/icon_refreshtime"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:id="@+id/imageView11"/>
+
+            <TextView
+                android:gravity="center_vertical"
+                android:id="@+id/textView30"
+                android:textSize="11sp"
+                android:textColor="@color/gray"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="휴식"/>
+          </LinearLayout>
+
+          <LinearLayout
+
+              android:visibility="gone"
+              android:layout_marginLeft="3dp"
+              android:gravity="center_vertical"
+              android:id="@+id/linNightView"
+              android:orientation="horizontal"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent">
+            <ImageView
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:src="@drawable/icon_moon_work"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_gravity="center_vertical"/>
+            <TextView
+                android:textSize="11sp"
+                android:textColor="@color/gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="야간"/>
+          </LinearLayout>
+
+          <LinearLayout
+              android:visibility="gone"
+              android:layout_marginLeft="3dp"
+              android:gravity="center_vertical"
+              android:id="@+id/linAddView"
+              android:orientation="horizontal"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:src="@drawable/icon_addmoney"
+                android:layout_width="11dp"
+                android:layout_height="11dp"
+                android:id="@+id/imageView13"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:textSize="11sp"
+                android:textColor="@color/gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="연장"/>
+          </LinearLayout>
+
+          <LinearLayout
+              android:visibility="gone"
+              android:layout_marginLeft="3dp"
+              android:id="@+id/linGabulView"
+              android:orientation="horizontal"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:gravity="left|center_vertical">
+
+            <ImageView
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:src="@drawable/icon_gabulvalue"
+                android:layout_width="11dp"
+                android:layout_height="11dp"
+                android:id="@+id/imageView12"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:id="@+id/txtGabulMoney"
+                android:textSize="11sp"
+                android:textColor="@color/gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="가불"
+                android:layout_gravity="center_vertical"/>
+          </LinearLayout>
+
+          <LinearLayout
+              android:visibility="gone"
+              android:layout_marginLeft="3dp"
+              android:id="@+id/linEtc"
+              android:orientation="horizontal"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:gravity="left|center_vertical">
+
+            <ImageView
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:src="@drawable/icon_etcvalue"
+                android:layout_width="11dp"
+                android:layout_height="11dp"
+                android:id="@+id/imageView7"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:id="@+id/txtEtc"
+                android:textSize="11sp"
+                android:textColor="@color/gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="기타"
+                android:layout_gravity="center_vertical"/>
+          </LinearLayout>
+
+          <LinearLayout
+              android:visibility="gone"
+              android:layout_marginTop="3dp"
+              android:layout_marginBottom="3dp"
+              android:layout_marginLeft="1dp"
+              android:gravity="left"
+              android:id="@+id/linWeek"
+              android:orientation="horizontal"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+
+            <ImageView
+                android:padding="2dp"
+                android:src="@drawable/icon_week"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:id="@+id/imageView15"/>
+
+            <TextView
+                android:gravity="center_vertical"
+                android:id="@+id/textView35"
+                android:textSize="11sp"
+                android:textColor="@color/gray"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="주휴"/>
+          </LinearLayout>
+
+          <LinearLayout
+              android:visibility="invisible"
+              android:layout_marginTop="3dp"
+              android:layout_marginBottom="3dp"
+              android:layout_marginLeft="1dp"
+              android:gravity="left"
+              android:id="@+id/linearLayout"
+              android:orientation="horizontal"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@drawable/icon_refreshtime"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:id="@+id/imageView9"/>
+
+            <TextView
+                android:gravity="center_vertical"
+                android:id="@+id/textView37"
+                android:textSize="11sp"
+                android:textColor="@color/gray"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="휴식"/>
+          </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+          <LinearLayout
+              android:padding="2dp"
+              android:gravity="center_vertical|right"
+              android:orientation="horizontal"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent">
+
+            <ImageView
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="3dp"
+                android:src="@drawable/icon_time"
+                android:layout_width="11dp"
+                android:layout_height="11dp"
+                android:id="@+id/imageView5"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+              <TextView
+                  android:id="@+id/txtStartTime"
+                  android:textSize="11sp"
+                  android:textColor="@color/gray"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textAppearance="?android:attr/textAppearanceSmall"
+                  android:text="-"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+              <TextView
+                  android:layout_marginRight="10dp"
+                  android:textSize="11sp"
+                  android:textColor="@color/gray"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textAppearance="?android:attr/textAppearanceSmall"
+                  android:text="~"
+                  android:id="@+id/textView7"/>
+
+              <TextView
+                  android:id="@+id/txtEndTime"
+                  android:textSize="11sp"
+                  android:textColor="@color/gray"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textAppearance="?android:attr/textAppearanceSmall"
+                  android:text="-"/>
+
+            </LinearLayout>
+          </LinearLayout>
+
+
+        </LinearLayout>
+
+      </LinearLayout>
+
+    </LinearLayout>
+
+
+  </LinearLayout>
+
+</com.balysv.materialripple.MaterialRippleLayout>

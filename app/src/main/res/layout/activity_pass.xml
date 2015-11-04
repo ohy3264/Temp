@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/material_red_light">
+
+
+  <LinearLayout
+      android:layout_weight="1"
+      android:gravity="center_horizontal|bottom"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:padding="15dp"
+      >
+
+
+    <ImageView
+        android:padding="3dp"
+        android:src="@drawable/icon_pass"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:id="@+id/imageView18"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="암호입력"/>
+  </LinearLayout>
+
+
+  <LinearLayout
+      android:orientation="vertical"
+      android:layout_weight="1"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_horizontal|top">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+      <EditText
+          android:maxLength="4"
+          android:textColor="@color/dark_gray"
+          android:layout_marginRight="5dp"
+          android:layout_marginLeft="10dp"
+          android:background="@drawable/edit_text_bg"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:inputType="numberPassword"
+          android:ems="10"
+          android:id="@+id/edtPass"/>
+
+      <com.rey.material.widget.Button
+          android:layout_marginRight="5dp"
+          android:layout_marginLeft="10dp"
+          android:layout_weight="1"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="로그인"
+          android:id="@+id/btn_Login"
+          android:layout_gravity="center_vertical"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingTop="40dp"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+      <TextView
+          android:layout_marginRight="5dp"
+          android:layout_marginLeft="10dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textAppearance="?android:attr/textAppearanceSmall"
+          android:text="비밀번호 분실 시 개발자(ohy3264@gmail.com) 이메일로 문의해주세요"
+          android:id="@+id/textView9"/>
+
+    </LinearLayout>
+  </LinearLayout>
+
+</LinearLayout>

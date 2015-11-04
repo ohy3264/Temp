@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="@color/material_dialog_background"
+              android:padding="10dp">
+
+  <LinearLayout
+      android:gravity="center_vertical"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/icon_money"/>
+
+    <TextView
+        android:id="@+id/dig_txtStationName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:text="주휴수당"
+        android:textSize="20sp"/>
+
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="2dp">
+
+      <LinearLayout
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center_vertical|center_horizontal"
+          android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="* 개념"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="15sp"/>
+      </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="@color/dark_gray"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center_vertical|center_horizontal"
+          android:orientation="horizontal">
+
+        <TextView
+            android:padding="3dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/hourpayinfo3_str1"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="14sp"/>
+
+      </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="2dp">
+
+      <LinearLayout
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center_vertical|center_horizontal"
+          android:orientation="horizontal">
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="* 주휴수당 계산"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="15sp"/>
+      </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="@color/dark_gray"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center_vertical|center_horizontal"
+          android:orientation="horizontal">
+
+        <TextView
+            android:padding="3dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/hourpayinfo3_str2"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="14sp"/>
+      </LinearLayout>
+    </LinearLayout>
+
+  </LinearLayout>
+
+  <LinearLayout
+      android:gravity="right"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+    <com.balysv.materialripple.MaterialRippleLayout
+        android:layout_marginRight="10dp"
+        android:gravity="bottom"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:id="@+id/ripple"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+      <TextView
+
+          android:textColor="@color/accent_material_dark"
+          android:padding="15dp"
+          android:textSize="15dp"
+          android:gravity="center_vertical|right"
+          android:id="@+id/btnOk"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="확인"/>
+    </com.balysv.materialripple.MaterialRippleLayout>
+
+  </LinearLayout>
+
+</LinearLayout>
