@@ -1,9 +1,12 @@
 package com.hw.oh.temp;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -30,9 +33,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.vending.billing.IInAppBillingService;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
 import com.hw.oh.adapter.DrawerMenuAdapter;
 import com.hw.oh.billing.IabHelper;
 import com.hw.oh.billing.IabResult;
@@ -108,7 +108,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         mFont.setGlobalFont((ViewGroup) mToolbar);
 
-        // In APP Payment
+       /* // In APP Payment
         Intent serviceIntent = new Intent("com.android.vending.billing.InAppBillingService.BIND");
         serviceIntent.setPackage("com.android.vending");
         bindService(serviceIntent, mServiceConn, Context.BIND_AUTO_CREATE);
@@ -125,7 +125,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                     Toast.makeText(getApplicationContext(), "구글 결재 초기화 오류", Toast.LENGTH_SHORT).show();
                 }
             }
-        });
+        });*/
 
         //DrawerLayout
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);

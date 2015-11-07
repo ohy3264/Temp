@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -62,7 +61,7 @@ public class IntroActivity extends Activity {
     mPref = new HYPreference(this);
     mNet = new HYNetworkInfo(this);
 
-    //InApp
+    /*//InApp
     String base64EncodedPublicKey = getResources().getString(R.string.base64EncodedPublicKey);
     mHelper = new IabHelper(this, base64EncodedPublicKey);
     mHelper.enableDebugLogging(true, "IAB");
@@ -78,7 +77,7 @@ public class IntroActivity extends Activity {
           mHelper.queryInventoryAsync(mQueryFinishedListener);
         }
       }
-    });
+    });*/
 
     //View
     ViewGroup root = (ViewGroup) findViewById(android.R.id.content);

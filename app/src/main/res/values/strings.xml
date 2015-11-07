@@ -112,7 +112,7 @@
     <string name="app_notice_update">Ver. 1.51 \n - 달력 구조 변경 \n\n 오류발생 시 이메일이나 카톡으로 문의를 주시면 좀더 빠른개선이 가능합니다. 감사합니다 \n\n </string>
     <string name="app_notice_update">Ver. 1.52 \n - 달력화면에서 다중삭제 기능 추가 \n\n 일한날짜를 길게 클릭하면 삭제대기상태가 됩니다. \n\n 오류발생 시 이메일이나 카톡으로 문의를 주시면 좀더 빠른개선이 가능합니다. 감사합니다 \n\n </string>
   -->
-  <string name="app_notice_update">Ver. 1.53 \n - 월급 시작날 개별 등록(설정화면->알바 첫 등록 시 설정) \n\n 알람기능 추가 \n\n
+  <string name="app_notice_update">Ver. 1.58 \n - 월급 시작날 개별 등록(설정화면->알바 첫 등록 시 설정) \n\n 알람기능 추가 \n\n 알바 저장 인터페이스 변경 \n\n
     오류발생 시 이메일이나 카톡으로 문의를 주시면 좀더 빠른개선이 가능합니다. 감사합니다 \n\n
   </string>
 

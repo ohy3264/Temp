@@ -2,12 +2,9 @@
 
   <!-- Base application theme. -->
   <style name="Base.Theme.HMKCodeApp" parent="Theme.AppCompat.NoActionBar">
-
     <item name="colorPrimary">@color/my_primary</item>
-
     <!--   darker variant for the status bar and contextual app bars -->
     <item name="colorPrimaryDark">@color/my_primary_dark</item>
-
     <!--   theme UI controls like checkboxes and text fields e.g. FloatActionButton -->
     <item name="colorAccent">@color/my_accent</item>
 

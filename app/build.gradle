@@ -9,8 +9,8 @@ android {
     applicationId "com.hw.oh.temp"
     minSdkVersion 15
     targetSdkVersion 21
-    versionCode 57
-    versionName "1.56"
+    versionCode 59
+    versionName "1.58"
 
 
   }

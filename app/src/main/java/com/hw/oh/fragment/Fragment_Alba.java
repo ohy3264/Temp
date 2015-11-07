@@ -17,12 +17,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.hw.oh.adapter.WorkAlbaInfoAdapter;
+import com.hw.oh.adapter.WorkAlbaInfoAdapter_Array;
 import com.hw.oh.model.PartTimeInfo;
 import com.hw.oh.sqlite.DBConstant;
 import com.hw.oh.sqlite.DBManager;
@@ -30,6 +29,7 @@ import com.hw.oh.temp.CalendarActivity;
 import com.hw.oh.temp.NewAlbaActivity;
 import com.hw.oh.temp.PieChartsActivity;
 import com.hw.oh.temp.R;
+import com.hw.oh.utility.DndListView;
 import com.hw.oh.utility.HYFont;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.tistory.whdghks913.croutonhelper.CroutonHelper;
@@ -39,10 +39,11 @@ import java.util.ArrayList;
 /**
  * Created by oh on 2015-02-01.
  */
-public class Fragment_Alba extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class Fragment_Alba extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener,DndListView.DragListener, DndListView.DropListener {
   public static final String TAG = "Fragment_Alba";
   public static final boolean DBUG = true;
   public static final boolean INFO = true;
+  private Activity mActivity;
 
   //Crouton
   private View mCroutonView;
@@ -53,8 +54,8 @@ public class Fragment_Alba extends Fragment implements View.OnClickListener, Ada
   //private ImageButton mBtnNewAlba;
   private android.support.design.widget.FloatingActionButton mFabNewAlba;
   //List
-  private ListView mListView;
-  private WorkAlbaInfoAdapter mBoardAdapter;
+  private DndListView mListView;
+  private WorkAlbaInfoAdapter_Array mBoardAdapter;
   private ArrayList<PartTimeInfo> mAlbaInfoList = new ArrayList<PartTimeInfo>();
 
   //Utill
@@ -79,9 +80,11 @@ public class Fragment_Alba extends Fragment implements View.OnClickListener, Ada
         R.layout.crouton_custom_view, null);
     mTxtCrouton = (TextView) mCroutonView.findViewById(R.id.txt_crouton);
 
-    mListView = (ListView) rootView.findViewById(R.id.mainlistView);
+    mListView = (DndListView) rootView.findViewById(R.id.mainlistView);
     mListView.setFocusable(false);
     mListView.setOnItemClickListener(this);
+    mListView.setDragListener(this);
+    mListView.setDropListener(this);
     mProgressBar = (com.rey.material.widget.ProgressView) rootView.findViewById(R.id.progressBar);
 
     setHasOptionsMenu(true);
@@ -139,12 +142,15 @@ public class Fragment_Alba extends Fragment implements View.OnClickListener, Ada
   @Override
   public void onAttach(Activity activity) {
     super.onAttach(activity);
+    mActivity = activity;
   }
 
   public void setAdapter() {
-    mBoardAdapter = new WorkAlbaInfoAdapter(getActivity(), mAlbaInfoList);
+    mBoardAdapter = new WorkAlbaInfoAdapter_Array(getActivity(), mAlbaInfoList);
     if (mListView != null) {
       mListView.setAdapter(mBoardAdapter);
+      //mListView.setAdapter(adapter);
+
     }
   }
 
@@ -278,9 +284,20 @@ public class Fragment_Alba extends Fragment implements View.OnClickListener, Ada
       super.onPostExecute(result);
       setAdapter();
       mProgressBar.setVisibility(View.GONE);
-
     }
   }
+  public void drag(int from, int to) {
+    // 드래그 이벤트가 발생시 구현해야 할 것들을 기술한다.
+    Log.i("drag", "FROM : " + from + " TO : " + to);
+  }
+
+  public void drop(int from, int to) {
+    Log.i("drop", "FROM : " + from + " TO : " + to);
+    // 드롭 이벤트 발생시 구현해야 할 것들을 기술한다.
 
 
+    PartTimeInfo item=mBoardAdapter.getItem(from);
+    mBoardAdapter.remove(item);
+    mBoardAdapter.insert(item, to);
+  }
 }

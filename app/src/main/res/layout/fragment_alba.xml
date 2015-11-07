@@ -22,7 +22,8 @@
         android:layout_gravity="bottom|right"
         app:fabSize="normal"/>
 
-    <ListView
+
+    <com.hw.oh.utility.DndListView
         android:persistentDrawingCache="animation|scrolling"
         android:layoutAnimation="@anim/anim_layout_controller"
         android:layout_width="match_parent"

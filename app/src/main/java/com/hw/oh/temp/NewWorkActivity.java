@@ -6,13 +6,9 @@ import com.google.android.gms.ads.AdView;
 
 import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -45,12 +41,8 @@ import com.hw.oh.sqlite.DBManager;
 import com.hw.oh.utility.Constant;
 import com.hw.oh.utility.HYFont;
 import com.hw.oh.utility.HYPreference;
-import com.hw.oh.utility.HYStringUtill;
 import com.tistory.whdghks913.croutonhelper.CroutonHelper;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Calendar;
@@ -1157,38 +1149,6 @@ public class NewWorkActivity extends ActionBarActivity implements View.OnClickLi
     workHourSet();
   }
 
-  private String showScreen(Bitmap bm) {
-    try {
-      File[] filepath = ContextCompat.getExternalFilesDirs(getApplicationContext(), null);
-      if (DBUG) {
-        Log.d(TAG, "filepath[0] :: " + filepath[0].getPath());
-        Log.d("Storage Max Count : ", String.valueOf(filepath.length));
-      }
-      File path = new File(filepath[0].getPath() + "/");
-      String filename = HYStringUtill.getRandomString(6) + ".jpg";
-
-      if (!path.isDirectory()) {
-        path.mkdirs();
-      }
-
-      FileOutputStream out = new FileOutputStream(path.getPath() + filename);
-      bm.compress(Bitmap.CompressFormat.JPEG, 100, out);
-      return path.getPath() + filename;
-    } catch (FileNotFoundException e) {
-      Log.d("FileNotFoundException:", e.getMessage());
-      return "false";
-    }
-  }
-
-
-  public ProgressDialog showLoadingDialog(Context context, boolean cancelable) {
-    ProgressDialog dialog = new ProgressDialog(context);
-    dialog.setMessage("로딩중....");
-    dialog.setIndeterminate(true);
-    dialog.setCancelable(cancelable);
-    dialog.show();
-    return dialog;
-  }
 
   public void pbAniSet() {
     int workTotal = Integer.parseInt(mTxtWorkHour.getText().toString()) * 60 + Integer.parseInt(mTxtWorkMin.getText().toString());
