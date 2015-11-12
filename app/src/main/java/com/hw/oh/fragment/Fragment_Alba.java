@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -26,10 +27,10 @@ import com.hw.oh.model.PartTimeInfo;
 import com.hw.oh.sqlite.DBConstant;
 import com.hw.oh.sqlite.DBManager;
 import com.hw.oh.temp.CalendarActivity;
+import com.hw.oh.temp.DndActivity;
 import com.hw.oh.temp.NewAlbaActivity;
 import com.hw.oh.temp.PieChartsActivity;
 import com.hw.oh.temp.R;
-import com.hw.oh.utility.DndListView;
 import com.hw.oh.utility.HYFont;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.tistory.whdghks913.croutonhelper.CroutonHelper;
@@ -39,7 +40,7 @@ import java.util.ArrayList;
 /**
  * Created by oh on 2015-02-01.
  */
-public class Fragment_Alba extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener,DndListView.DragListener, DndListView.DropListener {
+public class Fragment_Alba extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener {
   public static final String TAG = "Fragment_Alba";
   public static final boolean DBUG = true;
   public static final boolean INFO = true;
@@ -54,7 +55,7 @@ public class Fragment_Alba extends Fragment implements View.OnClickListener, Ada
   //private ImageButton mBtnNewAlba;
   private android.support.design.widget.FloatingActionButton mFabNewAlba;
   //List
-  private DndListView mListView;
+  private ListView mListView;
   private WorkAlbaInfoAdapter_Array mBoardAdapter;
   private ArrayList<PartTimeInfo> mAlbaInfoList = new ArrayList<PartTimeInfo>();
 
@@ -63,6 +64,8 @@ public class Fragment_Alba extends Fragment implements View.OnClickListener, Ada
   private DBManager mDB;
   private RequestQueue mRequestQueue;
   private com.rey.material.widget.ProgressView mProgressBar;
+
+
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,18 +76,15 @@ public class Fragment_Alba extends Fragment implements View.OnClickListener, Ada
     mFont.setGlobalFont((ViewGroup) rootView);
     mDB = new DBManager(getActivity());
 
-
     //Crouton
     mCroutonHelper = new CroutonHelper(getActivity());
     mCroutonView = getActivity().getLayoutInflater().inflate(
         R.layout.crouton_custom_view, null);
     mTxtCrouton = (TextView) mCroutonView.findViewById(R.id.txt_crouton);
 
-    mListView = (DndListView) rootView.findViewById(R.id.mainlistView);
+    mListView = (ListView) rootView.findViewById(R.id.mainlistView);
     mListView.setFocusable(false);
     mListView.setOnItemClickListener(this);
-    mListView.setDragListener(this);
-    mListView.setDropListener(this);
     mProgressBar = (com.rey.material.widget.ProgressView) rootView.findViewById(R.id.progressBar);
 
     setHasOptionsMenu(true);
@@ -149,7 +149,6 @@ public class Fragment_Alba extends Fragment implements View.OnClickListener, Ada
     mBoardAdapter = new WorkAlbaInfoAdapter_Array(getActivity(), mAlbaInfoList);
     if (mListView != null) {
       mListView.setAdapter(mBoardAdapter);
-      //mListView.setAdapter(adapter);
 
     }
   }
@@ -161,6 +160,7 @@ public class Fragment_Alba extends Fragment implements View.OnClickListener, Ada
 
     while (!results.isAfterLast()) {
       PartTimeInfo info = new PartTimeInfo();
+      info.set_id(results.getInt(results.getColumnIndex("_id")));
       info.setAlbaname(results.getString(results.getColumnIndex("albaname")));
       info.setHourMoney(results.getString(results.getColumnIndex("hourMoney")));
       info.setStartTimeHour(results.getString(results.getColumnIndex("startTimeHour")));
@@ -239,7 +239,15 @@ public class Fragment_Alba extends Fragment implements View.OnClickListener, Ada
         getActivity().overridePendingTransition(0, 0);
 
         break;
+      case R.id.action_swap:
+        Intent intent_swap = new Intent(getActivity(), DndActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("ObjectDataList", mAlbaInfoList);
+        intent_swap.putExtra("bundle", bundle);
+        startActivity(intent_swap);
+        getActivity().overridePendingTransition(0, 0);
 
+        break;
 
     }
     getActivity().invalidateOptionsMenu();
@@ -285,19 +293,5 @@ public class Fragment_Alba extends Fragment implements View.OnClickListener, Ada
       setAdapter();
       mProgressBar.setVisibility(View.GONE);
     }
-  }
-  public void drag(int from, int to) {
-    // 드래그 이벤트가 발생시 구현해야 할 것들을 기술한다.
-    Log.i("drag", "FROM : " + from + " TO : " + to);
-  }
-
-  public void drop(int from, int to) {
-    Log.i("drop", "FROM : " + from + " TO : " + to);
-    // 드롭 이벤트 발생시 구현해야 할 것들을 기술한다.
-
-
-    PartTimeInfo item=mBoardAdapter.getItem(from);
-    mBoardAdapter.remove(item);
-    mBoardAdapter.insert(item, to);
   }
 }

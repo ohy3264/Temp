@@ -578,6 +578,7 @@ public class DBManager extends SQLiteOpenHelper {
           + "', workPayAddMin  = '" + info.getWorkPayAddMin()
           + "', workAlarm  = '" + info.getWorkAlarm()
           + "', workMonthDay  = '" + info.getWorkMonthDay()
+          + "', _id  = '" + info.get_id()
           + "' where albaname = '" + albaname
           + "';";
       Log.i(TAG, sql);
@@ -594,6 +595,47 @@ public class DBManager extends SQLiteOpenHelper {
     }
     return false;
   }
+
+  public boolean updatePartTimeInfo(PartTimeInfo info, int _id) {
+    if (INFO)
+      Log.i(TAG, "updateData DataBase");
+    SQLiteDatabase db = getWritableDatabase();
+    try {
+      String sql = "update " + DBConstant.TABLE_PARTTIMEINFO + " set albaname = '" + info.getAlbaname()
+          + "', hourMoney = '" + info.getHourMoney()
+          + "', startTimeHour = '" + info.getStartTimeHour()
+          + "', startTimeMin = '" + info.getStartTimeMin()
+          + "', endTimeHour = '" + info.getEndTimeHour()
+          + "', endTimeMin = '" + info.getEndTimeMin()
+          + "', simpleMemo = '" + info.getSimpleMemo()
+          + "', workPayNight = '" + info.getWorkPayNight()
+          + "', workRefresh = '" + info.getWorkRefresh()
+          + "', workPayAdd = '" + info.getWorkPayAdd()
+          + "', workRefreshType = '" + info.getWorkRefreshType()
+          + "', workRefreshHour = '" + info.getWorkRefreshHour()
+          + "', workRefreshMin = '" + info.getWorkRefreshMin()
+          + "', workPayEtc = '" + info.getWorkPayEtc()
+          + "', workPayEtcNum = '" + info.getWorkPayEtcNum()
+          + "', workPayEtcMoney = '" + info.getWorkPayEtcMoney()
+          + "', workPayWeekTime = '" + info.getWorkPayWeekTime()
+          + "', workPayWeekMoney = '" + info.getWorkPayWeekMoney()
+          + "', workPayWeek = '" + info.getWorkPayWeek()
+          + "', workAddType  = '" + info.getWorkAddType()
+          + "', workPayAddHour  = '" + info.getWorkPayAddHour()
+          + "', workPayAddMin  = '" + info.getWorkPayAddMin()
+          + "', workAlarm  = '" + info.getWorkAlarm()
+          + "', workMonthDay  = '" + info.getWorkMonthDay()
+          + "' where albaname = '" + _id
+          + "';";
+      Log.i(TAG, sql);
+      db.execSQL(sql);
+      return true;
+    } catch (Exception e) {
+
+    }
+    return false;
+  }
+
 
   // 데이터 갱신
   public boolean updatePartTimeData(PartTimeItem item, String date) {

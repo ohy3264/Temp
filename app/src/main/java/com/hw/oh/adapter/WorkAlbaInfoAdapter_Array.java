@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,10 +23,9 @@ import java.util.List;
 
 
 public class WorkAlbaInfoAdapter_Array extends ArrayAdapter<PartTimeInfo> {
-  public static final String TAG = "AlbaInfoAdapter";
+  public static final String TAG = "WorkAlbaInfoAdapter_Array";
   public static final boolean DBUG = true;
   public static final boolean INFO = true;
-
 
   private Context mContext;
   private List<PartTimeInfo> mAlbaInfoList;
@@ -62,8 +60,6 @@ public class WorkAlbaInfoAdapter_Array extends ArrayAdapter<PartTimeInfo> {
       holder.mLinAddMoney = (LinearLayout) ret.findViewById(R.id.linAddView);
       holder.mLinEtc = (LinearLayout) ret.findViewById(R.id.linEtc);
       holder.mLinWeek = (LinearLayout) ret.findViewById(R.id.linWeek);
-      holder.mFraRow = (FrameLayout) ret.findViewById(R.id.fraRow);
-
       ret.setTag(holder);
     } else {
       ret = convertView;
@@ -125,7 +121,6 @@ public class WorkAlbaInfoAdapter_Array extends ArrayAdapter<PartTimeInfo> {
       Log.e(TAG, e.toString());
     }
 
-
     mFont.setGlobalFont((ViewGroup) ret);
     return ret;
   }
@@ -134,7 +129,6 @@ public class WorkAlbaInfoAdapter_Array extends ArrayAdapter<PartTimeInfo> {
     private TextView mTxtMoney, mTxtStartTime, mTxtEndTime, mTxtMemo, mTxtAlbaName;
     private ImageButton mBtnUpdate;
     private LinearLayout mLinNightView, mLinRefreshTime, mLinAddMoney, mLinEtc, mLinWeek;
-    private FrameLayout mFraRow;
   }
 
 }

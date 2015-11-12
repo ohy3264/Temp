@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-    package="com.hw.oh.temp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.hw.oh.temp">
 
   <uses-permission android:name="android.permission.VIBRATE"/>
   <uses-permission android:name="android.permission.INTERNET"/>
@@ -136,6 +136,8 @@
           android:resource="@xml/searchable"/>
     </activity>
 
+    <activity
+        android:name=".DndActivity">  </activity>
     <activity
         android:name=".PieChartsActivity"
         android:screenOrientation="portrait"/>

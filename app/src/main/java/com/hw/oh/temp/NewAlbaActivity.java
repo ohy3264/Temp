@@ -77,7 +77,7 @@ public class NewAlbaActivity extends ActionBarActivity implements View.OnClickLi
   private int mStartHour;
   private int mEndMin;
   private int mEndHour;
-
+  private int mID;
   private int mTotalTimeAll = 600;
   private int mWeekHourMoney = 0;
   private Double mWeekTime = 0.0;
@@ -279,6 +279,7 @@ public class NewAlbaActivity extends ActionBarActivity implements View.OnClickLi
         mTxtSave.setText("수정하기");
         mToolbar.setTitle("수정하기");
         mPartInfoData_Intent = (PartTimeInfo) getIntent().getSerializableExtra("ObjectData");
+        mID = mPartInfoData_Intent.get_id();
         mEdtAlbaName.setText(mPartInfoData_Intent.getAlbaname());
         mEdtHourMoney.setText(mPartInfoData_Intent.getHourMoney());
         mEdtMemo.setText(mPartInfoData_Intent.getSimpleMemo());
@@ -855,6 +856,7 @@ public class NewAlbaActivity extends ActionBarActivity implements View.OnClickLi
 
   public void dataSet() {
     mPartInfoData = new PartTimeInfo();
+    mPartInfoData.set_id(mID);
     mPartInfoData.setAlbaname(mEdtAlbaName.getText().toString());
     mPartInfoData.setHourMoney(mEdtHourMoney.getText().toString());
     mPartInfoData.setStartTimeHour(mTxtStartTime_hour.getText().toString());

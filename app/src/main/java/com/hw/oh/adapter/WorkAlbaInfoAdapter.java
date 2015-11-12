@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -77,7 +76,6 @@ public class WorkAlbaInfoAdapter extends BaseAdapter {
       holder.mLinAddMoney = (LinearLayout) ret.findViewById(R.id.linAddView);
       holder.mLinEtc = (LinearLayout) ret.findViewById(R.id.linEtc);
       holder.mLinWeek = (LinearLayout) ret.findViewById(R.id.linWeek);
-      holder.mFraRow = (FrameLayout) ret.findViewById(R.id.fraRow);
 
       ret.setTag(holder);
     } else {
@@ -149,7 +147,6 @@ public class WorkAlbaInfoAdapter extends BaseAdapter {
     private TextView mTxtMoney, mTxtStartTime, mTxtEndTime, mTxtMemo, mTxtAlbaName;
     private ImageButton mBtnUpdate;
     private LinearLayout mLinNightView, mLinRefreshTime, mLinAddMoney, mLinEtc, mLinWeek;
-    private FrameLayout mFraRow;
   }
 
 }

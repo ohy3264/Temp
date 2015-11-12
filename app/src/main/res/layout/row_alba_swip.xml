@@ -4,9 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="1dp"
-    android:layout_marginLeft="1dp"
-    android:layout_marginRight="1dp">
+    android:padding="2dp">
 
   <LinearLayout
       android:elevation="5dp"
@@ -20,6 +18,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ImageView
+            android:layout_margin="10dp"
+            android:src="@drawable/grabber"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:id="@+id/handle"/>
         <FrameLayout
             android:layout_margin="3dp"
             android:orientation="horizontal"
@@ -50,7 +55,7 @@
         </FrameLayout>
 
         <LinearLayout
-          android:layout_weight="8"
+          android:layout_weight="6"
           android:orientation="vertical"
           android:layout_width="0dp"
           android:layout_height="fill_parent">
@@ -95,6 +100,7 @@
                 android:layout_height="fill_parent">
 
               <ImageButton
+                  android:visibility="invisible"
                   android:elevation="2dp"
                   android:src="@drawable/icon_info"
                   android:textSize="11sp"
@@ -140,6 +146,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:visibility="invisible"
             android:layout_marginTop="8dp"
             android:padding="2dp"
             android:gravity="center_vertical"

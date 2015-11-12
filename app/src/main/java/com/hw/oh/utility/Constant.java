@@ -54,7 +54,7 @@ public class Constant {
 
 
   /* admob  on/off */
-  public static boolean ADMOB = true;
+  public static boolean ADMOB = false;
 
   public static String FONT_NAME = "fonts/SangSangTitle.ttf";
 
