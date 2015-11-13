@@ -346,35 +346,35 @@ public class NewAlbaActivity extends ActionBarActivity implements View.OnClickLi
 
     //체크박스에 따른 view 상태 갱신
     if (mFlag_WeekPay) {
-      mLinWeekTimelebel.setBackgroundColor(getResources().getColor(R.color.red_lebel));
-    } else {
       mLinWeekTimelebel.setBackgroundColor(getResources().getColor(R.color.black_lebel));
+    } else {
+      mLinWeekTimelebel.setBackgroundColor(getResources().getColor(R.color.red_lebel));
     }
     if (mFlag_EtcPay) {
-      mLinEtcTimelebel.setBackgroundColor(getResources().getColor(R.color.red_lebel));
-    } else {
       mLinEtcTimelebel.setBackgroundColor(getResources().getColor(R.color.black_lebel));
+    } else {
+      mLinEtcTimelebel.setBackgroundColor(getResources().getColor(R.color.red_lebel));
     }
     if (mFlag_AddPay) {
-      mLinAddTimelebel.setBackgroundColor(getResources().getColor(R.color.red_lebel));
-    } else {
       mLinAddTimelebel.setBackgroundColor(getResources().getColor(R.color.black_lebel));
+    } else {
+      mLinAddTimelebel.setBackgroundColor(getResources().getColor(R.color.red_lebel));
     }
     if (mFlag_RefreshTime) {
-      mLinRefreshTimelebel.setBackgroundColor(getResources().getColor(R.color.red_lebel));
-    } else {
       mLinRefreshTimelebel.setBackgroundColor(getResources().getColor(R.color.black_lebel));
+    } else {
+      mLinRefreshTimelebel.setBackgroundColor(getResources().getColor(R.color.red_lebel));
     }
     if (mFlag_NightAdvance) {
-      mLinNightTimelebel.setBackgroundColor(getResources().getColor(R.color.red_lebel));
-    } else {
       mLinNightTimelebel.setBackgroundColor(getResources().getColor(R.color.black_lebel));
+    } else {
+      mLinNightTimelebel.setBackgroundColor(getResources().getColor(R.color.red_lebel));
     }
     if (mFlag_Alarm) {
-      mLinAlarmlebel.setBackgroundColor(getResources().getColor(R.color.red_lebel));
+      mLinAlarmlebel.setBackgroundColor(getResources().getColor(R.color.black_lebel));
       mLinWeekSelector.setVisibility(View.VISIBLE);
     } else {
-      mLinAlarmlebel.setBackgroundColor(getResources().getColor(R.color.black_lebel));
+      mLinAlarmlebel.setBackgroundColor(getResources().getColor(R.color.red_lebel));
       mLinWeekSelector.setVisibility(View.GONE);
     }
   }

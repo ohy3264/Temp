@@ -24,7 +24,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -81,7 +80,8 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
 
   // List Header
   private View mlistViewHeader;
-  private Button mBtnCalendarPeriodStart, mBtnCalendarPeriodEnd;
+  private LinearLayout mBtnCalendarPeriodStart, mBtnCalendarPeriodEnd;
+  private TextView mTxtCalendarPeriodStart,mTxtCalendarPeriodEnd;
   private TextView mTxtTotalTime, mTxtAlbaName;
   private LinearLayout mLinDuty, mLinInsurance, mLinResult;
   private TextView mTxtDutyResult, mTxtInsurance1, mTxtInsurance2, mTxtInsurance3, mTxtInsurance4, mTxtInsuranceResult, mTxtTotalresult;
@@ -156,11 +156,12 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
     // Alba listview header
     mlistViewHeader = getActivity().getLayoutInflater().inflate(
         R.layout.header_calcul_calendar, null, false);
-    mBtnCalendarPeriodStart = (Button) mlistViewHeader.findViewById(R.id.btn_calendar_period_start);
+    mBtnCalendarPeriodStart = (LinearLayout) mlistViewHeader.findViewById(R.id.btn_calendar_period_start);
     mBtnCalendarPeriodStart.setOnClickListener(this);
-    mBtnCalendarPeriodEnd = (Button) mlistViewHeader.findViewById(R.id.btn_calendar_period_end);
+    mBtnCalendarPeriodEnd = (LinearLayout) mlistViewHeader.findViewById(R.id.btn_calendar_period_end);
     mBtnCalendarPeriodEnd.setOnClickListener(this);
-
+    mTxtCalendarPeriodStart= (TextView) mlistViewHeader.findViewById(R.id.txt_calendar_period_start);
+    mTxtCalendarPeriodEnd= (TextView) mlistViewHeader.findViewById(R.id.txt_calendar_period_end);
     mFont.setGlobalFont((ViewGroup) mlistViewHeader);
     mListView.addHeaderView(mlistViewHeader);
     mTxtTotalMoney = (TextView) mlistViewHeader.findViewById(R.id.txtTotalMoney);
@@ -216,8 +217,8 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
         mEndYear = Integer.parseInt(Info.getEndYear());
         mEndMonth = Integer.parseInt(Info.getEndMonth());
         mEndDay = Integer.parseInt(Info.getEndDay());
-        mBtnCalendarPeriodStart.setText(mStartYear + "년 " + (mStartMonth + 1) + "월 " + mStartDay + "일 ");
-        mBtnCalendarPeriodEnd.setText(mEndYear + "년 " + (mEndMonth + 1) + "월 " + mEndDay + "일 ");
+        mTxtCalendarPeriodStart.setText(mStartYear + "년 " + (mStartMonth + 1) + "월 " + mStartDay + "일 ");
+        mTxtCalendarPeriodEnd.setText(mEndYear + "년 " + (mEndMonth + 1) + "월 " + mEndDay + "일 ");
       } else {
         mStartYear = mYear;
         mStartMonth = mMonth;
@@ -226,8 +227,8 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
         mEndYear = mYear;
         mEndMonth = mMonth;
         mEndDay = mDay;
-        mBtnCalendarPeriodStart.setText("기간선택");
-        mBtnCalendarPeriodEnd.setText("기간선택");
+        mTxtCalendarPeriodStart.setText("기간선택");
+        mTxtCalendarPeriodEnd.setText("기간선택");
       }
     } else {
       Calendar today = Calendar.getInstance();
@@ -261,8 +262,8 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
       mEndMonth = c2.get(Calendar.MONTH);
       mEndDay = c2.get(Calendar.DATE);
 
-      mBtnCalendarPeriodStart.setText(mStartYear + "년 " + (mStartMonth + 1) + "월 " + mStartDay + "일 ");
-      mBtnCalendarPeriodEnd.setText(mEndYear + "년 " + (mEndMonth + 1) + "월 " + mEndDay + "일 ");
+      mTxtCalendarPeriodStart.setText(mStartYear + "년 " + (mStartMonth + 1) + "월 " + mStartDay + "일 ");
+      mTxtCalendarPeriodEnd.setText(mEndYear + "년 " + (mEndMonth + 1) + "월 " + mEndDay + "일 ");
     }
 
   }
@@ -416,7 +417,7 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
         startDialog.positiveActionClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            mBtnCalendarPeriodStart.setText(startDialog.getYear() + "년 " + (startDialog.getMonth() + 1) + "월 " + startDialog.getDay() + "일 ");
+            mTxtCalendarPeriodStart.setText(startDialog.getYear() + "년 " + (startDialog.getMonth() + 1) + "월 " + startDialog.getDay() + "일 ");
 
             mStartYear = startDialog.getYear();
             mStartMonth = startDialog.getMonth();
@@ -449,7 +450,7 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
         endDialog.positiveActionClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            mBtnCalendarPeriodEnd.setText(endDialog.getYear() + "년 " + (endDialog.getMonth() + 1) + "월 " + endDialog.getDay() + "일 ");
+            mTxtCalendarPeriodEnd.setText(endDialog.getYear() + "년 " + (endDialog.getMonth() + 1) + "월 " + endDialog.getDay() + "일 ");
 
             mEndYear = endDialog.getYear();
             mEndMonth = endDialog.getMonth();
@@ -475,7 +476,7 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
   private DatePickerDialog.OnDateSetListener startListener = new DatePickerDialog.OnDateSetListener() {
     @Override
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-      mBtnCalendarPeriodStart.setText(year + "년 " + (monthOfYear + 1) + "월 " + dayOfMonth + "일 ");
+      mTxtCalendarPeriodStart.setText(year + "년 " + (monthOfYear + 1) + "월 " + dayOfMonth + "일 ");
 
       mStartYear = year;
       mStartMonth = monthOfYear;
@@ -487,7 +488,7 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
   private DatePickerDialog.OnDateSetListener endListener = new DatePickerDialog.OnDateSetListener() {
     @Override
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-      mBtnCalendarPeriodEnd.setText(year + "년 " + (monthOfYear + 1) + "월 " + dayOfMonth + "일 ");
+      mTxtCalendarPeriodEnd.setText(year + "년 " + (monthOfYear + 1) + "월 " + dayOfMonth + "일 ");
 
       mEndYear = year;
       mEndMonth = monthOfYear;
@@ -530,7 +531,7 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
         HYExcelWrite excel = new HYExcelWrite();
         if (isExternalStorageWritable()) {
           Log.i(TAG, "쓰기 가능");
-          File file = new File(getActivity().getExternalFilesDir(null), mPartInfoData.getAlbaname() + "_" + mBtnCalendarPeriodStart.getText() + "_" + mBtnCalendarPeriodEnd.getText() + ".xls");
+          File file = new File(getActivity().getExternalFilesDir(null), mPartInfoData.getAlbaname() + "_" + mTxtCalendarPeriodStart.getText() + "_" + mTxtCalendarPeriodEnd.getText() + ".xls");
           Log.i(TAG, file.getAbsolutePath().toString());
           try {
             excel.excelWrite(mTxtAlbaName.getText().toString(), file, getHeader(), mWorkDataList);
@@ -542,7 +543,7 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
 
           Intent emailSend = new Intent("android.intent.action.SEND");
           emailSend.setType("plain/text");
-          emailSend.putExtra(Intent.EXTRA_SUBJECT, mPartInfoData.getAlbaname() + "_" + mBtnCalendarPeriodStart.getText() + "_" + mBtnCalendarPeriodEnd.getText());
+          emailSend.putExtra(Intent.EXTRA_SUBJECT, mPartInfoData.getAlbaname() + "_" + mTxtCalendarPeriodStart.getText() + "_" + mTxtCalendarPeriodEnd.getText());
           emailSend.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
           startActivity(emailSend);
 
@@ -618,7 +619,7 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
 
   public Map<String, Object> getHeader() {
     Map<String, Object> map = new HashMap<String, Object>();
-    map.put("title", mBtnCalendarPeriodStart.getText() + "~" + mBtnCalendarPeriodEnd.getText());
+    map.put("title", mTxtCalendarPeriodStart.getText() + "~" + mTxtCalendarPeriodEnd.getText());
     map.put("date", "날짜");
     map.put("startTime", "시작시간");
     map.put("endTime", "종료시간");

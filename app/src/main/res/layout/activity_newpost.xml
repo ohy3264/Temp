@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/button_material_light"
+              android:background="@color/blue_gray_action"
               android:orientation="vertical">
 
   <include
@@ -54,6 +54,7 @@
 
 
     <Button
+        android:background="@drawable/selector_btn_red"
         android:id="@+id/btnFloating"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="match_parent"

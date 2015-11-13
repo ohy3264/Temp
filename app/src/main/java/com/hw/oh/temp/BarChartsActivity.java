@@ -10,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -50,8 +49,8 @@ public class BarChartsActivity extends ActionBarActivity implements View.OnClick
   private Boolean mHeaderFlag = false;
 
   protected BarChart mChart;
-  private Button mBtnCalendarPeriodStart, mBtnCalendarPeriodEnd;
-
+  private LinearLayout mBtnCalendarPeriodStart, mBtnCalendarPeriodEnd;
+  private TextView mTxtCalendarPeriodStart, mTxtCalendarPeriodEnd;
   private Calendar mCal = Calendar.getInstance(); // 현재시점의 객체를 가져옴
   private int mYear = this.mCal.get(Calendar.YEAR); // 년
   private int mMonth = this.mCal.get(Calendar.MONTH); // 월
@@ -100,9 +99,11 @@ public class BarChartsActivity extends ActionBarActivity implements View.OnClick
     }
 
     //View Set
-    mBtnCalendarPeriodStart = (Button) findViewById(R.id.btn_calendar_period_start);
+    mTxtCalendarPeriodStart = (TextView) findViewById(R.id.txt_calendar_period_start);
+    mTxtCalendarPeriodEnd = (TextView) findViewById(R.id.txt_calendar_period_end);
+    mBtnCalendarPeriodStart = (LinearLayout) findViewById(R.id.btn_calendar_period_start);
     mBtnCalendarPeriodStart.setOnClickListener(this);
-    mBtnCalendarPeriodEnd = (Button) findViewById(R.id.btn_calendar_period_end);
+    mBtnCalendarPeriodEnd = (LinearLayout) findViewById(R.id.btn_calendar_period_end);
     mBtnCalendarPeriodEnd.setOnClickListener(this);
     mTxtTotal = (TextView) findViewById(R.id.txt_Total);
     mHeader_barchart = (LinearLayout) findViewById(R.id.header_barchart);
@@ -178,7 +179,7 @@ public class BarChartsActivity extends ActionBarActivity implements View.OnClick
         startDialog.positiveActionClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            mBtnCalendarPeriodStart.setText(startDialog.getYear() + "년 " + (startDialog.getMonth() + 1) + "월 ");
+            mTxtCalendarPeriodStart.setText(startDialog.getYear() + "년 " + (startDialog.getMonth() + 1) + "월 ");
 
             mStartYear = startDialog.getYear();
             mStartMonth = startDialog.getMonth();
@@ -212,7 +213,7 @@ public class BarChartsActivity extends ActionBarActivity implements View.OnClick
         endDialog.positiveActionClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            mBtnCalendarPeriodEnd.setText(endDialog.getYear() + "년 " + (endDialog.getMonth() + 1) + "월 ");
+            mTxtCalendarPeriodEnd.setText(endDialog.getYear() + "년 " + (endDialog.getMonth() + 1) + "월 ");
 
             mEndYear = endDialog.getYear();
             mEndMonth = endDialog.getMonth();
@@ -284,7 +285,7 @@ public class BarChartsActivity extends ActionBarActivity implements View.OnClick
       d.setValueTextSize(9f);
       mChart.setData(d);
       mChart.invalidate();
-      mTxtTotal.setText(mBtnCalendarPeriodStart.getText() + "부터 " + mBtnCalendarPeriodEnd.getText() + "까지의 총 누적액은 " + mNumFomat.format(monthTotal) + "원 입니다.");
+      mTxtTotal.setText(mTxtCalendarPeriodStart.getText() + "부터 " + mTxtCalendarPeriodEnd.getText() + "까지의 총 누적액은 " + mNumFomat.format(monthTotal) + "원 입니다.");
     }
   }
 
@@ -301,8 +302,8 @@ public class BarChartsActivity extends ActionBarActivity implements View.OnClick
     mEndYear = Integer.parseInt(mPeriod_end[0]);
     mEndMonth = Integer.parseInt(mPeriod_end[1]);
     mEndDay = Integer.parseInt(mPeriod_end[2]);
-    mBtnCalendarPeriodStart.setText(mStartYear + "년 " + (mStartMonth + 1) + "월 ");
-    mBtnCalendarPeriodEnd.setText(mEndYear + "년 " + (mEndMonth + 1) + "월 ");
+    mTxtCalendarPeriodStart.setText(mStartYear + "년 " + (mStartMonth + 1) + "월 ");
+    mTxtCalendarPeriodEnd.setText(mEndYear + "년 " + (mEndMonth + 1) + "월 ");
 
   }
 

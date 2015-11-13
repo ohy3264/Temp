@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" android:dither="true">
+
+  <item android:drawable="@color/light_red" android:state_window_focused="false"/>
+  <item android:drawable="@color/material_red_light" android:state_pressed="true"/>
+  <item android:drawable="@color/material_red_light" android:state_focused="true"/>
+  <item android:drawable="@color/light_red"/>
+
+</selector>

@@ -6,16 +6,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.hw.oh.fragment.Fragment_Swap;
 import com.hw.oh.model.PartTimeInfo;
 
 import java.util.ArrayList;
 
-public class DndActivity extends AppCompatActivity {
-  public static final String TAG = "DndActivity";
+public class SwapActivity extends AppCompatActivity {
+  public static final String TAG = "SwapActivity";
   private ArrayList<PartTimeInfo> mAlbaInfoList = new ArrayList<PartTimeInfo>();
   private Toolbar mToolbar;
 
@@ -39,24 +37,5 @@ public class DndActivity extends AppCompatActivity {
     Fragment_Swap frag_dnd = new Fragment_Swap(mAlbaInfoList);
     FragmentManager mFragManager = getFragmentManager();
     mFragManager.beginTransaction().replace(R.id.container, frag_dnd).commit();
-  }
-
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    getMenuInflater().inflate(R.menu.menu_swip, menu);
-    return true;
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()){
-      case android.R.id.home:
-        finish();
-        break;
-      case R.id.action_swap:
-        break;
-
-    }
-    return super.onOptionsItemSelected(item);
   }
 }

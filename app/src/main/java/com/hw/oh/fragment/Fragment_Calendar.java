@@ -548,7 +548,7 @@ public class Fragment_Calendar extends Fragment implements OnClickListener, Yaho
       this.mBtn[i].setText("");
       this.mTxtBottom[i].setText("");
       this.mTxtTop[i].setText("");
-      this.mBtn[i].setTextColor(Color.parseColor("#000000"));
+      this.mBtn[i].setTextColor(getResources().getColor(R.color.material_white_2));
       this.mBtn[i].setPaintFlags(this.mBtn[i].getPaintFlags()
           & ~Paint.FAKE_BOLD_TEXT_FLAG);
       this.mBtn[i].setPaintFlags(this.mBtn[i].getPaintFlags()
@@ -574,7 +574,7 @@ public class Fragment_Calendar extends Fragment implements OnClickListener, Yaho
     ArrayList<String> dayList = new ArrayList<String>();
     // dayList = underLineText();
     for (i = 0; i <= max + f_week_day; i++) {
-      this.mBtn[i].setTextColor(getResources().getColor(R.color.gray));
+      this.mBtn[i].setTextColor(getResources().getColor(R.color.material_white_2));
       mBtn[i].setTag("NONE");
       if (i % 7 == 0) {
         if (i != 0) {
@@ -598,6 +598,7 @@ public class Fragment_Calendar extends Fragment implements OnClickListener, Yaho
       String tempDay = mYear + "-" + (mMonth + 1) + "-" + mBtn[i].getText().toString();
       for (int j = 0; j < mPartTimeDataList.size(); j++) {
         if (mPartTimeDataList.get(j).getDate().equals(tempDay)) {
+          this.mBtn[i].setTextColor(getResources().getColor(R.color.gray));
           if (Boolean.parseBoolean(mPartTimeDataList.get(j).getWorkPayGabul())) {
             mTxtBottom[i].setBackgroundResource(R.drawable.calendar_gabul_bg);
           } else {

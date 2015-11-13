@@ -29,8 +29,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -75,7 +75,7 @@ public class DetailActivity extends ActionBarActivity implements AdapterView.OnI
   private static final boolean INFO = true;
   //View
   private Toolbar mToolbar;
-  private ImageButton mBtnFloating;
+  private Button mBtnFloating;
 
   //Flag
   private Boolean mMenuFlag = true;
@@ -238,7 +238,7 @@ public class DetailActivity extends ActionBarActivity implements AdapterView.OnI
     mEdtNewPost = (EditText) findViewById(R.id.edtNewPost);
 
     //댓글쓰기
-    mBtnFloating = (ImageButton) findViewById(R.id.btnFloating);
+    mBtnFloating = (Button) findViewById(R.id.btnFloating);
     mBtnFloating.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {

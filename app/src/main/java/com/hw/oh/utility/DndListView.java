@@ -21,7 +21,6 @@ import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -79,11 +78,8 @@ public class DndListView extends ListView {
     if (mDragListener != null || mDropListener != null) {
       switch (ev.getAction()) {
         case MotionEvent.ACTION_DOWN:
-          Log.i(TAG, "ACTION_DOWN");
           int x = (int) ev.getX();
           int y = (int) ev.getY();
-          Log.i(TAG, "X " + x);
-          Log.i(TAG, "Y " + y);
           int itemnum = pointToPosition(x, y);
           if (itemnum == AdapterView.INVALID_POSITION) {
             break;
@@ -118,7 +114,6 @@ public class DndListView extends ListView {
     }
     return super.onInterceptTouchEvent(ev);
   }
-
   /*
    * pointToPosition() doesn't consider invisible views, but we
    * need to, so implement a slightly different version.
@@ -126,26 +121,19 @@ public class DndListView extends ListView {
   private int myPointToPosition(int x, int y) {
     Rect frame = mTempRect;
     final int count = getChildCount();
-    Log.i(TAG, "count " + Integer.toString(count));
     for (int i = count - 1; i >= 0; i--) {
       final View child = getChildAt(i);
       child.getHitRect(frame);
-      Log.i(TAG, "x " + Integer.toString(x));
-      Log.i(TAG, "y " + Integer.toString(y));
       if (frame.contains(x, y)) {
-        Log.i(TAG, "getFirstVisiblePosition " + Integer.toString(getFirstVisiblePosition() + i));
         return getFirstVisiblePosition() + i;
       }
     }
-    Log.i(TAG, "INVALID_POSITION " + Integer.toString(INVALID_POSITION));
     return INVALID_POSITION;
   }
 
   private int getItemForPosition(int y) {
     int adjustedy = y - mDragPoint - 32;
-    Log.i(TAG, "adjustedy " + Integer.toString(adjustedy));
     int pos = myPointToPosition(0, adjustedy);
-    Log.i(TAG, "pos " + Integer.toString(pos));
     if (pos >= 0) {
       if (pos <= mFirstDragPos) {
         pos += 1;
@@ -153,7 +141,6 @@ public class DndListView extends ListView {
     } else if (adjustedy < 0) {
       pos = 0;
     }
-    Log.i(TAG, "pos " + Integer.toString(pos));
     return pos;
   }
 
@@ -270,18 +257,13 @@ public class DndListView extends ListView {
 
         case MotionEvent.ACTION_DOWN:
         case MotionEvent.ACTION_MOVE:
-          Log.i(TAG, "ACTION_MOVE");
           int x = (int) ev.getX();
           int y = (int) ev.getY();
           dragView(x, y);
-          Log.i(TAG, "y " + Integer.toString(y));
           int itemnum = getItemForPosition(y);
           if (itemnum >= 0) {
-            Log.i(TAG, "in "+Integer.toString(itemnum));
             if (action == MotionEvent.ACTION_DOWN || itemnum != mDragPos) {
-              Log.i(TAG, "action == MotionEvent.ACTION_DOWN || itemnum != mDragPos");
               if (mDragListener != null) {
-                Log.i(TAG, "Drag");
                 mDragListener.drag(mDragPos, itemnum);
               }
               mDragPos = itemnum;

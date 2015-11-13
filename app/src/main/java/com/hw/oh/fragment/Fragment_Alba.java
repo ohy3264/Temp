@@ -27,10 +27,10 @@ import com.hw.oh.model.PartTimeInfo;
 import com.hw.oh.sqlite.DBConstant;
 import com.hw.oh.sqlite.DBManager;
 import com.hw.oh.temp.CalendarActivity;
-import com.hw.oh.temp.DndActivity;
 import com.hw.oh.temp.NewAlbaActivity;
 import com.hw.oh.temp.PieChartsActivity;
 import com.hw.oh.temp.R;
+import com.hw.oh.temp.SwapActivity;
 import com.hw.oh.utility.HYFont;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.tistory.whdghks913.croutonhelper.CroutonHelper;
@@ -240,7 +240,7 @@ public class Fragment_Alba extends Fragment implements View.OnClickListener, Ada
 
         break;
       case R.id.action_swap:
-        Intent intent_swap = new Intent(getActivity(), DndActivity.class);
+        Intent intent_swap = new Intent(getActivity(), SwapActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("ObjectDataList", mAlbaInfoList);
         intent_swap.putExtra("bundle", bundle);

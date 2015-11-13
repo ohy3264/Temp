@@ -10,9 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hw.oh.adapter.WorkAlbaInfoAdapter_swip;
 import com.hw.oh.model.PartTimeInfo;
+import com.hw.oh.sqlite.DBConstant;
 import com.hw.oh.sqlite.DBManager;
 import com.hw.oh.temp.R;
 import com.hw.oh.utility.DndListView;
@@ -32,6 +34,7 @@ public class Fragment_Swap extends android.app.Fragment implements DndListView.D
   // DND ListView
   private DndListView listView;
   private ArrayList<PartTimeInfo> mAlbaInfoList = new ArrayList<PartTimeInfo>();
+  private ArrayList<String> mID = new ArrayList<String>();
   private WorkAlbaInfoAdapter_swip mBoardAdapter;
 
   //util
@@ -44,11 +47,14 @@ public class Fragment_Swap extends android.app.Fragment implements DndListView.D
 
   public Fragment_Swap(ArrayList<PartTimeInfo> albalist) {
     this.mAlbaInfoList = albalist;
+    for(int i = 0; i < albalist.size(); i++){
+      mID.add(Integer.toString(albalist.get(i).get_id()));
+    }
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    View rootView = inflater.inflate(R.layout.frag, container, false);
+    View rootView = inflater.inflate(R.layout.fragment_swap, container, false);
     //Util
     mDB = new DBManager(getActivity());
     //Crouton
@@ -69,6 +75,7 @@ public class Fragment_Swap extends android.app.Fragment implements DndListView.D
     mBoardAdapter = new WorkAlbaInfoAdapter_swip(getActivity(), mAlbaInfoList);
     listView.setAdapter(mBoardAdapter);
 
+    setHasOptionsMenu(true);
     return rootView;
   }
   @Override
@@ -90,7 +97,8 @@ public class Fragment_Swap extends android.app.Fragment implements DndListView.D
       case android.R.id.home:
         getActivity().finish();
         break;
-      case R.id.action_swap:
+
+      case R.id.action_swip_save:
         updateData();
         break;
     }
@@ -111,16 +119,27 @@ public class Fragment_Swap extends android.app.Fragment implements DndListView.D
     mAlbaInfoList.remove(item);
     mAlbaInfoList.add(to, item);
     listView.setAdapter(mBoardAdapter);
+
+    for(int i = 0; i< mID.size(); i++){
+      Log.i(TAG, "ori" + mID.get(i));
+    }
+    for(int i = 0; i< mAlbaInfoList.size(); i++){
+      Log.i(TAG, Integer.toString(mAlbaInfoList.get(i).get_id()));
+    }
   }
 
   public void updateData(){
-    for(int i = 0; i < mAlbaInfoList.size(); i++ ){
-      if (mDB.updatePartTimeInfo(mAlbaInfoList.get(i), mAlbaInfoList.get(i).get_id())) {
+    mDB.removeALLData(DBConstant.TABLE_PARTTIMEINFO);
+    if(mAlbaInfoList.isEmpty()){
+    }
+    for(int i = mAlbaInfoList.size()-1; i >=0; i-- ){
+      if (mDB.updatePartTimeInfoSwap(mAlbaInfoList.get(i), mID.get(i))) {
         Log.i(TAG, mAlbaInfoList.get(i).getAlbaname() + " : update sucess!");
+        getActivity().finish();
       } else {
         Log.i(TAG, mAlbaInfoList.get(i).getAlbaname() + " : update fail!");
+        Toast.makeText(getActivity(), "변경에 실패하였습니다. 개발자에게 문의하세요", Toast.LENGTH_SHORT).show();
       }
     }
-
   }
 }

@@ -1,5 +1,9 @@
 package com.hw.oh.temp;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,9 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
 import com.hw.oh.fragment.Fragment_Duty;
 import com.hw.oh.fragment.Fragment_insurance1;
 import com.hw.oh.fragment.Fragment_insurance2;

@@ -9,7 +9,7 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:layout_gravity="bottom"
-      android:background="@android:color/transparent">
+      android:background="@color/blue_gray_action">
 
     <android.support.design.widget.FloatingActionButton
         android:visibility="gone"
@@ -23,6 +23,7 @@
         app:fabSize="normal"/>
 
     <ListView
+        android:padding="5dp"
         android:id="@+id/mainlistView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

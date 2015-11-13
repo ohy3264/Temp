@@ -7,13 +7,15 @@
     android:padding="2dp">
 
   <LinearLayout
+      android:padding="2dp"
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
-      android:background="@color/material_white_2"
+      android:background="@drawable/selector_list_row"
       android:elevation="5dp"
       android:orientation="vertical">
 
     <LinearLayout
+        android:padding="2dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"

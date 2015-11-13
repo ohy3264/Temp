@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.hw.oh.temp.R;
 
-
 public class HYFont {
   private Typeface mTypeface;
   private HYPreference mPref;

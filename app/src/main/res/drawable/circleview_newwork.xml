@@ -4,7 +4,7 @@
     <layer-list>
       <item android:bottom="1dp" android:right="1dp">
         <shape>
-          <solid android:color="@color/newwork_background"/>
+          <solid android:color="@color/material_red_light"/>
           <corners android:radius="3dip"/>
         </shape>
       </item>
@@ -15,7 +15,7 @@
       <!-- CONTENT LAYER -->
       <item android:bottom="1dp" android:right="1dp">
         <shape>
-          <solid android:color="@color/newwork_background"/>
+          <solid android:color="@color/material_red_light"/>
           <corners android:radius="3dip"/>
 
         </shape>

@@ -799,11 +799,11 @@ public class NewWorkActivity extends ActionBarActivity implements View.OnClickLi
           mRefreshTotalTime = mRefreshHour * 60 + mRefreshMin;
           break;
       }
-      mLinRefreshTimelebel.setBackgroundColor(getResources().getColor(R.color.red_lebel));
+      mLinRefreshTimelebel.setBackgroundColor(getResources().getColor(R.color.black_lebel));
     } else {
       mResult_refresh = 0.0;
       mRefreshTotalTime = 0;
-      mLinRefreshTimelebel.setBackgroundColor(getResources().getColor(R.color.black_lebel));
+      mLinRefreshTimelebel.setBackgroundColor(getResources().getColor(R.color.red_lebel));
     }
     //총시간에서 야간시간을 뺀 시간이 휴식시간 보다 크지않을 때 즉 주간시간에서 차감을 할수 없을 때를 의미
 
@@ -849,13 +849,13 @@ public class NewWorkActivity extends ActionBarActivity implements View.OnClickLi
       Log.d("비야간", Double.toString(none_nightMoney_day));
       Log.d("야간", Double.toString(nightMoney_day));
       Log.d("토탈", Double.toString(mResult));
-      mLinNightTimelebel.setBackgroundColor(getResources().getColor(R.color.red_lebel));
+      mLinNightTimelebel.setBackgroundColor(getResources().getColor(R.color.black_lebel));
     } else {
       mResult = dayTimeMoney(Double.parseDouble(mEdtHourMoney.getText().toString()), Integer.parseInt(mTxtWorkHour.getText().toString()), Integer.parseInt(mTxtWorkMin.getText().toString()));
       mResult_night = 0.0;
       mTxtNightMoney.setText(Integer.toString((int) mResult_night));
       mNightTotalTime = 0;
-      mLinNightTimelebel.setBackgroundColor(getResources().getColor(R.color.black_lebel));
+      mLinNightTimelebel.setBackgroundColor(getResources().getColor(R.color.red_lebel));
     }
 
 
@@ -863,26 +863,26 @@ public class NewWorkActivity extends ActionBarActivity implements View.OnClickLi
     mTxtEtcMoney.setText(mNumFomat.format(mEtcMoney * mEtcNum));
     if (mFlag_EtcPay) {
       mEtcTotal = mEtcMoney * mEtcNum;
-      mLinEtcTimelebel.setBackgroundColor(getResources().getColor(R.color.red_lebel));
+      mLinEtcTimelebel.setBackgroundColor(getResources().getColor(R.color.black_lebel));
     } else {
       mEtcTotal = 0;
-      mLinEtcTimelebel.setBackgroundColor(getResources().getColor(R.color.black_lebel));
+      mLinEtcTimelebel.setBackgroundColor(getResources().getColor(R.color.red_lebel));
     }
     //주휴수당 적용
     mTxtWeekMoney.setText(mNumFomat.format(weekPaySet()));
     if (mFlag_WeekPay) {
       mWeekTotal = weekPaySet();
-      mLinWeekTimelebel.setBackgroundColor(getResources().getColor(R.color.red_lebel));
+      mLinWeekTimelebel.setBackgroundColor(getResources().getColor(R.color.black_lebel));
     } else {
       mWeekTotal = 0;
-      mLinWeekTimelebel.setBackgroundColor(getResources().getColor(R.color.black_lebel));
+      mLinWeekTimelebel.setBackgroundColor(getResources().getColor(R.color.red_lebel));
     }
     //추가근무 적용
     int time_add = 0;
     mDefaultTotalTime = 0;
     if (mFlag_AddPay) {
 
-      mLinAddTimelebel.setBackgroundColor(getResources().getColor(R.color.red_lebel));
+      mLinAddTimelebel.setBackgroundColor(getResources().getColor(R.color.black_lebel));
       switch (mAddType) {
         case 0:
           if (total >= 480) {
@@ -945,7 +945,7 @@ public class NewWorkActivity extends ActionBarActivity implements View.OnClickLi
           break;
       }
     } else {
-      mLinAddTimelebel.setBackgroundColor(getResources().getColor(R.color.black_lebel));
+      mLinAddTimelebel.setBackgroundColor(getResources().getColor(R.color.red_lebel));
       mResult_add = 0.0;
       mAddTotalTime = 0;
       mTxtAddMoney.setText(Integer.toString((int) mResult_add));
@@ -961,9 +961,9 @@ public class NewWorkActivity extends ActionBarActivity implements View.OnClickLi
     mResult_gabul = mResult;
     if (mFlag_ReceiveInAdvance) {
       mResult = mResult - mGabulMoney;
-      mLinGabulTimelebel.setBackgroundColor(getResources().getColor(R.color.red_lebel));
-    } else {
       mLinGabulTimelebel.setBackgroundColor(getResources().getColor(R.color.black_lebel));
+    } else {
+      mLinGabulTimelebel.setBackgroundColor(getResources().getColor(R.color.red_lebel));
     }
 
 

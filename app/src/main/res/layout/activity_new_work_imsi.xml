@@ -3,7 +3,7 @@
               android:id="@+id/lin_new_work"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/button_material_light"
+              android:background="@color/blue_gray_action"
               android:orientation="vertical">
 
   <include

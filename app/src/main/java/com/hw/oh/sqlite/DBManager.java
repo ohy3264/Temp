@@ -578,7 +578,6 @@ public class DBManager extends SQLiteOpenHelper {
           + "', workPayAddMin  = '" + info.getWorkPayAddMin()
           + "', workAlarm  = '" + info.getWorkAlarm()
           + "', workMonthDay  = '" + info.getWorkMonthDay()
-          + "', _id  = '" + info.get_id()
           + "' where albaname = '" + albaname
           + "';";
       Log.i(TAG, sql);
@@ -596,41 +595,44 @@ public class DBManager extends SQLiteOpenHelper {
     return false;
   }
 
-  public boolean updatePartTimeInfo(PartTimeInfo info, int _id) {
+  public boolean updatePartTimeInfoSwap(PartTimeInfo info, String _id) {
     if (INFO)
       Log.i(TAG, "updateData DataBase");
     SQLiteDatabase db = getWritableDatabase();
     try {
-      String sql = "update " + DBConstant.TABLE_PARTTIMEINFO + " set albaname = '" + info.getAlbaname()
-          + "', hourMoney = '" + info.getHourMoney()
-          + "', startTimeHour = '" + info.getStartTimeHour()
-          + "', startTimeMin = '" + info.getStartTimeMin()
-          + "', endTimeHour = '" + info.getEndTimeHour()
-          + "', endTimeMin = '" + info.getEndTimeMin()
-          + "', simpleMemo = '" + info.getSimpleMemo()
-          + "', workPayNight = '" + info.getWorkPayNight()
-          + "', workRefresh = '" + info.getWorkRefresh()
-          + "', workPayAdd = '" + info.getWorkPayAdd()
-          + "', workRefreshType = '" + info.getWorkRefreshType()
-          + "', workRefreshHour = '" + info.getWorkRefreshHour()
-          + "', workRefreshMin = '" + info.getWorkRefreshMin()
-          + "', workPayEtc = '" + info.getWorkPayEtc()
-          + "', workPayEtcNum = '" + info.getWorkPayEtcNum()
-          + "', workPayEtcMoney = '" + info.getWorkPayEtcMoney()
-          + "', workPayWeekTime = '" + info.getWorkPayWeekTime()
-          + "', workPayWeekMoney = '" + info.getWorkPayWeekMoney()
-          + "', workPayWeek = '" + info.getWorkPayWeek()
-          + "', workAddType  = '" + info.getWorkAddType()
-          + "', workPayAddHour  = '" + info.getWorkPayAddHour()
-          + "', workPayAddMin  = '" + info.getWorkPayAddMin()
-          + "', workAlarm  = '" + info.getWorkAlarm()
-          + "', workMonthDay  = '" + info.getWorkMonthDay()
-          + "' where albaname = '" + _id
-          + "';";
-      Log.i(TAG, sql);
-      db.execSQL(sql);
+     /* String sql = "replace " + DBConstant.TABLE_PARTTIMEINFO + " set albaname = (" + info.getAlbaname()
+          + "';";*/
+
+      ContentValues values = new ContentValues();
+      values.put("albaname", info.getAlbaname());
+      values.put("hourMoney", info.getHourMoney());
+      values.put("startTimeHour", info.getStartTimeHour());
+      values.put("startTimeMin", info.getStartTimeMin());
+      values.put("endTimeHour", info.getEndTimeHour());
+      values.put("endTimeMin", info.getEndTimeMin());
+      values.put("simpleMemo", info.getSimpleMemo());
+      values.put("workPayNight", info.getWorkPayNight());
+      values.put("workRefresh", info.getWorkRefresh());
+      values.put("workPayAdd", info.getWorkPayAdd());
+      values.put("workRefreshType", info.getWorkRefreshType());
+      values.put("workRefreshHour", info.getWorkRefreshHour());
+      values.put("workRefreshMin", info.getWorkRefreshMin());
+      values.put("workPayEtc", info.getWorkPayEtc());
+      values.put("workPayEtcNum", info.getWorkPayEtcNum());
+      values.put("workPayEtcMoney", info.getWorkPayEtcMoney());
+      values.put("workPayWeekTime", info.getWorkPayWeekTime());
+      values.put("workPayWeekMoney", info.getWorkPayWeekMoney());
+      values.put("workPayWeek", info.getWorkPayWeek());
+      values.put("workAddType", info.getWorkAddType());
+      values.put("workPayAddHour", info.getWorkPayAddHour());
+      values.put("workPayAddMin", info.getWorkPayAddMin());
+      values.put("workAlarm", Boolean.toString(info.getWorkAlarm()));
+      values.put("workMonthDay", info.getWorkMonthDay());
+
+      db.insert(DBConstant.TABLE_PARTTIMEINFO, null, values);
       return true;
     } catch (Exception e) {
+      Log.i(TAG, e.toString());
 
     }
     return false;
@@ -705,6 +707,20 @@ public class DBManager extends SQLiteOpenHelper {
     } catch (Exception e) {
       Log.i(TAG, "updateData fail :: " + e.toString());
 
+    }
+    return false;
+  }
+  // 데이터 전체삭제
+  public boolean removeALLData(String table) {
+    if (INFO)
+      Log.i(TAG, "removeALLData DataBase");
+    SQLiteDatabase db = getWritableDatabase();
+    try {
+      String sql = "Delete from " + table +  ";";
+      db.execSQL(sql);
+      return true;
+    } catch (Exception e) {
+      Log.i(TAG, "removeALLData fail :: " + e.toString());
     }
     return false;
   }

@@ -4,7 +4,7 @@
               android:id="@+id/LinearLayout1"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/material_white_2"
+              android:background="@color/blue_gray_action"
               android:gravity="center_horizontal"
               android:orientation="vertical">
 
@@ -90,7 +90,7 @@
             android:layout_marginLeft="8dp"
             android:text="yyyy"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/gray"/>
+            android:textColor="@color/material_white_2"/>
 
         <TextView
             android:id="@+id/TextView46"
@@ -98,7 +98,7 @@
             android:layout_height="wrap_content"
             android:text="년 "
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/gray"/>
+            android:textColor="@color/material_white_2"/>
 
         <TextView
 
@@ -108,7 +108,7 @@
             android:layout_marginLeft="8dp"
             android:text="mm"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/gray"/>
+            android:textColor="@color/material_white_2"/>
 
       </LinearLayout>
 
@@ -291,7 +291,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
 
         </FrameLayout>
@@ -345,7 +345,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
 
         </FrameLayout>
@@ -399,7 +399,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
         </FrameLayout>
 
@@ -452,7 +452,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
         </FrameLayout>
 
@@ -505,7 +505,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
         </FrameLayout>
 
@@ -558,7 +558,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
         </FrameLayout>
 
@@ -611,7 +611,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
         </FrameLayout>
       </TableRow>
@@ -672,7 +672,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
 
         </FrameLayout>
@@ -726,7 +726,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
 
         </FrameLayout>
@@ -780,7 +780,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
         </FrameLayout>
 
@@ -833,7 +833,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
         </FrameLayout>
 
@@ -886,7 +886,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
         </FrameLayout>
 
@@ -939,7 +939,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
         </FrameLayout>
 
@@ -992,7 +992,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
         </FrameLayout>
       </TableRow>
@@ -1053,7 +1053,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
 
         </FrameLayout>
@@ -1107,7 +1107,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
 
         </FrameLayout>
@@ -1161,7 +1161,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
         </FrameLayout>
 
@@ -1214,7 +1214,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
         </FrameLayout>
 
@@ -1267,7 +1267,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
         </FrameLayout>
 
@@ -1320,7 +1320,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
         </FrameLayout>
 
@@ -1373,7 +1373,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
         </FrameLayout>
       </TableRow>
@@ -1434,7 +1434,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
 
         </FrameLayout>
@@ -1488,7 +1488,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
 
         </FrameLayout>
@@ -1542,7 +1542,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
         </FrameLayout>
 
@@ -1595,7 +1595,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
         </FrameLayout>
 
@@ -1648,7 +1648,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
         </FrameLayout>
 
@@ -1701,7 +1701,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
         </FrameLayout>
 
@@ -1754,7 +1754,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
         </FrameLayout>
       </TableRow>
@@ -1815,7 +1815,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
 
         </FrameLayout>
@@ -1869,7 +1869,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
 
         </FrameLayout>
@@ -1923,7 +1923,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
         </FrameLayout>
 
@@ -1976,7 +1976,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
         </FrameLayout>
 
@@ -2029,7 +2029,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
         </FrameLayout>
 
@@ -2082,7 +2082,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
         </FrameLayout>
 
@@ -2135,7 +2135,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
         </FrameLayout>
       </TableRow>
@@ -2196,7 +2196,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
 
         </FrameLayout>
@@ -2250,7 +2250,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
 
         </FrameLayout>
@@ -2304,7 +2304,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
         </FrameLayout>
 
@@ -2357,7 +2357,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
         </FrameLayout>
 
@@ -2410,7 +2410,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
         </FrameLayout>
 
@@ -2463,7 +2463,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
         </FrameLayout>
 
@@ -2516,7 +2516,7 @@
               android:background="#00ff0000"
               android:gravity="top|center"
               android:padding="2dp"
-              android:textColor="@color/gray"
+              android:textColor="@color/material_red_light"
               android:textSize="7sp"/>
         </FrameLayout>
       </TableRow>

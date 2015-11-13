@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -63,7 +62,8 @@ public class PieChartsActivity extends ActionBarActivity implements View.OnClick
   private ArrayList<Map> mWorkDataList = new ArrayList<Map>();
 
   // View
-  private Button mBtnCalendarPeriodStart, mBtnCalendarPeriodEnd;
+  private LinearLayout mBtnCalendarPeriodStart, mBtnCalendarPeriodEnd;
+  private TextView mTxtCalendarPeriodStart, mTxtCalendarPeriodEnd;
   private TextView mTxtTotalView;
 
   private LinearLayout mHeader_piechart;
@@ -119,9 +119,11 @@ public class PieChartsActivity extends ActionBarActivity implements View.OnClick
 
     //View Set
     mTxtTotalView = (TextView) findViewById(R.id.txtTotalMoney);
-    mBtnCalendarPeriodStart = (Button) findViewById(R.id.btn_calendar_period_start);
+    mTxtCalendarPeriodStart= (TextView) findViewById(R.id.txt_calendar_period_start);
+    mTxtCalendarPeriodEnd= (TextView) findViewById(R.id.txt_calendar_period_end);
+    mBtnCalendarPeriodStart = (LinearLayout) findViewById(R.id.btn_calendar_period_start);
     mBtnCalendarPeriodStart.setOnClickListener(this);
-    mBtnCalendarPeriodEnd = (Button) findViewById(R.id.btn_calendar_period_end);
+    mBtnCalendarPeriodEnd = (LinearLayout) findViewById(R.id.btn_calendar_period_end);
     mBtnCalendarPeriodEnd.setOnClickListener(this);
 
     mHeader_piechart = (LinearLayout) findViewById(R.id.header_piechart);
@@ -264,7 +266,7 @@ public class PieChartsActivity extends ActionBarActivity implements View.OnClick
         startDialog.positiveActionClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            mBtnCalendarPeriodStart.setText(startDialog.getYear() + "년 " + (startDialog.getMonth() + 1) + "월 " + startDialog.getDay() + "일 ");
+            mTxtCalendarPeriodStart.setText(startDialog.getYear() + "년 " + (startDialog.getMonth() + 1) + "월 " + startDialog.getDay() + "일 ");
 
             mStartYear = startDialog.getYear();
             mStartMonth = startDialog.getMonth();
@@ -298,7 +300,7 @@ public class PieChartsActivity extends ActionBarActivity implements View.OnClick
         endDialog.positiveActionClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            mBtnCalendarPeriodEnd.setText(endDialog.getYear() + "년 " + (endDialog.getMonth() + 1) + "월 " + endDialog.getDay() + "일 ");
+            mTxtCalendarPeriodEnd.setText(endDialog.getYear() + "년 " + (endDialog.getMonth() + 1) + "월 " + endDialog.getDay() + "일 ");
 
             mEndYear = endDialog.getYear();
             mEndMonth = endDialog.getMonth();
@@ -363,8 +365,8 @@ public class PieChartsActivity extends ActionBarActivity implements View.OnClick
     mEndYear = Integer.parseInt(mPeriod_end[0]);
     mEndMonth = Integer.parseInt(mPeriod_end[1]);
     mEndDay = Integer.parseInt(mPeriod_end[2]);
-    mBtnCalendarPeriodStart.setText(mStartYear + "년 " + (mStartMonth + 1) + "월 " + mStartDay + "일 ");
-    mBtnCalendarPeriodEnd.setText(mEndYear + "년 " + (mEndMonth + 1) + "월 " + mEndDay + "일 ");
+    mTxtCalendarPeriodStart.setText(mStartYear + "년 " + (mStartMonth + 1) + "월 " + mStartDay + "일 ");
+    mTxtCalendarPeriodEnd.setText(mEndYear + "년 " + (mEndMonth + 1) + "월 " + mEndDay + "일 ");
 
   }
 

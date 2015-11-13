@@ -7,7 +7,7 @@
     android:padding="2dp">
 
   <LinearLayout
-      android:background="@color/material_white_2"
+      android:background="@drawable/selector_list_row"
       android:orientation="vertical"
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
