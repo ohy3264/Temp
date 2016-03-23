@@ -37,6 +37,24 @@ public class PartTimeInfo implements Serializable {
   }
 
   int workMonthDay;
+  int workWeekDay;
+  int workMonthWeekFlag;
+
+  public int getWorkWeekDay() {
+    return workWeekDay;
+  }
+
+  public void setWorkWeekDay(int workWeekDay) {
+    this.workWeekDay = workWeekDay;
+  }
+
+  public int getWorkMonthWeekFlag() {
+    return workMonthWeekFlag;
+  }
+
+  public void setWorkMonthWeekFlag(int workMonthWeekFlag) {
+    this.workMonthWeekFlag = workMonthWeekFlag;
+  }
 
   public void setWorkAlarm(Boolean workAlarm) {
     this.workAlarm = workAlarm;

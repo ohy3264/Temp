@@ -122,6 +122,17 @@ public class BoardDetailService extends Service {
         Log.d(TAG, "sendMessageToUI");
         Bundle b = new Bundle();
         Message msg;
+
+        if (DBUG) {
+          Log.d(TAG, "ID : " + mHeaderData.get_id());
+          Log.d(TAG, "Unique : " + mHeaderData.getUniqueID());
+          Log.d(TAG, "Gender : " + mHeaderData.getGender());
+          Log.d(TAG, "StrText : " + mHeaderData.getStrText());
+          Log.d(TAG, "LIKE : " + mHeaderData.getLikeCNT());
+          Log.d(TAG, "COMMENT : " + mHeaderData.getCommCNT());
+          Log.d(TAG, "HATE : " + mHeaderData.getHateCNT());
+        }
+
         for (int i = 0; i < mCommentList.size(); i++) {
           Log.i(TAG, mCommentList.get(i).getStrText());
         }
@@ -437,6 +448,7 @@ public class BoardDetailService extends Service {
       requestCall_Header_Info();
       requestCall_CommentList();
       try {
+        mCDL_HeaderSet.await();
         mCDL_CommentList.await();
       } catch (InterruptedException e) {
         // TODO Auto-generated catch block

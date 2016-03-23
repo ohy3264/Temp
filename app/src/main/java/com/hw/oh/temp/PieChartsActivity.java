@@ -3,6 +3,9 @@ package com.hw.oh.temp;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import android.app.ProgressDialog;
 import android.database.Cursor;
@@ -101,6 +104,11 @@ public class PieChartsActivity extends ActionBarActivity implements View.OnClick
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_piechart);
+    // 구글 통계
+    Tracker mTracker = ((ApplicationClass) getApplication()).getDefaultTracker();
+    mTracker.setScreenName("알바별 원형 차트");
+    mTracker.send(new HitBuilders.AppViewBuilder().build());
+
     //Util
     mFont = new HYFont(this);
     ViewGroup root = (ViewGroup) findViewById(android.R.id.content);
@@ -520,6 +528,20 @@ public class PieChartsActivity extends ActionBarActivity implements View.OnClick
     dialog.show();
     return dialog;
   }
+
+  @Override
+  public void onStart() {
+    super.onStart();
+    // 구글 통계
+    GoogleAnalytics.getInstance(this).reportActivityStart(this);
+  };
+
+  @Override
+  public void onStop() {
+    super.onStop();
+    // 구글 통계
+    GoogleAnalytics.getInstance(this).reportActivityStop(this);
+  };
 }
 
 

@@ -1,5 +1,7 @@
 package com.hw.oh.temp;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -92,7 +94,7 @@ public class BarChartsActivity extends ActionBarActivity implements View.OnClick
     //ActionBar
     mToolbar = (Toolbar) findViewById(R.id.toolbar);
     if (mToolbar != null) {
-      mToolbar.setTitle("월별 그래프");
+      mToolbar.setTitle("월별 바 그래프");
       setSupportActionBar(mToolbar);
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
       mFont.setGlobalFont((ViewGroup) mToolbar);
@@ -214,7 +216,6 @@ public class BarChartsActivity extends ActionBarActivity implements View.OnClick
           @Override
           public void onClick(View v) {
             mTxtCalendarPeriodEnd.setText(endDialog.getYear() + "년 " + (endDialog.getMonth() + 1) + "월 ");
-
             mEndYear = endDialog.getYear();
             mEndMonth = endDialog.getMonth();
             mEndDay = endDialog.getDay();
@@ -278,7 +279,7 @@ public class BarChartsActivity extends ActionBarActivity implements View.OnClick
       //Chart Data Set
       BarDataSet dataset = new BarDataSet(entries, "월급");
       dataset.setBarSpacePercent(35f);
-      dataset.setColor(getResources().getColor(R.color.link_text_material_dark));
+      dataset.setColor(getResources().getColor(R.color.newwork_background));
       BarData d = new BarData(labels, dataset);
 
       d.setValueTextColor(getResources().getColor(R.color.light_red));
@@ -468,4 +469,18 @@ public class BarChartsActivity extends ActionBarActivity implements View.OnClick
     dialog.show();
     return dialog;
   }
+
+  @Override
+  public void onStart() {
+    super.onStart();
+    // 구글 통계
+    GoogleAnalytics.getInstance(this).reportActivityStart(this);
+  };
+
+  @Override
+  public void onStop() {
+    super.onStop();
+    // 구글 통계
+    GoogleAnalytics.getInstance(this).reportActivityStop(this);
+  };
 }

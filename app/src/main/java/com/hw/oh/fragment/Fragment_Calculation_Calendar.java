@@ -1,5 +1,9 @@
 package com.hw.oh.fragment;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
@@ -15,6 +19,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,8 +33,8 @@ import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hw.oh.adapter.WorkDataAdapter;
 import com.hw.oh.model.CalendarInfo;
@@ -37,6 +43,7 @@ import com.hw.oh.model.PartTimeItem;
 import com.hw.oh.model.WorkItem;
 import com.hw.oh.sqlite.DBConstant;
 import com.hw.oh.sqlite.DBManager;
+import com.hw.oh.temp.ApplicationClass;
 import com.hw.oh.temp.BarChartsActivity;
 import com.hw.oh.temp.NewWorkActivity;
 import com.hw.oh.temp.R;
@@ -45,6 +52,10 @@ import com.hw.oh.utility.HYExcelWrite;
 import com.hw.oh.utility.HYFont;
 import com.hw.oh.utility.HYPreference;
 import com.hw.oh.utility.HYStringUtill;
+import com.nhaarman.listviewanimations.appearance.simple.AlphaInAnimationAdapter;
+import com.nhaarman.listviewanimations.itemmanipulation.DynamicListView;
+import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
+import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.undo.SimpleSwipeUndoAdapter;
 import com.tistory.whdghks913.croutonhelper.CroutonHelper;
 
 import jxl.write.WriteException;
@@ -56,6 +67,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -65,16 +77,17 @@ import java.util.concurrent.CountDownLatch;
 /**
  * Created by oh on 2015-02-01.
  */
-public class Fragment_Calculation_Calendar extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class Fragment_Calculation_Calendar extends Fragment implements View.OnClickListener {
   public static final String TAG = "Fragment_Calculation_Calendar";
   public static final boolean DBUG = true;
   public static final boolean INFO = true;
+  private static final int INITIAL_DELAY_MILLIS = 300;
 
   private TextView mTxtGuide;
   private TextView mTxtTotalDay;
   private TextView mTxtTotalMoney;
   //ListView
-  private ListView mListView;
+  private DynamicListView mListView;
   private WorkDataAdapter mWorkDataAdapter;
   private ArrayList<WorkItem> mWorkDataList = new ArrayList<WorkItem>();
 
@@ -84,7 +97,7 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
   private TextView mTxtCalendarPeriodStart,mTxtCalendarPeriodEnd;
   private TextView mTxtTotalTime, mTxtAlbaName;
   private LinearLayout mLinDuty, mLinInsurance, mLinResult;
-  private TextView mTxtDutyResult, mTxtInsurance1, mTxtInsurance2, mTxtInsurance3, mTxtInsurance4, mTxtInsuranceResult, mTxtTotalresult;
+  private TextView mTxtDutyResult, mTxtInsurance1, mTxtInsurance2, mTxtInsurance3, mTxtInsurance4, mTxtInsuranceResult, mTxtTotalresult, mTxtAddTotalTime, mTxtRefreshTotalTime;
   // mTxtRefreshTotalTime, mTxtNightTotalTime, mTxtAddTotalTime,
 
   //Crouton
@@ -125,13 +138,13 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
   private CountDownLatch mCdlPeroidLatch;
   private NumberFormat mNumFomat = new DecimalFormat("###,###,###");
 
+
   private List<Bitmap>
       bmps = new ArrayList<Bitmap>();
 
   public Fragment_Calculation_Calendar(PartTimeInfo info) {
     mPartInfoData = info;
   }
-
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_calculation_calendar, container, false);
@@ -141,6 +154,11 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
     mDB = new DBManager(getActivity());
     mPref = new HYPreference(getActivity());
 
+    // 구글 통계
+    Tracker mTracker = ((ApplicationClass) getActivity().getApplication()).getDefaultTracker();
+    mTracker.setScreenName("알바 토탈 계산");
+    mTracker.send(new HitBuilders.AppViewBuilder().build());
+
     //Crouton
     mCroutonHelper = new CroutonHelper(getActivity());
     mCroutonView = getActivity().getLayoutInflater().inflate(
@@ -149,13 +167,12 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
 
 
     //View Set
-    mListView = (ListView) rootView.findViewById(R.id.mainlistView);
-    mListView.setFocusable(false);
-    mListView.setOnItemClickListener(this);
+    mListView = (DynamicListView) rootView.findViewById(R.id.mainlistView);
+    //mListView.setFocusable(false);
 
     // Alba listview header
     mlistViewHeader = getActivity().getLayoutInflater().inflate(
-        R.layout.header_calcul_calendar, null, false);
+        R.layout.header_calcul_calendar, mListView, false);
     mBtnCalendarPeriodStart = (LinearLayout) mlistViewHeader.findViewById(R.id.btn_calendar_period_start);
     mBtnCalendarPeriodStart.setOnClickListener(this);
     mBtnCalendarPeriodEnd = (LinearLayout) mlistViewHeader.findViewById(R.id.btn_calendar_period_end);
@@ -164,13 +181,14 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
     mTxtCalendarPeriodEnd= (TextView) mlistViewHeader.findViewById(R.id.txt_calendar_period_end);
     mFont.setGlobalFont((ViewGroup) mlistViewHeader);
     mListView.addHeaderView(mlistViewHeader);
+
     mTxtTotalMoney = (TextView) mlistViewHeader.findViewById(R.id.txtTotalMoney);
     mTxtAlbaName = (TextView) mlistViewHeader.findViewById(R.id.txt_albaname);
     mTxtTotalTime = (TextView) mlistViewHeader.findViewById(R.id.txtTotalTime);
     mTxtTotalDay = (TextView) mlistViewHeader.findViewById(R.id.txtTotalDay);
-       /* mTxtRefreshTotalTime = (TextView) mlistViewHeader.findViewById(R.id.txtTotalRefreshTime);
-        mTxtNightTotalTime = (TextView) mlistViewHeader.findViewById(R.id.txtTotalNightTime);
-        mTxtAddTotalTime = (TextView) mlistViewHeader.findViewById(R.id.txtTotalADDTime);*/
+    mTxtRefreshTotalTime = (TextView) mlistViewHeader.findViewById(R.id.txtTotalRefreshTime);
+    //mTxtNightTotalTime = (TextView) mlistViewHeader.findViewById(R.id.txtTotalNightTime);
+    mTxtAddTotalTime = (TextView) mlistViewHeader.findViewById(R.id.txtTotalADDTime);
     mTxtDutyResult = (TextView) mlistViewHeader.findViewById(R.id.txtDutyResult);
     mLinDuty = (LinearLayout) mlistViewHeader.findViewById(R.id.linDuty);
     mLinInsurance = (LinearLayout) mlistViewHeader.findViewById(R.id.linInsurance);
@@ -187,8 +205,15 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
     mTxtGuide = (TextView) rootView.findViewById(R.id.txtGuide);
     mTxtGuide.setText(Constant.GUIDE_MSG2);
     mTxtGuide.setSelected(true);
-    setAdapter();
     datePickerSet();
+        /* Setup the adapter */
+    setAdapter();
+
+        /* Add new items on item click */
+    mListView.setOnItemClickListener(new MyOnItemClickListener(mListView));
+
+        /* Enable swipe to dismiss */
+    //mListView.enableSimpleSwipeUndo();
     setHasOptionsMenu(true);
     return rootView;
   }
@@ -234,23 +259,40 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
       Calendar today = Calendar.getInstance();
       Calendar c1 = Calendar.getInstance();
       Calendar c2 = Calendar.getInstance();
-      //Calendar 타입으로 변경 add()메소드로 1일씩 추가해 주기위해 변경
-      //          c1.set(getArguments().getInt("year"), getArguments().getInt("month"), mPref.getValue(mPref.KEY_MONTH_PAY, 1));
+
+      if (mPartInfoData.getWorkMonthWeekFlag() == 0) {
+        Log.i(TAG, mPartInfoData.getWorkMonthWeekFlag()  + " :: " + c1.get(Calendar.DAY_OF_WEEK));
+        if (c1.get(Calendar.DAY_OF_WEEK) < mPartInfoData.getWorkWeekDay()) {
+          c1.set(Calendar.DAY_OF_WEEK, mPartInfoData.getWorkWeekDay());
+          c2.set(Calendar.DAY_OF_WEEK, mPartInfoData.getWorkWeekDay());
+          c1.add(Calendar.DATE, -7);
+          c2.add(Calendar.DATE, -1);
+        } else {
+          c1.set(Calendar.DAY_OF_WEEK, mPartInfoData.getWorkWeekDay());
+          c2.set(Calendar.DAY_OF_WEEK, mPartInfoData.getWorkWeekDay());
+          c2.add(Calendar.DATE, 6);
+        }
+      } else {
+
+        //Calendar 타입으로 변경 add()메소드로 1일씩 추가해 주기위해 변경
+        //          c1.set(getArguments().getInt("year"), getArguments().getInt("month"), mPref.getValue(mPref.KEY_MONTH_PAY, 1));
 //            c2.set(getArguments().getInt("year"), getArguments().getInt("month"), mPref.getValue(mPref.KEY_MONTH_PAY, 1));
 
-      c1.set(getArguments().getInt("year"), getArguments().getInt("month"), mPartInfoData.getWorkMonthDay());
-      c2.set(getArguments().getInt("year"), getArguments().getInt("month"), mPartInfoData.getWorkMonthDay());
-      c2.add(Calendar.DATE, -1);
+        c1.set(getArguments().getInt("year"), getArguments().getInt("month"), mPartInfoData.getWorkMonthDay());
+        c2.set(getArguments().getInt("year"), getArguments().getInt("month"), mPartInfoData.getWorkMonthDay());
+        c2.add(Calendar.DATE, -1);
 
-      //월급 종료날이 오늘 보다 뒤일때
-      if (today.after(c2)) {
-        Log.i(TAG, "오늘날짜보다 월급 종료날이 더 앞");
-        c2.add(Calendar.MONTH, 1);
-      } else {
-        Log.i(TAG, "오늘날짜보다 월급 종료날이 더 뒤");
-        c1.add(Calendar.MONTH, -1);
+        //월급 종료날이 오늘 보다 뒤일때
+        if (today.after(c2)) {
+          Log.i(TAG, "오늘날짜보다 월급 종료날이 더 앞");
+          c2.add(Calendar.MONTH, 1);
+        } else {
+          Log.i(TAG, "오늘날짜보다 월급 종료날이 더 뒤");
+          c1.add(Calendar.MONTH, -1);
+        }
+        // c2.set(Integer.parseInt(mTxtYear.getText().toString()), Integer.parseInt(mTxtMonth.getTag().toString()) - 1, mCal.getActualMaximum(Calendar.DATE));
+
       }
-      // c2.set(Integer.parseInt(mTxtYear.getText().toString()), Integer.parseInt(mTxtMonth.getTag().toString()) - 1, mCal.getActualMaximum(Calendar.DATE));
       Log.d(TAG, "time1 :: " + c1.getTime().toString());
       Log.d(TAG, "time2 :: " + c2.getTime().toString());
 
@@ -643,51 +685,66 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
     return map;
   }
 
+  private class MyOnItemClickListener implements AdapterView.OnItemClickListener {
 
-  @Override
-  public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    private final DynamicListView mListView;
 
-    String year = mWorkDataList.get(position - 1).getYear();
-    String month = mWorkDataList.get(position - 1).getMonth();
-    String day = mWorkDataList.get(position - 1).getDay();
+    MyOnItemClickListener(final DynamicListView listView) {
+      mListView = listView;
+    }
 
-    Intent intent = new Intent(getActivity(), NewWorkActivity.class);
-    if (INFO)
-      Log.i(TAG, "NEWWORK_INTENT_UPDATE");
-    Constant.NEWWORK_INTENT_FLAG = Constant.NEWWORK_INTENT_UPDATE;
-    PartTimeItem temp = mDB.selectOneData(DBConstant.COLUMN_DATE, year + "-" + month + "-" + day, DBConstant.COLUMN_ALBANAME, mPartInfoData.getAlbaname());
-    intent.putExtra("HOURMONEY", temp.getHourMoney());
-    intent.putExtra("START_HOUR", temp.getStartTimeHour());
-    intent.putExtra("START_MIN", temp.getStartTimeMin());
-    intent.putExtra("END_HOUR", temp.getEndTimeHour());
-    intent.putExtra("END_MIN", temp.getEndTimeMin());
-    intent.putExtra("MEMO", temp.getSimpleMemo());
-    intent.putExtra("GABUL", temp.getWorkPayGabul());
-    intent.putExtra("GABUL_PAY", temp.getWorkPayGabulVal());
-    intent.putExtra("NIGHT_PAY", temp.getWorkPayNight());
-    intent.putExtra("REFRESH_TIME", temp.getWorkRefreshTime());
-    intent.putExtra("ADD_PAY", temp.getWorkPayAdd());
-    intent.putExtra("REFRESH_TYPE", temp.getWorkRefreshType());
-    intent.putExtra("REFRESH_HOUR", temp.getWorkRefreshHour());
-    intent.putExtra("REFRESH_MIN", temp.getWorkRefreshMin());
-    intent.putExtra("ETC_MONEY", temp.getWorkEtcMoeny());
-    intent.putExtra("ETC_NUM", temp.getWorkEtcNum());
-    intent.putExtra("ETC_PAY", temp.getWorkEtc());
-    intent.putExtra("WEEK_HOURKMONEY", temp.getWorkPayWeekMoney());
-    intent.putExtra("WEEK_TIME", temp.getWorkPayWeekTime());
-    intent.putExtra("WEEK_PAY", temp.getWorkPayWeek());
-    intent.putExtra("ADD_PAY_TYPE", temp.getWorkAddType());
-    intent.putExtra("ADD_PAY_HOUR", temp.getWorkAddHour());
-    intent.putExtra("ADD_PAY_MIN", temp.getWorkAddMin());
+    @Override
+    public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
+      try {
+        String year = mWorkDataList.get(position - 1).getYear();
+        String month = mWorkDataList.get(position - 1).getMonth();
+        String day = mWorkDataList.get(position - 1).getDay();
+
+        Intent intent = new Intent(getActivity(), NewWorkActivity.class);
+        if (INFO)
+          Log.i(TAG, "NEWWORK_INTENT_UPDATE");
+        Constant.NEWWORK_INTENT_FLAG = Constant.NEWWORK_INTENT_UPDATE;
+        PartTimeItem temp = mDB.selectOneData(DBConstant.COLUMN_DATE, year + "-" + month + "-" + day, DBConstant.COLUMN_ALBANAME, mPartInfoData.getAlbaname());
+
+        intent.putExtra("ALBA_NAME", temp.getAlbaname());
+        intent.putExtra("HOURMONEY", temp.getHourMoney());
+        intent.putExtra("START_HOUR", temp.getStartTimeHour());
+        intent.putExtra("START_MIN", temp.getStartTimeMin());
+        intent.putExtra("END_HOUR", temp.getEndTimeHour());
+        intent.putExtra("END_MIN", temp.getEndTimeMin());
+        intent.putExtra("MEMO", temp.getSimpleMemo());
+        intent.putExtra("GABUL", temp.getWorkPayGabul());
+        intent.putExtra("GABUL_PAY", temp.getWorkPayGabulVal());
+        intent.putExtra("NIGHT_PAY", temp.getWorkPayNight());
+        intent.putExtra("REFRESH_TIME", temp.getWorkRefreshTime());
+        intent.putExtra("ADD_PAY", temp.getWorkPayAdd());
+        intent.putExtra("REFRESH_TYPE", temp.getWorkRefreshType());
+        intent.putExtra("REFRESH_HOUR", temp.getWorkRefreshHour());
+        intent.putExtra("REFRESH_MIN", temp.getWorkRefreshMin());
+        intent.putExtra("ETC_MONEY", temp.getWorkEtcMoeny());
+        intent.putExtra("ETC_NUM", temp.getWorkEtcNum());
+        intent.putExtra("ETC_PAY", temp.getWorkEtc());
+        intent.putExtra("WEEK_HOURKMONEY", temp.getWorkPayWeekMoney());
+        intent.putExtra("WEEK_TIME", temp.getWorkPayWeekTime());
+        intent.putExtra("WEEK_PAY", temp.getWorkPayWeek());
+        intent.putExtra("ADD_PAY_TYPE", temp.getWorkAddType());
+        intent.putExtra("ADD_PAY_HOUR", temp.getWorkAddHour());
+        intent.putExtra("ADD_PAY_MIN", temp.getWorkAddMin());
 
 
-    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    intent.putExtra("YEAR", year);
-    intent.putExtra("MONTH", month);
-    intent.putExtra("DAY", day);
-    startActivity(intent);
-    getActivity().overridePendingTransition(0, 0);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("YEAR", year);
+        intent.putExtra("MONTH", month);
+        intent.putExtra("DAY", day);
+        startActivity(intent);
+        getActivity().overridePendingTransition(0, 0);
+      }catch (Exception e){
+        Log.e(TAG, e.toString());
+      }
+
+    }
   }
+
 
   @Override
   public void onResume() {
@@ -709,10 +766,61 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
     }
   }
 
+  /* Setup the adapter */
   public void setAdapter() {
     mWorkDataAdapter = new WorkDataAdapter(getActivity(), mWorkDataList);
     if (mListView != null) {
+      SimpleSwipeUndoAdapter simpleSwipeUndoAdapter = new SimpleSwipeUndoAdapter(mWorkDataAdapter, getActivity(), new MyOnDismissCallback(mWorkDataAdapter));
+      AlphaInAnimationAdapter animAdapter = new AlphaInAnimationAdapter(simpleSwipeUndoAdapter);
+      animAdapter.setAbsListView(mListView);
+      assert animAdapter.getViewAnimator() != null;
+      animAdapter.getViewAnimator().setInitialDelayMillis(INITIAL_DELAY_MILLIS);
       mListView.setAdapter(mWorkDataAdapter);
+    }
+  }
+  private static class MyOnItemLongClickListener implements AdapterView.OnItemLongClickListener {
+
+    private final DynamicListView mListView;
+
+    MyOnItemLongClickListener(final DynamicListView listView) {
+      mListView = listView;
+    }
+
+    @Override
+    public boolean onItemLongClick(final AdapterView<?> parent, final View view, final int position, final long id) {
+      if (mListView != null) {
+        mListView.startDragging(position - mListView.getHeaderViewsCount());
+      }
+      return true;
+    }
+  }
+
+  private class MyOnDismissCallback implements OnDismissCallback {
+
+    private final WorkDataAdapter mAdapter;
+
+    @Nullable
+    private Toast mToast;
+
+    MyOnDismissCallback(final WorkDataAdapter adapter) {
+      mAdapter = adapter;
+    }
+
+    @Override
+    public void onDismiss(@NonNull final ViewGroup listView, @NonNull final int[] reverseSortedPositions) {
+      for (int position : reverseSortedPositions) {
+        mWorkDataList.remove(position);
+        mAdapter.notifyDataSetChanged();
+      }
+
+      if (mToast != null) {
+        mToast.cancel();
+      }
+      mToast = Toast.makeText(getActivity(),
+          getString(R.string.removed_positions, Arrays.toString(reverseSortedPositions)),
+          Toast.LENGTH_LONG
+      );
+      mToast.show();
     }
   }
 
@@ -772,7 +880,7 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
             mTxtTotalDay.setText(mTotalDay + "일");
             mTxtTotalMoney.setText("");
             mTxtTotalMoney.setText(mNumFomat.format(mTotalMoney) + "원");
-            mTxtTotalTime.setText(mTotalTime / 60 + "시간 " + mTotalTime % 60 + "분");
+            mTxtTotalTime.setText("합계 : "+mTotalTime / 60 + "시간 " + mTotalTime % 60 + "분");
 
             //소득세 계산
             Double duty = 0.0;
@@ -830,6 +938,8 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
                         mTxtRefreshTotalTime.setText("총 휴식시간 " + mRefreshTotalTime / 60 + "시간 " + mRefreshTotalTime % 60 + "분");
                         mTxtNightTotalTime.setText("총 야간시간 " + mNightTotalTime / 60 + "시간 " + mNightTotalTime % 60 + "분");
                         mTxtAddTotalTime.setText("총 추가시간 " + mAddTotalTime / 60 + "시간 " + mAddTotalTime % 60 + "분");*/
+            mTxtRefreshTotalTime.setText("휴식 : " + mRefreshTotalTime / 60 + "시간 " + mRefreshTotalTime % 60 + "분");
+            mTxtAddTotalTime.setText("연장 : " + mAddTotalTime / 60 + "시간 " + mAddTotalTime % 60 + "분");
             mLoadingDialog.dismiss();
           }
         });
@@ -1144,5 +1254,17 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
       return 0;
     }
   }
+  @Override
+  public void onStart() {
+    super.onStart();
+    // 구글 통계
+    GoogleAnalytics.getInstance(getActivity()).reportActivityStart(getActivity());
+  };
 
+  @Override
+  public void onStop() {
+    super.onStop();
+    // 구글 통계
+    GoogleAnalytics.getInstance(getActivity()).reportActivityStop(getActivity());
+  };
 }

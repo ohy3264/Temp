@@ -3,6 +3,9 @@ package com.hw.oh.temp;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
@@ -138,6 +141,10 @@ public class NewWorkActivity extends ActionBarActivity implements View.OnClickLi
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_new_work_imsi);
+// 구글 통계
+    Tracker mTracker = ((ApplicationClass) getApplication()).getDefaultTracker();
+    mTracker.setScreenName("새로운 일급 등록");
+    mTracker.send(new HitBuilders.AppViewBuilder().build());
 
     //Utill
     mPref = new HYPreference(this);
@@ -881,7 +888,6 @@ public class NewWorkActivity extends ActionBarActivity implements View.OnClickLi
     int time_add = 0;
     mDefaultTotalTime = 0;
     if (mFlag_AddPay) {
-
       mLinAddTimelebel.setBackgroundColor(getResources().getColor(R.color.black_lebel));
       switch (mAddType) {
         case 0:
@@ -983,7 +989,7 @@ public class NewWorkActivity extends ActionBarActivity implements View.OnClickLi
     mDetailCalItem.setTime_add(time_add);
 
     if (mPrevHour != mTotalTime)
-      pbAniSet();
+      //pbAniSet();
 
     mPrevHour = mTotalTime;
   }
@@ -1087,7 +1093,6 @@ public class NewWorkActivity extends ActionBarActivity implements View.OnClickLi
         dialog.cancel(); // No 버튼을 눌렀을 경우이며 단순히 창을 닫아 버린다.
       }
     });
-
     alert.show();
   }
 
@@ -1156,7 +1161,7 @@ public class NewWorkActivity extends ActionBarActivity implements View.OnClickLi
     if (workTotal <= 720) {
       Log.i("startTime : ", "" + mStartHour * 60 + mStartMin);
       pb.setRotation(((mStartHour * 30) + (int) (mStartMin * 0.5)) - 1); //1시간에 30도 1분에 0.5도
-      pb.setMax(720);
+      pb.setMax(1440);
       pb.setProgress(0);
       pb.setSecondaryProgress(0);
       animationA = ObjectAnimator.ofInt(pb, "progress", -1, workTotal);
@@ -1164,7 +1169,7 @@ public class NewWorkActivity extends ActionBarActivity implements View.OnClickLi
       animationA.setInterpolator(new DecelerateInterpolator());
       animationA.start();
     } else if (workTotal > 720) {
-      Log.i("startTime : ", "" + Integer.toString(mStartHour * 60 + mStartMin));
+      /*Log.i("startTime : ", "" + Integer.toString(mStartHour * 60 + mStartMin));
       Log.i("progress : ", "" + 720);
       pb.setRotation((mStartHour * 30) + (int) (mStartMin * 0.5)); //1시간에 30도 1분에 0.5도
       pb.setMax(720);
@@ -1180,7 +1185,20 @@ public class NewWorkActivity extends ActionBarActivity implements View.OnClickLi
       animationB.setDuration(5000); //in milliseconds
       animationB.setInterpolator(new DecelerateInterpolator());
       animationB.setStartDelay(5000);
-      animationB.start();
+      animationB.start();*/
     }
   }
+  @Override
+  public void onStart() {
+    super.onStart();
+    // 구글 통계
+    GoogleAnalytics.getInstance(this).reportActivityStart(this);
+  };
+
+  @Override
+  public void onStop() {
+    super.onStop();
+    // 구글 통계
+    GoogleAnalytics.getInstance(this).reportActivityStop(this);
+  };
 }

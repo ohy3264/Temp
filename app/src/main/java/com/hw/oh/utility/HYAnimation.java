@@ -69,7 +69,7 @@ public class HYAnimation {
     final View mView = v;
     AlphaAnimation fadeOutAnimation = new AlphaAnimation(1, 0);
 
-    fadeOutAnimation.setDuration(500);
+    fadeOutAnimation.setDuration(100);
     fadeOutAnimation.setFillAfter(true);
     fadeOutAnimation.setAnimationListener(new AnimationListener() {
       @Override

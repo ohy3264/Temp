@@ -3,8 +3,12 @@ package com.hw.oh.temp;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.gson.Gson;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -56,9 +60,12 @@ import com.hw.oh.utility.HYNetworkInfo;
 import com.hw.oh.utility.HYPreference;
 import com.hw.oh.utility.HYTime_Maximum;
 import com.hw.oh.utility.InfoExtra;
+import com.hw.oh.utility.ServerRequestUtils;
 import com.hw.oh.volley.utility.DiskBitmapCache;
 import com.hw.oh.volley.utility.FadeInImageListener;
 import com.tistory.whdghks913.croutonhelper.CroutonHelper;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,6 +77,7 @@ import java.util.concurrent.CountDownLatch;
  */
 public class DetailActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
   //Tag
+  private static Toast toast;
   private static final String TAG = "DetailActivity";
   private static final boolean DBUG = true;
   private static final boolean INFO = true;
@@ -210,6 +218,11 @@ public class DetailActivity extends ActionBarActivity implements AdapterView.OnI
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_detail);
+    // 구글 통계
+    Tracker mTracker = ((ApplicationClass) getApplication()).getDefaultTracker();
+    mTracker.setScreenName("게시글 상세보기");
+    mTracker.send(new HitBuilders.AppViewBuilder().build());
+
     //Util
     mNet = new HYNetworkInfo(this);
     mInfoExtra = new InfoExtra(this);
@@ -441,6 +454,8 @@ public class DetailActivity extends ActionBarActivity implements AdapterView.OnI
   protected void onStop() {
     super.onStop();
     doUnbindService();
+    // 구글 통계
+    GoogleAnalytics.getInstance(this).reportActivityStop(this);
   }
 
 
@@ -753,7 +768,17 @@ public class DetailActivity extends ActionBarActivity implements AdapterView.OnI
 
   // Request BoardPost Delete
   public void requestCall_BoardPostDel() {
-    if (INFO)
+
+    try {
+      HashMap<String, String> params = new HashMap<String, String>();
+      params.put("MODE", "BoardPostDelete");
+      params.put("BSEQ", mHeaderData.get_id());
+      ServerRequestUtils.request(this, "http://ohy3264.cafe24.com", "/Anony/api/boardPostDelete.php", params, IntentDelHandler);
+    } catch (Exception e) {
+      Log.d(TAG, "Splash:handler2: "+e.getMessage());
+    }
+
+    /*if (INFO)
       Log.i(TAG, "requestCall_BoardPostDel");
 
     mCDL_BoardPostDel = new CountDownLatch(1);
@@ -789,8 +814,11 @@ public class DetailActivity extends ActionBarActivity implements AdapterView.OnI
         return params;
       }
     };
-    mRequestQueue.add(request);
+    mRequestQueue.add(request);*/
   }
+
+
+
 
 
   public void requestCall_LikeState() {
@@ -888,11 +916,11 @@ public class DetailActivity extends ActionBarActivity implements AdapterView.OnI
   // Intent Handler
   final Handler IntentDelHandler = new android.os.Handler() {
     public void handleMessage(Message msg) {
-      try {
+     /* try {
         mCDL_BoardPostDel.await();
       } catch (InterruptedException e) {
         e.printStackTrace();
-      }
+      }*/
 
       Constant.REFRESH_BOARD_FLAG = Constant.REQUEST_DELPOST;
       finish();
@@ -947,8 +975,72 @@ public class DetailActivity extends ActionBarActivity implements AdapterView.OnI
     alert.show();
 
   }
+  /**
+   * front notice 서버에서 상태값을 가져온다.
+   * {"statusCode":0, "versionCode":11, "eventType":"MOBILE"}
+   *
+   * - statusCode 0:일반 | 1:서버점검(html공지)
+   * - versionCode app 버전코드
+   * - eventType: WEB:webView 이벤트 | MOBILE:App 친구초대 이벤트
+   */
+  @SuppressLint("HandlerLeak")
+  private Handler introStatusHandler = new Handler(){
+    public void handleMessage(Message msg) {
+      switch(msg.what){
+        case -1:
+          alertMessage(getApplicationContext(), getResources().getString(R.string.error_etc));
+          break;
+        case 0:
+          Log.i(TAG, msg.toString());
+          if(Constant.SUCCESS.equals(getString(msg.obj, "result"))){
 
+          } else {
+            if(toast == null){
+              toast = Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_network), Toast.LENGTH_LONG);
+            } else {
+              toast.cancel();
+              toast = Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_network), Toast.LENGTH_LONG);
+            }
+            toast.show();
+          }
+          break;
+      }
+    }
+  };
+  public static String getString(final Object jsonStr, final String searchWord) {
 
+    Object res = null;
+
+    try {
+      JSONObject obj = new JSONObject((String)jsonStr);
+      res = obj.get(searchWord);
+
+      if(res instanceof Object)
+        return "";
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return String.valueOf(res);
+  }
+  /**
+   *
+   * 각 Activity 에서 에러 메세지창 호출시
+   *
+   */
+  public void alertMessage(Context context, CharSequence message) {
+    AlertDialog alert;
+    alert = new AlertDialog.Builder(context)
+        .setIconAttribute(android.R.attr.alertDialogIcon)
+        .setTitle("알림")
+        .setMessage(message)
+        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int whichButton) {
+            dialog.dismiss();
+          }
+        })
+        .show();
+  }
   @Override
   public boolean onKeyDown(int keyCode, KeyEvent event) {
     if (keyCode == KeyEvent.KEYCODE_MENU) {
@@ -1007,5 +1099,11 @@ public class DetailActivity extends ActionBarActivity implements AdapterView.OnI
     InputMethodManager manager = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
     manager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
   }
+  @Override
+  public void onStart() {
+    super.onStart();
+    // 구글 통계
+    GoogleAnalytics.getInstance(this).reportActivityStart(this);
+  };
 
 }

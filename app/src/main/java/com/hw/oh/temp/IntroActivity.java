@@ -1,12 +1,19 @@
 package com.hw.oh.temp;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -49,6 +56,7 @@ public class IntroActivity extends Activity {
   private HYFont mFont;
   private HYPreference mPref;
   private HYNetworkInfo mNet;
+  private ImageView mIntroDot;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +69,8 @@ public class IntroActivity extends Activity {
     mPref = new HYPreference(this);
     mNet = new HYNetworkInfo(this);
 
-    /*//InApp
-    String base64EncodedPublicKey = getResources().getString(R.string.base64EncodedPublicKey);
+    //InApp
+String base64EncodedPublicKey = getResources().getString(R.string.base64EncodedPublicKey);
     mHelper = new IabHelper(this, base64EncodedPublicKey);
     mHelper.enableDebugLogging(true, "IAB");
     mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
@@ -77,20 +85,39 @@ public class IntroActivity extends Activity {
           mHelper.queryInventoryAsync(mQueryFinishedListener);
         }
       }
-    });*/
+    });
 
     //View
     ViewGroup root = (ViewGroup) findViewById(android.R.id.content);
     mFont.setGlobalFont(root);
-    dbinit();
 
-    if (!mNet.networkgetInfo()) {
+    // 구글 통계
+    Tracker mTracker = ((ApplicationClass) getApplication()).getDefaultTracker();
+    mTracker.setScreenName("스플래쉬");
+    mTracker.send(new HitBuilders.AppViewBuilder().build());
+
+
+
+    dbinit();
+/*
+// 인트로 애니메이션
+    root.post(new Runnable() {
+      @Override
+      public void run() {
+        introAnimation();
+      }
+    });
+*/
+
+    if (mNet.networkgetInfo()) {
       requestCallRest_Guide();
       requestUniqueID();
     } else {
       new Handler().postDelayed(new Runnable() {
         @Override
         public void run() {
+
+
           if (mPref.getValue(mPref.KEY_PASS_STATE, false)) {
             Log.i(TAG, "PassWord");
             Intent intent_pass = new Intent(IntroActivity.this, PassActivity.class);
@@ -107,9 +134,23 @@ public class IntroActivity extends Activity {
             finish();
           }
         }
-      }, 1000);
+      }, 3000);
     }
   }
+  private void introAnimation(){
+    mIntroDot = (ImageView) findViewById(R.id.intro_dot);
+
+    AnimationDrawable animation = new AnimationDrawable();
+    animation.addFrame(getResources().getDrawable(R.drawable.intro_img1), 300); //ms(밀리세컨드 1/1000초)
+    animation.addFrame(getResources().getDrawable(R.drawable.intro_img2), 300);
+    animation.addFrame(getResources().getDrawable(R.drawable.intro_img3), 300);
+    animation.addFrame(getResources().getDrawable(R.drawable.intro_img1), 300);
+
+    animation.setOneShot(false);
+    mIntroDot.setBackgroundDrawable(animation);
+    animation.start();
+  }
+
 
   public void dbinit() {
     if (INFO)
@@ -289,4 +330,17 @@ public class IntroActivity extends Activity {
   }
 
 
+  @Override
+  public void onStart() {
+    super.onStart();
+    // 구글 통계
+    GoogleAnalytics.getInstance(this).reportActivityStart(this);
+  };
+
+  @Override
+  public void onStop() {
+    super.onStop();
+    // 구글 통계
+    GoogleAnalytics.getInstance(this).reportActivityStop(this);
+  };
 }

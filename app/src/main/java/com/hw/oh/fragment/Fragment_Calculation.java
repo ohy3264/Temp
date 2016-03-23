@@ -1,5 +1,8 @@
 package com.hw.oh.fragment;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import android.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +18,7 @@ import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.hw.oh.temp.ApplicationClass;
 import com.hw.oh.temp.R;
 import com.hw.oh.utility.HYFont;
 import com.tistory.whdghks913.croutonhelper.CroutonHelper;
@@ -69,6 +73,7 @@ public class Fragment_Calculation extends Fragment implements AdapterView.OnItem
     //Utill
     mRequestQueue = Volley.newRequestQueue(getActivity());
     mFont = new HYFont(getActivity());
+
     mFont.setGlobalFont((ViewGroup) rootView);
 
     //Crouton
@@ -220,6 +225,7 @@ public class Fragment_Calculation extends Fragment implements AdapterView.OnItem
     super.onResume();
 
   }
+
 
 
 }

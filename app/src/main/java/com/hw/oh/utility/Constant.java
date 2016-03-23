@@ -4,6 +4,7 @@ package com.hw.oh.utility;
  * Created by oh on 2015-02-04.
  */
 public class Constant {
+  public static final String LOG = "HWOH";
   public static String IMG_UPLOAD_URL = "http://ohy3264.cafe24.com/Anony/api/uploads/Img";
   public static String GUIDE_MSG1 = "";
   public static String GUIDE_MSG2 = "";
@@ -20,6 +21,17 @@ public class Constant {
   public static int LIMIT_START = 0;
   public static int LIMIT_ADD = 15;
 
+  // 서버 통신 디폴트 시도 횟수
+  public static final int MAX_ATTEMPTS = 5;
+  // 네트워크 에러코드
+  public static final int ERROR_NETWORK = 1;
+  public static final int ERROR_SERVER = 2;
+  public static final int ERROR_UNKNOWN = 3;
+
+  public static final String SUCCESS = "SUCCESS";
+  public static final String WRONG = "WRONG";
+  public static final String FAIL = "FAIL";
+  public static final String DRAW = "DRAW";
 
   public static String ANI_STATE_UP = "UP";
   public static String ANI_STATE_DOWN = "DOWN";
@@ -54,7 +66,7 @@ public class Constant {
 
 
   /* admob  on/off */
-  public static boolean ADMOB = false;
+  public static boolean ADMOB = true;
 
   public static String FONT_NAME = "fonts/SangSangTitle.ttf";
 

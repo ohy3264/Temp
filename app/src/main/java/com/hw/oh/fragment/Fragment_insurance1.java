@@ -1,5 +1,9 @@
 package com.hw.oh.fragment;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -8,11 +12,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hw.oh.temp.ApplicationClass;
 import com.hw.oh.temp.R;
 import com.hw.oh.utility.HYFont;
 import com.hw.oh.utility.HYPreference;
@@ -29,6 +34,7 @@ public class Fragment_insurance1 extends Fragment {
   public static final String TAG = "Fragment_Info";
   public static final boolean DBUG = true;
   public static final boolean INFO = true;
+
   //Crouton
   private View mCroutonView;
   private TextView mTxtCrouton;
@@ -36,7 +42,7 @@ public class Fragment_insurance1 extends Fragment {
 
   //View
   private EditText mEdtWokerPay, mEdtOwnerPay, mEdtTotalPay, mEdtMonthPay;
-  private Button mBtnCal;
+  private LinearLayout mBtnCal;
 
   //Data
   private long mMonthPay;
@@ -48,6 +54,11 @@ public class Fragment_insurance1 extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_insurance1, container, false);
+    // 구글 통계
+    Tracker mTracker = ((ApplicationClass) getActivity().getApplication()).getDefaultTracker();
+    mTracker.setScreenName("연금보험");
+    mTracker.send(new HitBuilders.AppViewBuilder().build());
+
     //Util
     mFont = new HYFont(getActivity());
     mFont.setGlobalFont((ViewGroup) rootView);
@@ -84,7 +95,7 @@ public class Fragment_insurance1 extends Fragment {
     mEdtTotalPay = (EditText) rootView.findViewById(R.id.edtTotalPay);
     mEdtWokerPay = (EditText) rootView.findViewById(R.id.edtWokerPay);
 
-    mBtnCal = (Button) rootView.findViewById(R.id.btnCalculation);
+    mBtnCal = (LinearLayout) rootView.findViewById(R.id.btnCalculation);
     mBtnCal.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -122,4 +133,18 @@ public class Fragment_insurance1 extends Fragment {
     mEdtOwnerPay.setText(mNumFomat.format(monthPay * 0.045));
     mEdtWokerPay.setText(mNumFomat.format(monthPay * 0.045));
   }
+  @Override
+  public void onStart() {
+    super.onStart();
+    // 구글 통계
+    GoogleAnalytics.getInstance(getActivity()).reportActivityStart(getActivity());
+  };
+
+  @Override
+  public void onStop() {
+    super.onStop();
+    // 구글 통계
+    GoogleAnalytics.getInstance(getActivity()).reportActivityStop(getActivity());
+  };
+
 }

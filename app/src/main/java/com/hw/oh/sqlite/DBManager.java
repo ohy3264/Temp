@@ -19,9 +19,9 @@ public class DBManager extends SQLiteOpenHelper {
   private static final String TAG = "DBManager";
   public static final boolean DBUG = true;
   public static final boolean INFO = true;
+  private static DBManager mDbManager = null;
   // Database Version
-  private static final int DATABASE_VERSION = 14; //2015.10.27 hwoh :: 13에서 14로 변경함
-
+  private static final int DATABASE_VERSION = 15; //2015.12.06 hwoh :: 14에서 15로 변경함
   // Database Column
   private final String[] PARTTIME_DATA_COLUMN = {"_id", "albaname", "date", "hourMoney", "startTimeHour",
       "startTimeMin", "endTimeHour", "endTimeMin", "simpleMemo", "workTimeHour", "workTimeMin", "workPaygabul",
@@ -31,7 +31,12 @@ public class DBManager extends SQLiteOpenHelper {
 
   private final String[] PARTTIME_INFO_COLUMN = {"_id", "albaname", "hourMoney", "startTimeHour",
       "startTimeMin", "endTimeHour", "endTimeMin", "simpleMemo", "workPayNight", "workPayAdd", "workRefresh", "workRefreshType", "workRefreshHour", "workRefreshMin", "workPayEtc",
-      "workPayEtcNum", "workPayEtcMoney", "workPayWeekTime", "workPayWeekMoney", "workPayWeek", "workAddType", "workPayAddHour", "workPayAddMin", "workAlarm", "workMonthDay"};
+      "workPayEtcNum", "workPayEtcMoney", "workPayWeekTime", "workPayWeekMoney", "workPayWeek", "workAddType", "workPayAddHour", "workPayAddMin", "workAlarm", "workMonthDay", "workMonthWeekFlag", "workWeekDay"};
+
+  public static DBManager getInstance(Context context){
+    mDbManager = new DBManager(context);
+    return mDbManager;
+  }
 
   public DBManager(Context context) {
     super(context, DBConstant.DATABASE_NAME, null, DATABASE_VERSION);
@@ -104,6 +109,9 @@ public class DBManager extends SQLiteOpenHelper {
         + "workPayAddMin VACHAR DEFAULT 0, "
         + "workAlarm VACHAR DEFAULT false, "
         + "workMonthDay integer DEFAULT 1, "
+        + "workWeekDay integer DEFAULT 2, "
+        + "workMonthWeekFlag integer DEFAULT 1, "
+
         + "unique(albaname))";
     db.execSQL(createTable2);
     String createTable3 = "create table " + DBConstant.TABLE_CALENDARINFO + " ("
@@ -392,6 +400,18 @@ public class DBManager extends SQLiteOpenHelper {
           } else {
             Log.i(TAG, "workMonthDay  있음");
           }
+          if (PARTTIME_INFO_COLUMN[i].equals("workWeekDay")) {
+            Log.i(TAG, "workWeekDay  없음");
+            db.execSQL("ALTER TABLE " + DBConstant.TABLE_PARTTIMEINFO + " ADD COLUMN " + "workWeekDay" + " integer  DEFAULT 2");
+          } else {
+            Log.i(TAG, "workWeekDay  있음");
+          }
+          if (PARTTIME_INFO_COLUMN[i].equals("workMonthWeekFlag")) {
+            Log.i(TAG, "workMonthWeekFlag  없음");
+            db.execSQL("ALTER TABLE " + DBConstant.TABLE_PARTTIMEINFO + " ADD COLUMN " + "workMonthWeekFlag" + " integer  DEFAULT 1");
+          } else {
+            Log.i(TAG, "workMonthWeekFlag  있음");
+          }
 
           db.setTransactionSuccessful();
         } catch (IllegalStateException e) {
@@ -442,6 +462,8 @@ public class DBManager extends SQLiteOpenHelper {
       values.put("workPayAddMin", info.getWorkPayAddMin());
       values.put("workAlarm", Boolean.toString(info.getWorkAlarm()));
       values.put("workMonthDay", info.getWorkMonthDay());
+      values.put("workWeekDay", info.getWorkWeekDay());
+      values.put("workMonthWeekFlag", info.getWorkMonthWeekFlag());
 
       db.insert(DBConstant.TABLE_PARTTIMEINFO, null, values);
       return true;
@@ -578,6 +600,8 @@ public class DBManager extends SQLiteOpenHelper {
           + "', workPayAddMin  = '" + info.getWorkPayAddMin()
           + "', workAlarm  = '" + info.getWorkAlarm()
           + "', workMonthDay  = '" + info.getWorkMonthDay()
+          + "', workWeekDay  = '" + info.getWorkWeekDay()
+          + "', workMonthWeekFlag  = '" + info.getWorkMonthWeekFlag()
           + "' where albaname = '" + albaname
           + "';";
       Log.i(TAG, sql);
@@ -628,6 +652,9 @@ public class DBManager extends SQLiteOpenHelper {
       values.put("workPayAddMin", info.getWorkPayAddMin());
       values.put("workAlarm", Boolean.toString(info.getWorkAlarm()));
       values.put("workMonthDay", info.getWorkMonthDay());
+      values.put("workWeekDay", info.getWorkWeekDay());
+      values.put("workMonthWeekFlag", info.getWorkMonthWeekFlag());
+
 
       db.insert(DBConstant.TABLE_PARTTIMEINFO, null, values);
       return true;
@@ -642,7 +669,7 @@ public class DBManager extends SQLiteOpenHelper {
   // 데이터 갱신
   public boolean updatePartTimeData(PartTimeItem item, String date) {
     if (INFO)
-      Log.i(TAG, "updateData DataBase");
+      Log.i(TAG, "updatePartTimeData");
     SQLiteDatabase db = getWritableDatabase();
     try {
       String sql = "update " + DBConstant.TABLE_PARTTIMEDATA + " set hourMoney = '" + item.getHourMoney()
@@ -800,6 +827,9 @@ public class DBManager extends SQLiteOpenHelper {
       info.setWorkPayAddMin(results.getString(results.getColumnIndex("workPayAddMin")));
       info.setWorkAlarm(Boolean.parseBoolean(results.getString(results.getColumnIndex("workAlarm"))));
       info.setWorkMonthDay(results.getInt(results.getColumnIndex("workMonthDay")));
+      info.setWorkWeekDay(results.getInt(results.getColumnIndex("workWeekDay")));
+      info.setWorkMonthWeekFlag(results.getInt(results.getColumnIndex("workMonthWeekFlag")));
+
 
 
       results.close();

@@ -1,5 +1,9 @@
 package com.hw.oh.fragment;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +20,7 @@ import com.hw.oh.adapter.WorkAlbaInfoAdapter_swip;
 import com.hw.oh.model.PartTimeInfo;
 import com.hw.oh.sqlite.DBConstant;
 import com.hw.oh.sqlite.DBManager;
+import com.hw.oh.temp.ApplicationClass;
 import com.hw.oh.temp.R;
 import com.hw.oh.utility.DndListView;
 import com.tistory.whdghks913.croutonhelper.CroutonHelper;
@@ -55,6 +60,10 @@ public class Fragment_Swap extends android.app.Fragment implements DndListView.D
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_swap, container, false);
+    // 구글 통계
+    Tracker mTracker = ((ApplicationClass) getActivity().getApplication()).getDefaultTracker();
+    mTracker.setScreenName("알바리스트 순서변경");
+    mTracker.send(new HitBuilders.AppViewBuilder().build());
     //Util
     mDB = new DBManager(getActivity());
     //Crouton
@@ -142,4 +151,18 @@ public class Fragment_Swap extends android.app.Fragment implements DndListView.D
       }
     }
   }
+
+  @Override
+  public void onStart() {
+    super.onStart();
+    // 구글 통계
+    GoogleAnalytics.getInstance(getActivity()).reportActivityStart(getActivity());
+  };
+
+  @Override
+  public void onStop() {
+    super.onStop();
+    // 구글 통계
+    GoogleAnalytics.getInstance(getActivity()).reportActivityStop(getActivity());
+  };
 }

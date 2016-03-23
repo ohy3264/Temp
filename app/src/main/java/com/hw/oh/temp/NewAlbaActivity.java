@@ -3,6 +3,9 @@ package com.hw.oh.temp;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
@@ -84,6 +87,8 @@ public class NewAlbaActivity extends ActionBarActivity implements View.OnClickLi
   private int mEtcMoney = 0;
   private int mEtcNum = 0;
   private int mMonthDay = 1;
+  private int mWeekDay = 1;
+  private int mMonthWeekFlag = 1;
 
   private int mAddType = 0;
   private int mAddHour = 0;
@@ -130,6 +135,12 @@ public class NewAlbaActivity extends ActionBarActivity implements View.OnClickLi
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_newalba_imsi);
+    // 구글 통계
+    Tracker mTracker = ((ApplicationClass) getApplication()).getDefaultTracker();
+    mTracker.setScreenName("새로운 알바 등록");
+    mTracker.send(new HitBuilders.AppViewBuilder().build());
+
+
     //Util
     mInfoExtra = new InfoExtra(this);
     mPref = new HYPreference(this);
@@ -149,6 +160,7 @@ public class NewAlbaActivity extends ActionBarActivity implements View.OnClickLi
     //ActionBar
     mToolbar = (Toolbar) findViewById(R.id.toolbar);
     if (mToolbar != null) {
+      mToolbar.setTitle("알바등록");
       setSupportActionBar(mToolbar);
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
       mFont.setGlobalFont((ViewGroup) mToolbar);
@@ -188,8 +200,8 @@ public class NewAlbaActivity extends ActionBarActivity implements View.OnClickLi
     mLinWeek = (LinearLayout) findViewById(R.id.linWeek);
     mLinAddTime = (LinearLayout) findViewById(R.id.linAddTime);
     mLinMonthPay = (LinearLayout) findViewById(R.id.linMonthPay);
-    mLinMonthPay.setOnClickListener(this);
 
+    mLinMonthPay.setOnClickListener(this);
     mLinWeek.setOnClickListener(this);
     mLinEtc.setOnClickListener(this);
     mLinRefreshTime.setOnClickListener(this);
@@ -251,6 +263,8 @@ public class NewAlbaActivity extends ActionBarActivity implements View.OnClickLi
         , new Intent(this, AlarmService.class).putExtra("AlbaName", mEdtAlbaName.getText().toString()), PendingIntent.FLAG_UPDATE_CURRENT);
     mAlarmMgr = (AlarmManager) getSystemService(ALARM_SERVICE);
 
+
+
     // ADmob
     if (Constant.ADMOB) {
       LinearLayout layout = (LinearLayout) findViewById(R.id.mainLayout);
@@ -268,7 +282,7 @@ public class NewAlbaActivity extends ActionBarActivity implements View.OnClickLi
     switch (flag) {
       case "NEW":
         mTxtSave.setText("저장하기");
-        mToolbar.setTitle("저장하기");
+        mToolbar.setTitle("알바저장");
         mTxtAdd.setText("8시간 이상 근무한 시급 1.5배 적용");
         mTxtWeekMoney.setText("한주간의 근로시간이 15시간 이상 시 적용");
         mTxtRefreshView1.setText("4시간 마다");
@@ -277,7 +291,7 @@ public class NewAlbaActivity extends ActionBarActivity implements View.OnClickLi
         break;
       case "UPDATE":
         mTxtSave.setText("수정하기");
-        mToolbar.setTitle("수정하기");
+        mToolbar.setTitle("알바수정");
         mPartInfoData_Intent = (PartTimeInfo) getIntent().getSerializableExtra("ObjectData");
         mID = mPartInfoData_Intent.get_id();
         mEdtAlbaName.setText(mPartInfoData_Intent.getAlbaname());
@@ -301,7 +315,11 @@ public class NewAlbaActivity extends ActionBarActivity implements View.OnClickLi
         mAddType = Integer.parseInt(mPartInfoData_Intent.getWorkAddType());
         mAddHour = Integer.parseInt(mPartInfoData_Intent.getWorkPayAddHour());
         mAddMin = Integer.parseInt(mPartInfoData_Intent.getWorkPayAddMin());
+
         mMonthDay = mPartInfoData_Intent.getWorkMonthDay();
+        mWeekDay =  mPartInfoData_Intent.getWorkWeekDay();
+        mMonthWeekFlag = mPartInfoData_Intent.getWorkMonthWeekFlag();
+
         mFlag_Alarm = mPartInfoData_Intent.getWorkAlarm();
         switch (mPartInfoData_Intent.getWorkAddType()) {
           case "0":
@@ -325,9 +343,8 @@ public class NewAlbaActivity extends ActionBarActivity implements View.OnClickLi
             mTxtRefreshView2.setText(mRefreshMin + " 분 휴식");
             break;
         }
-
         //월급날
-        mTxtMonthPay.setText("매달 " + mMonthDay + "일");
+        onArticleSelected(mMonthWeekFlag, mWeekDay, mMonthDay);
         //월급상태
         workHourSet();
         break;
@@ -335,7 +352,6 @@ public class NewAlbaActivity extends ActionBarActivity implements View.OnClickLi
   }
 
   public void initCheckBox() {
-
     //체크박스 상태 갱신
     mChkWeekPay.setChecked(mFlag_WeekPay);
     mChkEtcPay.setChecked(mFlag_EtcPay);
@@ -439,7 +455,6 @@ public class NewAlbaActivity extends ActionBarActivity implements View.OnClickLi
         }
         break;
     }
-
     mChk_mon.setChecked(mWeekItem.isMon());
     mChk_thu.setChecked(mWeekItem.isThu());
     mChk_wed.setChecked(mWeekItem.isWed());
@@ -447,7 +462,6 @@ public class NewAlbaActivity extends ActionBarActivity implements View.OnClickLi
     mChk_fri.setChecked(mWeekItem.isFri());
     mChk_sat.setChecked(mWeekItem.isSat());
     mChk_sun.setChecked(mWeekItem.isSun());
-
   }
 
   @Override
@@ -456,7 +470,6 @@ public class NewAlbaActivity extends ActionBarActivity implements View.OnClickLi
       case R.id.linStartTime:
         if (mPref.getValue(mPref.KEY_PICKER_THEME, 0) == 0) {
           final com.rey.material.app.TimePickerDialog startDialog = new com.rey.material.app.TimePickerDialog(this);
-
           startDialog.hour(Integer.parseInt(mTxtStartTime_hour.getText().toString()));
           startDialog.minute(Integer.parseInt(mTxtStartTime_min.getText().toString()));
           startDialog.positiveAction("확인");
@@ -475,7 +488,6 @@ public class NewAlbaActivity extends ActionBarActivity implements View.OnClickLi
           startDialog.negativeActionClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
               startDialog.dismiss();
             }
           });
@@ -484,7 +496,6 @@ public class NewAlbaActivity extends ActionBarActivity implements View.OnClickLi
           TimePickerDialog startDialogICS = new TimePickerDialog(this, TimePickerDialog.THEME_HOLO_DARK, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
               mStartHour = hourOfDay;
               mStartMin = minute;
               mTxtStartTime_hour.setText(Integer.toString(hourOfDay));
@@ -623,10 +634,11 @@ public class NewAlbaActivity extends ActionBarActivity implements View.OnClickLi
                 monthBundle.putDouble("weekTime", mWeekTime);
                 monthPayDialog.setArguments(monthBundle);
                 monthPayDialog.show(getSupportFragmentManager(), null);*/
-
         MonthPayDialog monthPayDialog = new MonthPayDialog();
         Bundle monthBundle = new Bundle();
         monthBundle.putInt("MonthDay", mMonthDay);
+        monthBundle.putInt("WeekDay", mWeekDay);
+        monthBundle.putInt("MonthWeekFlag", mMonthWeekFlag);
         monthPayDialog.setArguments(monthBundle);
         monthPayDialog.show(getSupportFragmentManager(), null);
 
@@ -636,10 +648,8 @@ public class NewAlbaActivity extends ActionBarActivity implements View.OnClickLi
   }
 
   public void workAlarmSet() {
-
     Calendar currentCal = Calendar.getInstance();
     Calendar mAlbaCal = Calendar.getInstance();
-
     //Alram set
     mAlbaCal.set(Calendar.HOUR_OF_DAY, mStartHour);
     mAlbaCal.set(Calendar.MINUTE, mStartMin);
@@ -665,7 +675,6 @@ public class NewAlbaActivity extends ActionBarActivity implements View.OnClickLi
 
   }
 
-
   public void workHourSet() {
     //시작 시간
     Calendar startCal = Calendar.getInstance();
@@ -680,7 +689,7 @@ public class NewAlbaActivity extends ActionBarActivity implements View.OnClickLi
     startCal.set(Calendar.SECOND, 0);
 
     //기타수당 적용
-    mTxtEtcMoney.setText(mNumFomat.format(mEtcMoney * mEtcNum));
+    mTxtEtcMoney.setText(mNumFomat.format(mEtcMoney * mEtcNum) + " 원");
     //주휴수당 적용
     mTxtWeekMoney.setText(mNumFomat.format(weekPaySet()) + " 원");
 
@@ -719,7 +728,6 @@ public class NewAlbaActivity extends ActionBarActivity implements View.OnClickLi
 
   public void AlertDialog_AlbaDel() {
     AlertDialog.Builder alert = new AlertDialog.Builder(this);
-
     // 제목, 메시지, icon, 버튼
     alert.setTitle("삭제");
     alert.setMessage("삭제하시겠습니까?");
@@ -743,7 +751,6 @@ public class NewAlbaActivity extends ActionBarActivity implements View.OnClickLi
             mCroutonHelper.setCustomView(mCroutonView);
             mCroutonHelper.show();
           }
-
         } else {
           mTxtCrouton.setText("이미 등록된 알바명가 존재하지 않습니다");
           mCroutonHelper.setCustomView(mCroutonView);
@@ -758,7 +765,6 @@ public class NewAlbaActivity extends ActionBarActivity implements View.OnClickLi
         dialog.cancel(); // No 버튼을 눌렀을 경우이며 단순히 창을 닫아 버린다.
       }
     });
-
     alert.show();
 
   }
@@ -786,7 +792,6 @@ public class NewAlbaActivity extends ActionBarActivity implements View.OnClickLi
       mCroutonHelper.setCustomView(mCroutonView);
       mCroutonHelper.show();
     } else if (mEdtHourMoney.getText().toString().isEmpty()) {
-
       mTxtCrouton.setText("시급을 입력하세요");
       mCroutonHelper.setCustomView(mCroutonView);
       mCroutonHelper.show();
@@ -886,6 +891,9 @@ public class NewAlbaActivity extends ActionBarActivity implements View.OnClickLi
     mPartInfoData.setWorkAlarm(mFlag_Alarm);
     mPartInfoData.setWorkMonthDay(mMonthDay);
 
+    mPartInfoData.setWorkWeekDay(mWeekDay);
+    mPartInfoData.setWorkMonthWeekFlag(mMonthWeekFlag);
+
     mWeekItem.setAlbaName(mEdtAlbaName.getText().toString());
     Log.i(TAG, Boolean.toString(mFlag_NightAdvance));
     Log.i(TAG, Boolean.toString(mFlag_RefreshTime));
@@ -925,7 +933,6 @@ public class NewAlbaActivity extends ActionBarActivity implements View.OnClickLi
     mWeekHourMoney = Integer.parseInt(weekMoney);
     mWeekTime = Double.parseDouble(weekTime);
     workHourSet();
-
   }
 
   @Override
@@ -1005,10 +1012,64 @@ public class NewAlbaActivity extends ActionBarActivity implements View.OnClickLi
     }
   }
 
-  public void onArticleSelected(int monthDay) {
+  public void onArticleSelected(int flag, int weekDay, int monthDay) {
+    String mWeekStr = "";
     mMonthDay = monthDay;
-    mTxtMonthPay.setText("매달 " + monthDay + "일");
+    mWeekDay = weekDay;
+    mMonthWeekFlag = flag;
+    switch (weekDay){
+      case 1:
+        mWeekStr = "일";
+        break;
+      case 2:
+        mWeekStr = "월";
+        break;
+      case 3:
+        mWeekStr = "화";
+        break;
+      case 4:
+        mWeekStr = "수";
+        break;
+      case 5:
+        mWeekStr = "목";
+        break;
+      case 6:
+        mWeekStr = "금";
+        break;
+      case 7:
+        mWeekStr = "토";
+        break;
+    }
+
+    switch (flag){
+      case 0:
+        mTxtMonthPay.setText("매주 " + mWeekStr + "요일");
+        break;
+      case 1:
+        mTxtMonthPay.setText("매달 " + monthDay + "일");
+        break;
+    }
+
   }
 
 
+
+  public interface OnDeletedListener {
+    public void onDelete();
+  }
+
+
+  @Override
+  public void onStart() {
+    super.onStart();
+    // 구글 통계
+    GoogleAnalytics.getInstance(this).reportActivityStart(this);
+  };
+
+  @Override
+  public void onStop() {
+    super.onStop();
+    // 구글 통계
+    GoogleAnalytics.getInstance(this).reportActivityStop(this);
+  };
 }

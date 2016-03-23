@@ -3,10 +3,14 @@ package com.hw.oh.temp;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -93,12 +97,16 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //Util
+        // 구글 통계
+        Tracker mTracker = ((ApplicationClass) getApplication()).getDefaultTracker();
+        mTracker.setScreenName("메인액티비티");
+        mTracker.send(new HitBuilders.AppViewBuilder().build());
+
         mBackPressCloseHandler = new HYBackPressCloserHandler(this);
         mFont = new HYFont(this);
         ViewGroup root = (ViewGroup) findViewById(android.R.id.content);
         mFont.setGlobalFont(root);
         mPref = new HYPreference(this);
-
         //ActionBar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("알바매니저");
@@ -108,7 +116,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         mFont.setGlobalFont((ViewGroup) mToolbar);
 
-       /* // In APP Payment
+        // In APP Payment
         Intent serviceIntent = new Intent("com.android.vending.billing.InAppBillingService.BIND");
         serviceIntent.setPackage("com.android.vending");
         bindService(serviceIntent, mServiceConn, Context.BIND_AUTO_CREATE);
@@ -125,7 +133,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                     Toast.makeText(getApplicationContext(), "구글 결재 초기화 오류", Toast.LENGTH_SHORT).show();
                 }
             }
-        });*/
+        });
 
         //DrawerLayout
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -422,7 +430,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     public void onDestroy() {
         super.onDestroy();
         if (mServiceConn != null) {
-            unbindService(mServiceConn);
+            try {
+                unbindService(mServiceConn);
+            }catch (Exception e){
+                Log.i(TAG, e.toString());
+            }
         }
     }
 
@@ -438,4 +450,17 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             }
         }
     }
+    @Override
+    public void onStart() {
+        super.onStart();
+        // 구글 통계
+        GoogleAnalytics.getInstance(this).reportActivityStart(this);
+    };
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        // 구글 통계
+        GoogleAnalytics.getInstance(this).reportActivityStop(this);
+    };
 }

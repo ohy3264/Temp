@@ -1,5 +1,9 @@
 package com.hw.oh.fragment;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
@@ -33,6 +37,7 @@ import com.hw.oh.model.PartTimeItem;
 import com.hw.oh.model.WeekWeatherItem;
 import com.hw.oh.sqlite.DBConstant;
 import com.hw.oh.sqlite.DBManager;
+import com.hw.oh.temp.ApplicationClass;
 import com.hw.oh.temp.CalculationCalendarActivity;
 import com.hw.oh.temp.NewWorkActivity;
 import com.hw.oh.temp.R;
@@ -109,6 +114,10 @@ public class Fragment_Calendar extends Fragment implements OnClickListener, Yaho
     // TODO Auto-generated method stub
     View fragView = inflater.inflate(R.layout.fragment_calendar, container,
         false);
+    // 구글 통계
+    Tracker mTracker = ((ApplicationClass) getActivity().getApplication()).getDefaultTracker();
+    mTracker.setScreenName("알바 캘린더");
+    mTracker.send(new HitBuilders.AppViewBuilder().build());
 
     // Utill Set
     mFont = new HYFont(getActivity());
@@ -401,28 +410,38 @@ public class Fragment_Calendar extends Fragment implements OnClickListener, Yaho
     Calendar today = Calendar.getInstance();
     Calendar c1 = Calendar.getInstance();
     Calendar c2 = Calendar.getInstance();
-
-    //Calendar 타입으로 변경 add()메소드로 1일씩 연장해 주기위해 변경
-    c1.set(Integer.parseInt(mTxtYear.getText().toString()), Integer.parseInt(mTxtMonth.getTag().toString()) - 1, mPartInfoData.getWorkMonthDay());
-    c2.set(Integer.parseInt(mTxtYear.getText().toString()), Integer.parseInt(mTxtMonth.getTag().toString()) - 1, mPartInfoData.getWorkMonthDay());
-
-    c2.add(Calendar.DATE, -1);
-
-
-    //월급 종료날이 오늘 보다 뒤일때
-    if (today.after(c2)) {
-      if (mPartInfoData.getWorkMonthDay() == 1) {
-        Log.i(TAG, "오늘날짜보다 월급 종료날이 더 앞 (1)");
-        c2.set(Integer.parseInt(mTxtYear.getText().toString()), Integer.parseInt(mTxtMonth.getTag().toString()) - 1, mPartInfoData.getWorkMonthDay());
-        c2.add(Calendar.MONTH, 1);
+    if(mPartInfoData.getWorkMonthWeekFlag() == 0){
+      if(c1.get(Calendar.DAY_OF_WEEK) < mPartInfoData.getWorkWeekDay()){
+        c1.set(Calendar.DAY_OF_WEEK, mPartInfoData.getWorkWeekDay());
+        c2.set(Calendar.DAY_OF_WEEK, mPartInfoData.getWorkWeekDay());
+        c1.add(Calendar.DATE, -7);
         c2.add(Calendar.DATE, -1);
-      } else {
-        Log.i(TAG, "오늘날짜보다 월급 종료날이 더 앞");
-        c2.add(Calendar.MONTH, 1);
+      }else{
+        c1.set(Calendar.DAY_OF_WEEK, mPartInfoData.getWorkWeekDay());
+        c2.set(Calendar.DAY_OF_WEEK, mPartInfoData.getWorkWeekDay());
+        c2.add(Calendar.DATE, 6);
       }
-    } else {
-      Log.i(TAG, "오늘날짜보다 월급 종료날이 더 뒤");
-      c1.add(Calendar.MONTH, -1);
+    }else{
+      //Calendar 타입으로 변경 add()메소드로 1일씩 연장해 주기위해 변경
+      c1.set(Integer.parseInt(mTxtYear.getText().toString()), Integer.parseInt(mTxtMonth.getTag().toString()) - 1, mPartInfoData.getWorkMonthDay());
+      c2.set(Integer.parseInt(mTxtYear.getText().toString()), Integer.parseInt(mTxtMonth.getTag().toString()) - 1, mPartInfoData.getWorkMonthDay());
+      c2.add(Calendar.DATE, -1);
+
+      //월급 종료날이 오늘 보다 뒤일때
+      if (today.after(c2)) {
+        if (mPartInfoData.getWorkMonthDay() == 1) {
+          Log.i(TAG, "오늘날짜보다 월급 종료날이 더 앞 (1)");
+          c2.set(Integer.parseInt(mTxtYear.getText().toString()), Integer.parseInt(mTxtMonth.getTag().toString()) - 1, mPartInfoData.getWorkMonthDay());
+          c2.add(Calendar.MONTH, 1);
+          c2.add(Calendar.DATE, -1);
+        } else {
+          Log.i(TAG, "오늘날짜보다 월급 종료날이 더 앞");
+          c2.add(Calendar.MONTH, 1);
+        }
+      } else {
+        Log.i(TAG, "오늘날짜보다 월급 종료날이 더 뒤");
+        c1.add(Calendar.MONTH, -1);
+      }
     }
     // c2.set(Integer.parseInt(mTxtYear.getText().toString()), Integer.parseInt(mTxtMonth.getTag().toString()) - 1, mCal.getActualMaximum(Calendar.DATE));
     Log.d(TAG, "time1 :: " + c1.getTime().toString());
@@ -447,7 +466,6 @@ public class Fragment_Calendar extends Fragment implements OnClickListener, Yaho
     });
     if (totalMoney != 0)
       snackbar.show();
-
   }
 
   public void asyncTask_Calendar_Call() {
@@ -463,14 +481,11 @@ public class Fragment_Calendar extends Fragment implements OnClickListener, Yaho
       // TODO Auto-generated method stub
       super.onPreExecute();
       mProgress.setVisibility(View.VISIBLE);
-
     }
 
     @Override
     protected Void doInBackground(Void... params) {
       // TODO Auto-generated method stub
-
-
       Cursor result = mDBManager.selectAllData(DBConstant.TABLE_PARTTIMEDATA, DBConstant.COLUMN_ALBANAME, mPartInfoData.getAlbaname());
       result.moveToFirst();
       mPartTimeDataList.clear();
@@ -558,7 +573,6 @@ public class Fragment_Calendar extends Fragment implements OnClickListener, Yaho
       this.mTxtBottom[i]
           .setBackgroundColor(Color.parseColor("#00ff0000"));
       // this.btn[i].setBackgroundResource(2130837508);
-
     }
   }
 
@@ -875,4 +889,17 @@ public class Fragment_Calendar extends Fragment implements OnClickListener, Yaho
                  vibe.vibrate(pattern, 0);*/
     vibe.vibrate(50);
   }
+  @Override
+  public void onStart() {
+    super.onStart();
+    // 구글 통계
+    GoogleAnalytics.getInstance(getActivity()).reportActivityStart(getActivity());
+  };
+
+  @Override
+  public void onStop() {
+    super.onStop();
+    // 구글 통계
+    GoogleAnalytics.getInstance(getActivity()).reportActivityStop(getActivity());
+  };
 }

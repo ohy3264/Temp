@@ -1,6 +1,9 @@
 package com.hw.oh.fragment;
 
 import com.google.android.gcm.GCMRegistrar;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -15,6 +18,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,9 +36,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.hw.oh.adapter.BoardListAdapter;
+import com.hw.oh.adapter.BoardListAdapter_Array;
 import com.hw.oh.model.BoardItem;
 import com.hw.oh.service.BoardListService;
+import com.hw.oh.temp.ApplicationClass;
 import com.hw.oh.temp.DetailActivity;
 import com.hw.oh.temp.NewPostActivity;
 import com.hw.oh.temp.R;
@@ -43,6 +48,9 @@ import com.hw.oh.utility.HYFont;
 import com.hw.oh.utility.HYNetworkInfo;
 import com.hw.oh.utility.HYPreference;
 import com.hw.oh.utility.InfoExtra;
+import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
+import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
+import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.SwipeDismissAdapter;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.tistory.whdghks913.croutonhelper.CroutonHelper;
 
@@ -53,21 +61,24 @@ import java.util.Map;
 /**
  * Created by oh on 2015-02-01.
  */
-public class Fragment_Talk extends Fragment implements AbsListView.OnScrollListener, AdapterView.OnItemClickListener {
+public class Fragment_Talk extends Fragment implements AbsListView.OnScrollListener, AdapterView.OnItemClickListener, OnDismissCallback {
   public static final String TAG = "Fragment_Talk";
   public static final boolean DBUG = true;
   public static final boolean INFO = true;
+  private static final int INITIAL_DELAY_MILLIS = 300;
 
   private TextView mTxtGuide;
   //Flag
   private boolean mLastitemVisibleFlag = false;
+  private boolean mLock = false;
   private Boolean mIsBound;
 
 
   private android.support.design.widget.FloatingActionButton mFabNewTalk;
+
   //List
   private ListView mListView;
-  private BoardListAdapter mBoardAdapter;
+  private BoardListAdapter_Array mBoardAdapter;
   private ArrayList<BoardItem> mBoardDataList = new ArrayList<BoardItem>();
   private ArrayList<BoardItem> mServiceDatalist = new ArrayList<BoardItem>();
 
@@ -119,11 +130,13 @@ public class Fragment_Talk extends Fragment implements AbsListView.OnScrollListe
           }
           mBoardAdapter.notifyDataSetChanged();
           mProgressBar.setVisibility(View.GONE);
+          mLock = false;
           break;
         default:
           Log.d(TAG, "default");
           super.handleMessage(msg);
           mProgressBar.setVisibility(View.GONE);
+          mLock = false;
       }
     }
   }
@@ -153,6 +166,11 @@ public class Fragment_Talk extends Fragment implements AbsListView.OnScrollListe
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_talk, container, false);
+    // 구글 통계
+    Tracker mTracker = ((ApplicationClass) getActivity().getApplication()).getDefaultTracker();
+    mTracker.setScreenName("알바톡");
+    mTracker.send(new HitBuilders.AppViewBuilder().build());
+
     //Util
     mRequestQueue = Volley.newRequestQueue(getActivity());
     mFont = new HYFont(getActivity());
@@ -170,12 +188,11 @@ public class Fragment_Talk extends Fragment implements AbsListView.OnScrollListe
     mTxtGuide.setSelected(true);
 
 
+    mProgressBar = (com.rey.material.widget.ProgressView) rootView.findViewById(R.id.progressBar);
+
     mListView = (ListView) rootView.findViewById(R.id.mainlistView);
     mListView.setOnScrollListener(this);
     mListView.setOnItemClickListener(this);
-
-    mProgressBar = (com.rey.material.widget.ProgressView) rootView.findViewById(R.id.progressBar);
-
 
     // Top pull refresh
     mTopPullRefresh = (SwipeRefreshLayout) rootView
@@ -205,6 +222,7 @@ public class Fragment_Talk extends Fragment implements AbsListView.OnScrollListe
         }, 1000);
       }
     });
+
     inits();
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
@@ -300,8 +318,11 @@ public class Fragment_Talk extends Fragment implements AbsListView.OnScrollListe
 
   @Override
   public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-    mLastitemVisibleFlag = (totalItemCount > 0)
-        && (firstVisibleItem + visibleItemCount >= totalItemCount);
+    mLastitemVisibleFlag = (totalItemCount > 0) && (firstVisibleItem + visibleItemCount >= totalItemCount);
+
+    int count = totalItemCount - visibleItemCount;
+    mLastitemVisibleFlag = firstVisibleItem >= count && totalItemCount != 0 && mLock == false;
+
   }
 
   @Override
@@ -310,6 +331,7 @@ public class Fragment_Talk extends Fragment implements AbsListView.OnScrollListe
     if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE
         && mLastitemVisibleFlag && !mTopPullRefresh.isRefreshing() && !Constant.RESPON_EMPTY) {
       Log.d(TAG, "allsync : BottomPullRefresh");
+      mLock = true;
       Constant.REFRESH_BOARD_FLAG = Constant.REQUEST_BOTTOM_REFRESH;
       sendRefreshToService();
       mProgressBar.setVisibility(View.VISIBLE);
@@ -318,12 +340,30 @@ public class Fragment_Talk extends Fragment implements AbsListView.OnScrollListe
 
 
   public void setAdapter() {
-    mBoardAdapter = new BoardListAdapter(getActivity(), mBoardDataList);
+  /*  mBoardAdapter = new BoardListAdapter_Array(getActivity(), mBoardDataList);
     if (mListView != null) {
-      mListView.setAdapter(mBoardAdapter);
+      AnimationAdapter  mAnimAdapter = new AlphaInAnimationAdapter(mBoardAdapter);
+      mAnimAdapter.setAbsListView(mListView);
+      mListView.setAdapter(mAnimAdapter);
+    }*/
+
+    mBoardAdapter = new BoardListAdapter_Array(getActivity(), mBoardDataList);
+    if (mListView != null) {
+      SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(new SwipeDismissAdapter(mBoardAdapter, this));
+      swingBottomInAnimationAdapter.setAbsListView(mListView);
+      assert swingBottomInAnimationAdapter.getViewAnimator() != null;
+      swingBottomInAnimationAdapter.getViewAnimator().setInitialDelayMillis(INITIAL_DELAY_MILLIS);
+
+      mListView.setAdapter(swingBottomInAnimationAdapter);
     }
   }
-
+  @Override
+  public void onDismiss(@NonNull final ViewGroup listView, @NonNull final int[] reverseSortedPositions) {
+    for (int position : reverseSortedPositions) {
+      mBoardDataList.remove(position);
+      mBoardAdapter.notifyDataSetChanged();
+    }
+  }
 
   @Override
   public void onResume() {
@@ -344,6 +384,12 @@ public class Fragment_Talk extends Fragment implements AbsListView.OnScrollListe
   }
 
   @Override
+  public void onStart() {
+    super.onStart();
+    // 구글 통계
+    GoogleAnalytics.getInstance(getActivity()).reportActivityStart(getActivity());
+  };
+  @Override
   public void onStop() {
     super.onStop();
     if (INFO)
@@ -352,6 +398,8 @@ public class Fragment_Talk extends Fragment implements AbsListView.OnScrollListe
     doUnbindService();
     mProgressBar.setVisibility(View.GONE);
     // mRequestQueue.cancelAll(TAG);
+    // 구글 통계
+    GoogleAnalytics.getInstance(getActivity()).reportActivityStop(getActivity());
   }
 
   @Override
@@ -464,4 +512,9 @@ public class Fragment_Talk extends Fragment implements AbsListView.OnScrollListe
     };
     this.mRequestQueue.add(postReq);
   }
+
+
+
+
+
 }

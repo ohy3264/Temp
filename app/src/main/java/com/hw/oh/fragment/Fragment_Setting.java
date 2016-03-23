@@ -1,5 +1,9 @@
 package com.hw.oh.fragment;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
@@ -31,6 +35,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.azeesoft.lib.colorpicker.ColorPickerDialog;
 import com.hw.oh.dialog.CalculSetDialog;
 import com.hw.oh.dialog.DigStyleDialog;
 import com.hw.oh.dialog.DutySetDialog;
@@ -41,6 +46,7 @@ import com.hw.oh.model.KmaCodeItem;
 import com.hw.oh.network.RestClient;
 import com.hw.oh.sqlite.DBConstant;
 import com.hw.oh.sqlite.KmDBManager;
+import com.hw.oh.temp.ApplicationClass;
 import com.hw.oh.temp.LocationSelectActivity;
 import com.hw.oh.temp.R;
 import com.hw.oh.utility.Constant;
@@ -106,14 +112,16 @@ public class Fragment_Setting extends Fragment implements View.OnClickListener, 
   private HYPreference mPref;
   private HYNetworkInfo mNet;
   private KmDBManager kmDBManager;
-
   private CountDownLatch CDLGpsLatch;
   private CountDownLatch CDLKmaDistanceLatch;
-
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_setting, container, false);
+// 구글 통계
+    Tracker mTracker = ((ApplicationClass) getActivity().getApplication()).getDefaultTracker();
+    mTracker.setScreenName("설정화면");
+    mTracker.send(new HitBuilders.AppViewBuilder().build());
     //Utill
     mFont = new HYFont(getActivity());
     mFont.setGlobalFont((ViewGroup) rootView);
@@ -218,7 +226,31 @@ public class Fragment_Setting extends Fragment implements View.OnClickListener, 
     switch (v.getId()) {
       case R.id.linSave:
         if (!mNet.networkgetInfo()) {
-          requetBackupDBSend();
+         // requetBackupDBSend();
+          //ColorPickerDialog colorPickerDialog= ColorPickerDialog.createColorPickerDialog(this);
+/*          ColorPickerDialog colorPickerDialog= ColorPickerDialog.createColorPickerDialog(getActivity(),ColorPickerDialog.DARK_THEME);
+          colorPickerDialog.setOnColorPickedListener(new ColorPickerDialog.OnColorPickedListener() {
+            @Override
+            public void onColorPicked(int color, String hexVal) {
+              //Your code here
+            }
+          });
+       //   colorPickerDialog.setHexaDecimalTextColor(Color.parse("#ffffff")); //There are many functions like this
+          colorPickerDialog.show();*/
+
+          ColorPickerDialog colorPickerDialog = new ColorPickerDialog(this, initialColor, new OnColorSelectedListener() {
+
+            @Override
+            public void onColorSelected(int color) {
+              // do action
+            }
+
+          });
+          colorPickerDialog.show();
+
+
+
+
         } else {
           mTxtCrouton.setText("네트워크를 확인해주세요");
           mCroutonHelper.setCustomView(mCroutonView);
@@ -785,5 +817,21 @@ public class Fragment_Setting extends Fragment implements View.OnClickListener, 
       mTxtDuty.setText("미적용");
     }
   }
+
+
+  @Override
+  public void onStart() {
+    super.onStart();
+    // 구글 통계
+    GoogleAnalytics.getInstance(getActivity()).reportActivityStart(getActivity());
+  };
+
+  @Override
+  public void onStop() {
+    super.onStop();
+    // 구글 통계
+    GoogleAnalytics.getInstance(getActivity()).reportActivityStop(getActivity());
+  };
+
 
 }

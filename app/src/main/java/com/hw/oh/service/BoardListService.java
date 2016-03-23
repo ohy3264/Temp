@@ -5,7 +5,6 @@ import com.google.gson.reflect.TypeToken;
 
 import android.app.Service;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -14,21 +13,16 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.util.Log;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.hw.oh.model.BoardItem;
 import com.hw.oh.utility.Constant;
 import com.hw.oh.utility.HYTime_Maximum;
+import com.hw.oh.utility.ServerRequestUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -65,7 +59,8 @@ public class BoardListService extends Service {
         case MSG_REGISTER_CLIENT:
           Log.d(TAG, "mHandler.case MSG_REGISTER_CLIENT");
           mClients = msg.replyTo;
-          asyncTask_BoardList_Call();
+        //  asyncTask_BoardList_Call();
+          requestCallRest_BoardList();
 
           break;
 
@@ -77,7 +72,8 @@ public class BoardListService extends Service {
 
         case MSG_REQ_REFRESH_CLIENT:
           Log.d(TAG, "mHandler.case MSG_REFRESH_CLIENT");
-          asyncTask_BoardList_Call();
+        //  asyncTask_BoardList_Call();
+          requestCallRest_BoardList();
 
           break;
 
@@ -129,12 +125,93 @@ public class BoardListService extends Service {
     super.onDestroy();
   }
 
+  // Intent Handler
+  final Handler listCallHandler = new android.os.Handler() {
+    public void handleMessage(Message msg) {
+      switch(msg.what){
+        case -1:
+          break;
+        case 0:
+          Log.d(TAG, "onResponse :: " + msg.obj);
+          String response = msg.obj.toString();
+          Constant.RESPON_EMPTY = false;
+          if (response.trim().equals("null")) {
+            Log.d(TAG, "null");
+            Constant.RESPON_EMPTY = true;
+            mBoardDataList = mBoardPrevList;
+          } else {
+            try {
+              java.lang.reflect.Type type = new TypeToken<List<BoardItem>>() {
+              }.getType();
+
+              ArrayList<BoardItem> value = new Gson()
+                  .fromJson(response, type);
+
+              for (BoardItem m : value) {
+                BoardItem t = new BoardItem();
+                t.set_id(m.get_id());
+                t.setStrText(m.getStrText());
+                t.setGender(m.getGender());
+                t.setRegDate(HYTime_Maximum.formatTimeString(m.getRegDate()));
+                t.setUniqueID(m.getUniqueID());
+                t.setHitCNT(m.getHitCNT());
+                t.setCommCNT(m.getCommCNT());
+                t.setLikeCNT(m.getLikeCNT());
+                t.setHateCNT(m.getHateCNT());
+                t.setImgState(m.getImgState());
+                mBoardDataList.add(t);
+                Log.d(TAG, m.getStrText());
+              }
+
+            } catch (Exception e) {
+              Log.d(TAG, "allsync.Response : Gson Exception");
+            }
+          }
+          break;
+      }//switch
+      sendMessageToUI();
+    }
+  };
   public void requestCallRest_BoardList() {
+    switch (Constant.REFRESH_BOARD_FLAG) {
+      case 0:
+        Constant.LIMIT_START = 0;
+        break;
+      case 1:
+        Constant.LIMIT_START = 0;
+        break;
+      case 2:
+        Constant.LIMIT_START = 0;
+        break;
+      case 3:
+        Constant.LIMIT_START += Constant.LIMIT_ADD;
+
+        break;
+      case 4:
+        Constant.LIMIT_START = 0;
+        break;
+    }
+
+    mBoardPrevList = mBoardDataList;
+    //  mBoardDataList.clear();
+    mBoardDataList = new ArrayList<BoardItem>();
+    try {
+      HashMap<String, String> params = new HashMap<String, String>();
+      params.put("MODE", "BoardList");
+      params.put("LIMIT", Integer.toString(Constant.LIMIT_START));
+      ServerRequestUtils.request(this, "http://ohy3264.cafe24.com", "/Anony/api/boardListAll.php", params, listCallHandler);
+    } catch (Exception e) {
+      Log.d(TAG, "Splash:handler2: " + e.getMessage());
+    }
+  }
+
+  /*public void requestCallRest_BoardList() {
     mCountDownLatch_BoardList = new CountDownLatch(1);
     mBoardPrevList = mBoardDataList;
     //  mBoardDataList.clear();
     mBoardDataList = new ArrayList<BoardItem>();
-    String url = "http://ohy3264.cafe24.com/Anony/api/boardListAll.php";
+
+    String url = "http://ohy3264.cafe24.com/Anony/api/boardListAll_Test.php";
     StringRequest request = new StringRequest(Request.Method.POST, url,
         new Response.Listener<String>() {
           @Override
@@ -148,11 +225,15 @@ public class BoardListService extends Service {
               mCountDownLatch_BoardList.countDown();
             } else {
               try {
+                JSONObject jsonObj = new JSONObject(response);
+                Boolean more = jsonObj.getBoolean("more");
+                String data = jsonObj.getString("data");
+
                 java.lang.reflect.Type type = new TypeToken<List<BoardItem>>() {
                 }.getType();
 
                 ArrayList<BoardItem> value = new Gson()
-                    .fromJson(response, type);
+                    .fromJson(data, type);
 
                 for (BoardItem m : value) {
                   BoardItem t = new BoardItem();
@@ -192,13 +273,12 @@ public class BoardListService extends Service {
         params.put("LIMIT", Integer.toString(Constant.LIMIT_START));
         return params;
       }
-
     };
     mRequestQueue.add(request);
   }
+*/
 
-
-  public void asyncTask_BoardList_Call() {
+ /* public void asyncTask_BoardList_Call() {
     if (INFO)
       Log.i(TAG, "asyncTask_BoardList_Call");
     new asyncTask_BoardList().execute();
@@ -235,13 +315,16 @@ public class BoardListService extends Service {
     protected Void doInBackground(Void... params) {
       // TODO Auto-generated method stub
 
-      requestCallRest_BoardList();
+     *//* requestCallRest_BoardList();
       try {
         mCountDownLatch_BoardList.await();
       } catch (InterruptedException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
-      }
+      }*//*
+      requestCallRest_BoardListT();
+
+
 
       return null;
     }
@@ -253,5 +336,5 @@ public class BoardListService extends Service {
       sendMessageToUI();
 
     }
-  }
+  }*/
 }

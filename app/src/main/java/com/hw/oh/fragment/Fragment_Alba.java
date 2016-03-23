@@ -1,5 +1,9 @@
 package com.hw.oh.fragment;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.ProgressDialog;
@@ -17,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,6 +31,7 @@ import com.hw.oh.adapter.WorkAlbaInfoAdapter_Array;
 import com.hw.oh.model.PartTimeInfo;
 import com.hw.oh.sqlite.DBConstant;
 import com.hw.oh.sqlite.DBManager;
+import com.hw.oh.temp.ApplicationClass;
 import com.hw.oh.temp.CalendarActivity;
 import com.hw.oh.temp.NewAlbaActivity;
 import com.hw.oh.temp.PieChartsActivity;
@@ -40,7 +46,7 @@ import java.util.ArrayList;
 /**
  * Created by oh on 2015-02-01.
  */
-public class Fragment_Alba extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class Fragment_Alba extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener, NewAlbaActivity.OnDeletedListener {
   public static final String TAG = "Fragment_Alba";
   public static final boolean DBUG = true;
   public static final boolean INFO = true;
@@ -52,6 +58,7 @@ public class Fragment_Alba extends Fragment implements View.OnClickListener, Ada
   private CroutonHelper mCroutonHelper;
 
   //View
+  private LinearLayout mLin_guide;
   //private ImageButton mBtnNewAlba;
   private android.support.design.widget.FloatingActionButton mFabNewAlba;
   //List
@@ -82,6 +89,13 @@ public class Fragment_Alba extends Fragment implements View.OnClickListener, Ada
         R.layout.crouton_custom_view, null);
     mTxtCrouton = (TextView) mCroutonView.findViewById(R.id.txt_crouton);
 
+    // 구글 통계
+    Tracker mTracker = ((ApplicationClass) getActivity().getApplication()).getDefaultTracker();
+    mTracker.setScreenName("알바리스트");
+    mTracker.send(new HitBuilders.AppViewBuilder().build());
+
+
+    mLin_guide = (LinearLayout) rootView.findViewById(R.id.lin_guide);
     mListView = (ListView) rootView.findViewById(R.id.mainlistView);
     mListView.setFocusable(false);
     mListView.setOnItemClickListener(this);
@@ -149,7 +163,6 @@ public class Fragment_Alba extends Fragment implements View.OnClickListener, Ada
     mBoardAdapter = new WorkAlbaInfoAdapter_Array(getActivity(), mAlbaInfoList);
     if (mListView != null) {
       mListView.setAdapter(mBoardAdapter);
-
     }
   }
 
@@ -187,7 +200,8 @@ public class Fragment_Alba extends Fragment implements View.OnClickListener, Ada
       info.setWorkPayAddMin(results.getString(results.getColumnIndex("workPayAddMin")));
       info.setWorkAlarm(Boolean.parseBoolean(results.getString(results.getColumnIndex("workAlarm"))));
       info.setWorkMonthDay(results.getInt(results.getColumnIndex("workMonthDay")));
-
+      info.setWorkWeekDay(results.getInt(results.getColumnIndex("workWeekDay")));
+      info.setWorkMonthWeekFlag(results.getInt(results.getColumnIndex("workMonthWeekFlag")));
       mAlbaInfoList.add(info);
       results.moveToNext();
     }
@@ -204,7 +218,6 @@ public class Fragment_Alba extends Fragment implements View.OnClickListener, Ada
         startActivity(intnet_newAlba);
         break;
     }
-
   }
 
   @Override
@@ -215,7 +228,6 @@ public class Fragment_Alba extends Fragment implements View.OnClickListener, Ada
     intent_main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     startActivity(intent_main);
     getActivity().overridePendingTransition(0, 0);
-
   }
 
 
@@ -223,7 +235,6 @@ public class Fragment_Alba extends Fragment implements View.OnClickListener, Ada
   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     super.onCreateOptionsMenu(menu, inflater);
     inflater.inflate(R.menu.menu_albalist, menu);
-
   }
 
   @Override
@@ -246,22 +257,46 @@ public class Fragment_Alba extends Fragment implements View.OnClickListener, Ada
         intent_swap.putExtra("bundle", bundle);
         startActivity(intent_swap);
         getActivity().overridePendingTransition(0, 0);
-
         break;
-
     }
     getActivity().invalidateOptionsMenu();
     return super.onOptionsItemSelected(item);
-
   }
-
 
   @Override
   public void onResume() {
     super.onResume();
+    mLin_guide.setVisibility(View.GONE);
+    Log.i(TAG, "onResume");
     asyncTask_AlbaList_Call();
-
   }
+  public void guideVisibility(){
+    if(mAlbaInfoList.isEmpty()){
+      Log.i(TAG, "isEmpty_TRUE");
+      mLin_guide.setVisibility(View.VISIBLE);
+      //HYAnimation.VISIBLE(mLin_guide);
+    }else{
+      Log.i(TAG, "isEmpty_FALSE");
+      mLin_guide.setVisibility(View.GONE);
+      //HYAnimation.GONE(mLin_guide);
+    }
+  }
+
+
+  @Override
+  public void onStart() {
+    super.onStart();
+    // 구글 통계
+    GoogleAnalytics.getInstance(getActivity()).reportActivityStart(getActivity());
+  };
+
+  @Override
+  public void onStop() {
+    super.onStop();
+    // 구글 통계
+    GoogleAnalytics.getInstance(getActivity()).reportActivityStop(getActivity());
+  };
+
 
   public void asyncTask_AlbaList_Call() {
     if (INFO)
@@ -292,6 +327,12 @@ public class Fragment_Alba extends Fragment implements View.OnClickListener, Ada
       super.onPostExecute(result);
       setAdapter();
       mProgressBar.setVisibility(View.GONE);
+      guideVisibility();
     }
+  }
+
+  @Override
+  public void onDelete() {
+    guideVisibility();
   }
 }
