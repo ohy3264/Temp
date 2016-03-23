@@ -4,6 +4,7 @@
               android:layout_height="match_parent"
               android:background="@color/blue_gray_action">
   <TextView
+      android:visibility="gone"
       android:gravity="center_vertical"
       android:elevation="5dp"
       android:padding="1dp"
@@ -21,7 +22,7 @@
       android:layout_height="wrap_content"
       android:background="@android:color/transparent">
 
-    <ListView
+    <com.nhaarman.listviewanimations.itemmanipulation.DynamicListView
         android:persistentDrawingCache="animation|scrolling"
         android:layoutAnimation="@anim/anim_layout_controller"
         android:padding="5dp"

@@ -31,7 +31,7 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/button_material_light"/>
+        android:background="@color/blue_gray_action"/>
 
     <ListView
         android:id="@+id/drawer_list"
@@ -39,7 +39,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
-        android:background="@color/background_floating_material_light"
+        android:background="@color/blue_gray_action"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"/>
 

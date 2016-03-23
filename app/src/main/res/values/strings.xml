@@ -67,6 +67,7 @@
     최저임금위반사례신고)에서 하실 수 있습니다.
   </string>
 
+  <string name="removed_positions">Removed positions: %s</string>
   <string name="hourpayinfo2_str1">사용자가 근로자에게 야간근로를 시킬 경우에 지급하는 수당으로, 통상임금의 100분의 50 이상을 가산하여 지급하여야
     한다(근로기준법 제55조). 야근수당·심야수당이라고도 한다. 연장근로가 야간에 이루어진 경우에는 야간근로수당과 함께 연장근로수당을 중복하여 지급하여야 한다.
   </string>
@@ -81,6 +82,8 @@
   </string>
   <string name="hourpayinfo3_str2">주휴수당 = (1주 근로시간/40h) * 근로자의 시급 * 8h</string>
 
+  <string name="taptoundo">Tap to undo</string>
+  <string name="itemdeleted">Item deleted</string>
   <string name="app_notice">공지사항</string>
   <!-- 공지사항
   <string name="app_notice_update">Ver. 1.28 \n - 휴게시간 적용 시 총 일한시간에서 휴게시간 만큼의 시간이 감소됩니다. \n(기 버전에서는 휴게적용 시 급여만 감소 하였습니다) \n\n기존 휴게시간과 함께 야간, 연장을 적용해 오신분들은 저장된 일급을 다시 수정저장 해주셔야 정상적으로 계산됩니다. \n\n잘못된 계산방식으로 인해 불편함을 드려 죄송합니다  </string>
@@ -111,9 +114,22 @@
    <string name="app_notice_update">Ver. 1.50 \n - 달력 구조 변경 \n\n 오류발생 시 이메일이나 카톡으로 문의를 주시면 좀더 빠른개선이 가능합니다. 감사합니다 \n\n </string>
     <string name="app_notice_update">Ver. 1.51 \n - 달력 구조 변경 \n\n 오류발생 시 이메일이나 카톡으로 문의를 주시면 좀더 빠른개선이 가능합니다. 감사합니다 \n\n </string>
     <string name="app_notice_update">Ver. 1.52 \n - 달력화면에서 다중삭제 기능 추가 \n\n 일한날짜를 길게 클릭하면 삭제대기상태가 됩니다. \n\n 오류발생 시 이메일이나 카톡으로 문의를 주시면 좀더 빠른개선이 가능합니다. 감사합니다 \n\n </string>
-  -->
+
   <string name="app_notice_update">Ver. 1.58 \n - 월급 시작날 개별 등록(설정화면->알바 첫 등록 시 설정) \n\n 알람기능 추가 \n\n 알바 저장 인터페이스 변경 \n\n
     오류발생 시 이메일이나 카톡으로 문의를 주시면 좀더 빠른개선이 가능합니다. 감사합니다 \n\n
   </string>
+  <string name="app_notice_update">Ver. 1.59 \n - 등록한 알바 순서변경 기능 추가 \n\n 인터페이스 변경 \n\n
+    오류발생 시 이메일이나 카톡으로 문의를 주시면 좀더 빠른개선이 가능합니다. 감사합니다 \n\n
+  </string>
+  <string name="app_notice_update">Ver. 1.63 \n - 일한시간이 사각박스로 가리는 현상 제거 \n\n 인터페이스 변경 \n\n
+    오류발생 시 이메일이나 카톡으로 문의를 주시면 좀더 빠른개선이 가능합니다. 감사합니다 \n\n
+  </string>
+-->
+  <string name="app_notice_update">Ver. 1.64 \n -  버그수정 \n\n
+    오류발생 시 이메일이나 카톡으로 문의를 주시면 좀더 빠른개선이 가능합니다. 감사합니다 \n\n
+  </string>
+  <!-- Error 명칭 -->
+  <string name="error_network">인터넷 연결상태를 확인해 주세요.</string>
+  <string name="error_etc">에러가 발생하였습니다.</string>
 
 </resources>

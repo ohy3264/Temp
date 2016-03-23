@@ -12,17 +12,17 @@
       layout="@layout/toolbar"/>
 
   <it.neokree.materialtabs.MaterialTabHost
+      android:elevation="5dp"
       android:id="@+id/materialTabHost"
       android:layout_width="match_parent"
       android:layout_height="0dp"
       android:layout_weight="0.8"
       app:textColor="#FFFFFF"
-      app:primaryColor="@color/light_red"
+      app:primaryColor="?attr/colorPrimary"
       app:accentColor="@color/button_material_dark"
       />
 
   <android.support.v4.view.ViewPager
-      android:layout_marginTop="2dp"
       android:background="@color/button_material_light"
       android:layout_width="match_parent"
       android:layout_height="0dp"

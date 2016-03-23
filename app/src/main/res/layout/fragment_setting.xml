@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/button_material_light"
               android:orientation="vertical"
+              android:background="@color/blue_gray_action"
               android:padding="10dp">
 
   <ScrollView
@@ -30,14 +30,14 @@
             android:layout_height="wrap_content"
             android:text="백업설정"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/dark_gray"/>
+            android:textColor="@color/material_white_2"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="5dp"
-            android:background="@color/dark_gray"
+            android:background="@color/material_white_2"
             android:orientation="vertical"/>
 
         <LinearLayout
@@ -66,7 +66,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="데이터 백업"
-                  android:textColor="@color/dark_gray"
+                  android:textColor="@color/material_white_2"
                   android:textSize="20dp"/>
 
               <TextView
@@ -75,7 +75,7 @@
                   android:layout_height="wrap_content"
                   android:layout_marginLeft="5dp"
                   android:text=""
-                  android:textColor="#4c08060c"
+                  android:textColor="@color/material_white_2"
                   android:textSize="15dp"/>
             </LinearLayout>
 
@@ -206,14 +206,14 @@
             android:layout_height="wrap_content"
             android:text="날씨위치 설정"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/dark_gray"/>
+            android:textColor="@color/material_white_2"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="5dp"
-            android:background="@color/dark_gray"
+            android:background="@color/material_white_2"
             android:orientation="vertical"/>
 
         <LinearLayout
@@ -249,7 +249,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="저장위치변경"
-                    android:textColor="@color/dark_gray"
+                    android:textColor="@color/material_white_2"
                     android:textSize="20dp"/>
 
                 <TextView
@@ -258,7 +258,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:text=""
-                    android:textColor="#4c08060c"
+                    android:textColor="@color/material_white_2"
                     android:textSize="15dp"/>
               </LinearLayout>
 
@@ -295,14 +295,14 @@
             android:layout_height="wrap_content"
             android:text="메시지 알림"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/dark_gray"/>
+            android:textColor="@color/material_white_2"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="5dp"
-            android:background="@color/dark_gray"
+            android:background="@color/material_white_2"
             android:orientation="vertical"/>
 
         <LinearLayout
@@ -330,7 +330,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="알림상태"
-                  android:textColor="@color/dark_gray"
+                  android:textColor="@color/material_white_2"
                   android:textSize="20dp"/>
 
               <TextView
@@ -339,7 +339,7 @@
                   android:layout_height="wrap_content"
                   android:layout_marginLeft="5dp"
                   android:text="알림의 상태를 제어합니다"
-                  android:textColor="#4c08060c"
+                  android:textColor="@color/material_white_2"
                   android:textSize="15dp"/>
             </LinearLayout>
 
@@ -376,7 +376,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="소리알림"
-                  android:textColor="@color/dark_gray"
+                  android:textColor="@color/material_white_2"
                   android:textSize="20dp"/>
 
               <TextView
@@ -385,7 +385,7 @@
                   android:layout_height="wrap_content"
                   android:layout_marginLeft="5dp"
                   android:text="알림 수신시 소리로 알려줍니다"
-                  android:textColor="#4c08060c"
+                  android:textColor="@color/material_white_2"
                   android:textSize="15dp"/>
 
 
@@ -425,7 +425,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="진동알림"
-                  android:textColor="@color/dark_gray"
+                  android:textColor="@color/material_white_2"
                   android:textSize="20dp"/>
 
               <TextView
@@ -434,7 +434,7 @@
                   android:layout_height="wrap_content"
                   android:layout_marginLeft="5dp"
                   android:text="알림 수신시 진동으로 알려줍니다"
-                  android:textColor="#4c08060c"
+                  android:textColor="@color/material_white_2"
                   android:textSize="15dp"/>
 
 
@@ -471,14 +471,14 @@
             android:layout_height="wrap_content"
             android:text="앱 설정"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/dark_gray"/>
+            android:textColor="@color/material_white_2"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="5dp"
-            android:background="@color/dark_gray"
+            android:background="@color/material_white_2"
             android:orientation="vertical"/>
 
         <LinearLayout
@@ -518,14 +518,14 @@
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:text="날짜팝업"
-                      android:textColor="@color/dark_gray"
+                      android:textColor="@color/material_white_2"
                       android:textSize="20dp"/>
 
                   <TextView
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:layout_marginLeft="5dp"
-                      android:textColor="#4c08060c"
+                      android:textColor="@color/material_white_2"
                       android:textSize="15dp"/>
                 </LinearLayout>
 
@@ -542,7 +542,7 @@
                       android:layout_height="wrap_content"
                       android:layout_marginLeft="5dp"
                       android:text="아날로그"
-                      android:textColor="#4c08060c"
+                      android:textColor="@color/material_white_2"
                       android:textSize="15dp"/>
                 </LinearLayout>
               </LinearLayout>
@@ -574,7 +574,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="폰트변경"
-                    android:textColor="@color/dark_gray"
+                    android:textColor="@color/material_white_2"
                     android:textSize="20dp"/>
 
                 <TextView
@@ -582,7 +582,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:text=""
-                    android:textColor="#4c08060c"
+                    android:textColor="@color/material_white_2"
                     android:textSize="15dp"/>
               </LinearLayout>
 
@@ -599,7 +599,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:text=""
-                    android:textColor="#4c08060c"
+                    android:textColor="@color/material_white_2"
                     android:textSize="15dp"/>
               </LinearLayout>
             </LinearLayout>
@@ -634,14 +634,14 @@
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:text="암호설정"
-                      android:textColor="@color/dark_gray"
+                      android:textColor="@color/material_white_2"
                       android:textSize="20dp"/>
 
                   <TextView
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:layout_marginLeft="5dp"
-                      android:textColor="#4c08060c"
+                      android:textColor="@color/material_white_2"
                       android:textSize="15dp"/>
                 </LinearLayout>
 
@@ -658,7 +658,7 @@
                       android:layout_height="wrap_content"
                       android:layout_marginLeft="5dp"
                       android:text="사용안함"
-                      android:textColor="#4c08060c"
+                      android:textColor="@color/material_white_2"
                       android:textSize="15dp"/>
 
                   <com.rey.material.widget.Button
@@ -690,7 +690,7 @@
             android:layout_height="wrap_content"
             android:text="급여 설정"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/dark_gray"/>
+            android:textColor="@color/material_white_2"/>
 
       </LinearLayout>
       <LinearLayout
@@ -700,7 +700,7 @@
           android:layout_height="1dp"
           android:layout_marginBottom="10dp"
           android:layout_marginTop="5dp"
-          android:background="@color/dark_gray"
+          android:background="@color/material_white_2"
           android:orientation="vertical"/>
 
 
@@ -736,7 +736,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="계산기간"
-                  android:textColor="@color/dark_gray"
+                  android:textColor="@color/material_white_2"
                   android:textSize="20dp"/>
 
               <TextView
@@ -744,7 +744,7 @@
                   android:layout_height="wrap_content"
                   android:layout_marginLeft="5dp"
                   android:text="계산화면에서 날짜기간 설정방식"
-                  android:textColor="#4c08060c"
+                  android:textColor="@color/material_white_2"
                   android:textSize="15dp"/>
             </LinearLayout>
 
@@ -761,7 +761,7 @@
                   android:layout_height="wrap_content"
                   android:layout_marginLeft="5dp"
                   android:text=""
-                  android:textColor="#4c08060c"
+                  android:textColor="@color/material_white_2"
                   android:textSize="15dp"/>
 
             </LinearLayout>
@@ -801,7 +801,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="4대보험"
-                  android:textColor="@color/dark_gray"
+                  android:textColor="@color/material_white_2"
                   android:textSize="20dp"/>
 
               <TextView
@@ -809,7 +809,7 @@
                   android:layout_height="wrap_content"
                   android:layout_marginLeft="5dp"
                   android:text="4대보험 적용"
-                  android:textColor="#4c08060c"
+                  android:textColor="@color/material_white_2"
                   android:textSize="15dp"/>
             </LinearLayout>
 
@@ -826,7 +826,7 @@
                   android:layout_height="wrap_content"
                   android:layout_marginLeft="5dp"
                   android:text=""
-                  android:textColor="#4c08060c"
+                  android:textColor="@color/material_white_2"
                   android:textSize="15dp"/>
 
             </LinearLayout>
@@ -865,7 +865,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="세금설정"
-                  android:textColor="@color/dark_gray"
+                  android:textColor="@color/material_white_2"
                   android:textSize="20dp"/>
 
               <TextView
@@ -873,7 +873,7 @@
                   android:layout_height="wrap_content"
                   android:layout_marginLeft="5dp"
                   android:text="소득세 적용"
-                  android:textColor="#4c08060c"
+                  android:textColor="@color/material_white_2"
                   android:textSize="15dp"/>
             </LinearLayout>
 
@@ -890,7 +890,7 @@
                   android:layout_height="wrap_content"
                   android:layout_marginLeft="5dp"
                   android:text=""
-                  android:textColor="#4c08060c"
+                  android:textColor="@color/material_white_2"
                   android:textSize="15dp"/>
 
             </LinearLayout>

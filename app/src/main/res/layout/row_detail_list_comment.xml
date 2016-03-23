@@ -65,7 +65,7 @@
           android:layout_weight="1.5"
           android:singleLine="true"
           android:ellipsize="middle"
-          android:textColor="@color/link_text_material_dark"
+          android:textColor="@color/newwork_background"
           android:gravity="right|bottom"
           android:layout_width="0dp"
           android:layout_height="match_parent"

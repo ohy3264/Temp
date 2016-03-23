@@ -23,12 +23,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
-        android:text="월급일 설정"
+        android:text="시작일 설정"
         android:textSize="20sp"/>
 
   </LinearLayout>
 
   <LinearLayout
+      android:orientation="vertical"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content">
+    <RadioGroup
+        android:id="@+id/radioGroupMonth"
+        android:checkedButton="@+id/radioMonth"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+      <RadioButton
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="월급"
+          android:id="@+id/radioMonth"/>
+      <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content"
+                   android:text="주급" android:id="@+id/radioWeek"/>
+    </RadioGroup>
+  </LinearLayout>
+
+  <LinearLayout
+      android:visibility="gone"
+      android:id="@+id/linMonthPay"
       android:paddingRight="10dp"
       android:paddingLeft="10dp"
       android:layout_width="match_parent"
@@ -78,6 +99,24 @@
   </LinearLayout>
 
   <LinearLayout
+      android:visibility="gone"
+      android:id="@+id/linWeekPay" android:paddingRight="10dp" android:paddingLeft="10dp"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical">
+    <LinearLayout android:layout_marginTop="5dp" android:layout_width="match_parent"
+                  android:layout_height="wrap_content" android:orientation="horizontal"
+                  android:padding="5dp">
+      <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:gravity="center_vertical|center_horizontal"
+                    android:orientation="horizontal">
+        <TextView android:padding="10dp" android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textAppearance="?android:attr/textAppearanceLarge" android:text="매주"/>
+        <include layout="@layout/selector_week_radio"/>
+      </LinearLayout>
+    </LinearLayout>
+  </LinearLayout>
+  <LinearLayout
       android:gravity="right"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -101,7 +140,5 @@
           android:layout_height="wrap_content"
           android:text="확인"/>
     </com.balysv.materialripple.MaterialRippleLayout>
-
   </LinearLayout>
-
 </LinearLayout>

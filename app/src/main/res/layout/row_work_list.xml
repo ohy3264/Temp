@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.balysv.materialripple.MaterialRippleLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="2dp">
+    android:layout_height="wrap_content"
+    android:padding="2dp"
+    android:descendantFocusability="blocksDescendants">
 
   <LinearLayout
       android:background="@drawable/selector_list_row"
@@ -17,8 +19,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-      <LinearLayout
+        <LinearLayout
           android:id="@+id/linGabulCheck"
           android:layout_margin="5dp"
           android:elevation="2dp"

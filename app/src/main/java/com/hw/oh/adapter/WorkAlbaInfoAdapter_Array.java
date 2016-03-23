@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class WorkAlbaInfoAdapter_Array extends ArrayAdapter<PartTimeInfo> {
+public class WorkAlbaInfoAdapter_Array extends ArrayAdapter<PartTimeInfo>{
   public static final String TAG = "WorkAlbaInfoAdapter_Array";
   public static final boolean DBUG = true;
   public static final boolean INFO = true;
@@ -39,6 +39,8 @@ public class WorkAlbaInfoAdapter_Array extends ArrayAdapter<PartTimeInfo> {
     mAlbaInfoList = objects;
     mFont = new HYFont(mContext);
   }
+
+
 
   @Override
   public View getView(final int position, View convertView, ViewGroup parent) {
@@ -124,7 +126,6 @@ public class WorkAlbaInfoAdapter_Array extends ArrayAdapter<PartTimeInfo> {
     mFont.setGlobalFont((ViewGroup) ret);
     return ret;
   }
-
   public class ViewHolder {
     private TextView mTxtMoney, mTxtStartTime, mTxtEndTime, mTxtMemo, mTxtAlbaName;
     private ImageButton mBtnUpdate;

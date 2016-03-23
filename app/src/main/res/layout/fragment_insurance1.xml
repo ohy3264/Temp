@@ -3,408 +3,376 @@
               android:orientation="vertical" android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-  <LinearLayout
-      android:focusable="true"
-      android:focusableInTouchMode="true"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_gravity="bottom"
-      android:orientation="vertical">
-
-
-    <LinearLayout
-        android:gravity="center_vertical"
-        android:background="@color/material_white_2"
-        android:padding="5dp"
-        android:orientation="vertical"
+    <ScrollView
+        android:background="@color/blue_gray_action"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2.5">
-
-      <LinearLayout
-          android:layout_marginTop="5dp"
-          android:orientation="horizontal"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content">
-
-
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView5">
         <LinearLayout
-            android:layout_weight="8"
-            android:orientation="horizontal"
-            android:layout_width="0dp"
-            android:layout_height="match_parent">
-
-          <android.support.design.widget.TextInputLayout
-
-              android:paddingBottom="3.0dip"
-              android:paddingLeft="10.0dip"
-              android:paddingRight="10.0dip"
-              android:layout_width="0dp"
-              android:layout_weight="8"
-              android:layout_height="wrap_content">
-            <EditText
-                android:background="@color/light_gray"
-                android:textColorHint="@color/gray"
-                android:textColor="@color/dark_gray"
-                android:id="@+id/edtInputMonthPay"
-                android:layout_width="fill_parent"
-                android:layout_height="35dp"
-                android:hint="  월 급여"
-                android:inputType="number"/>
-          </android.support.design.widget.TextInputLayout>
-
-          <TextView
-              android:paddingBottom="10dp"
-              android:gravity="bottom"
-              android:layout_weight="2"
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:textAppearance="?android:attr/textAppearanceMedium"
-              android:text="원"
-              android:textColor="@color/dark_gray"
-              android:id="@+id/textView20"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_weight="2"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:gravity="bottom"
-            android:orientation="horizontal"
-            android:layout_width="0dp"
-            android:layout_height="match_parent">
-
-          <Button
-              android:layout_weight="1"
-              style="?android:attr/buttonStyleSmall"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="계산"
-              android:id="@+id/btnCalculation"/>
-
-        </LinearLayout>
-
-      </LinearLayout>
-
-      <LinearLayout
-          android:orientation="horizontal"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content">
-
-        <RadioGroup
-            android:visibility="invisible"
-            android:checkedButton="@+id/radBtn1"
-            android:id="@+id/radioGroudChoice"
-            android:gravity="center_vertical|center"
-            android:orientation="horizontal"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-          <RadioButton
-              android:id="@+id/radBtn1"
-              android:textColor="@color/dark_gray"
-              android:textSize="10sp"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="150미만"/>
-
-          <RadioButton
-              android:textColor="@color/dark_gray"
-              android:textSize="10sp"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="150이상"
-              android:id="@+id/radBtn2"/>
-
-          <RadioButton
-              android:textColor="@color/dark_gray"
-              android:textSize="10sp"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="150~1000미만"
-              android:id="@+id/radBtn3"/>
-
-          <RadioButton
-              android:textColor="@color/dark_gray"
-              android:textSize="10sp"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="1000이상"
-              android:id="@+id/radBtn4"/>
-        </RadioGroup>
-      </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:gravity="center_vertical"
-        android:layout_marginTop="5dp"
-        android:background="@color/material_white_2"
-        android:padding="5dp"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3">
-
-      <LinearLayout
-          android:layout_marginRight="5dp"
-          android:padding="1dp"
-          android:orientation="horizontal"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_marginRight="1dp"
-            android:background="@color/material_red_default"
-            android:gravity="center"
-            android:textColor="@color/material_white_2"
-            android:layout_weight="4"
-            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:textSize="11sp"
-            android:text="근로자 부담액"
-            android:id="@+id/textView33"/>
+            android:padding="5dp"
+            android:orientation="vertical">
 
-        <EditText
-            android:paddingRight="10dp"
-            android:gravity="right"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:enabled="false"
-            android:background="@color/light_gray"
-            android:textColor="@color/dark_gray"
-            android:layout_weight="5"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/edtWokerPay"/>
 
-        <TextView
-            android:gravity="center"
-            android:textColor="@color/dark_gray"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textSize="11sp"
-            android:text="원"
-            android:id="@+id/textView21"/>
-      </LinearLayout>
+          <LinearLayout
+              android:gravity="center_vertical"
+              android:padding="10dp"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="0dp"
+              android:layout_weight="2.5">
 
-      <LinearLayout
-          android:layout_marginRight="5dp"
-          android:padding="1dp"
-          android:orientation="horizontal"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_marginRight="1dp"
-            android:background="@color/material_red_default"
-            android:gravity="center"
-            android:textColor="@color/material_white_2"
-            android:layout_weight="4"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:textSize="11sp"
-            android:text="사업주 부담액"
-            android:id="@+id/textView34"/>
 
-        <EditText
-            android:paddingRight="10dp"
-            android:gravity="right"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:enabled="false"
-            android:background="@color/light_gray"
-            android:textColor="@color/dark_gray"
-            android:layout_weight="5"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/edtonwerPay"/>
+                <LinearLayout
+                    android:layout_weight="8"
+                    android:orientation="horizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
 
-        <TextView
-            android:gravity="center"
-            android:textColor="@color/dark_gray"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textSize="11sp"
-            android:text="원"
-            android:id="@+id/textView62"/>
-      </LinearLayout>
+                    <android.support.design.widget.TextInputLayout
 
-      <LinearLayout
-          android:layout_marginRight="5dp"
-          android:padding="1dp"
-          android:orientation="horizontal"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content">
+                        android:paddingBottom="3.0dip"
+                        android:paddingLeft="10.0dip"
+                        android:paddingRight="10.0dip"
+                        android:layout_width="0dp"
+                        android:layout_weight="8"
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:textColorHint="@color/material_white_2"
+                            android:textColor="@color/material_white_2"
+                            android:id="@+id/edtInputMonthPay"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="  월 급여를 입력하세요"
+                            android:inputType="number"/>
+                    </android.support.design.widget.TextInputLayout>
 
-        <TextView
-            android:layout_marginRight="1dp"
-            android:background="@color/material_red_default"
-            android:gravity="center"
-            android:textColor="@color/material_white_2"
-            android:layout_weight="4"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:textSize="11sp"
-            android:text="총 액"
-            android:id="@+id/textView55"/>
+                    <TextView
+                        android:paddingBottom="10dp"
+                        android:gravity="bottom"
+                        android:layout_weight="2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="원"
+                        android:textColor="@color/material_white_2"
+                        android:id="@+id/textView20"/>
+                </LinearLayout>
 
-        <EditText
-            android:paddingRight="10dp"
-            android:gravity="right"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:enabled="false"
-            android:background="@color/light_gray"
-            android:textColor="@color/dark_gray"
-            android:layout_weight="5"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/edtTotalPay"/>
+            </LinearLayout>
 
-        <TextView
-            android:gravity="center"
-            android:textColor="@color/dark_gray"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textSize="11sp"
-            android:text="원"
-            android:id="@+id/textView63"/>
-      </LinearLayout>
+          </LinearLayout>
 
-    </LinearLayout>
+            <LinearLayout
 
-    <LinearLayout
-        android:gravity="top"
-        android:layout_marginTop="5dp"
-        android:background="@color/material_white_2"
-        android:padding="5dp"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5">
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/circleview_newwork"
+                android:gravity="right|bottom"
+                android:orientation="vertical">
 
-      <LinearLayout
-          android:layout_marginTop="10dp"
-          android:layout_marginBottom="1dp"
-          android:layout_marginRight="5dp"
-          android:orientation="horizontal"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content">
+                <com.balysv.materialripple.MaterialRippleLayout
+                    android:id="@+id/ripple4"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:gravity="bottom">
 
-        <TextView
-            android:layout_marginRight="1dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:background="@color/material_red_default"
-            android:textColor="@color/dark_gray"
-            android:layout_weight="4"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:id="@+id/textView56"/>
+                    <LinearLayout
 
-        <TextView
-            android:layout_marginRight="1dp"
-            android:background="@color/material_red_default"
-            android:textColor="@color/material_white_2"
-            android:gravity="center"
-            android:layout_weight="2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:textSize="11sp"
-            android:text="전체"
-            android:id="@+id/textView58"/>
+                        android:id="@+id/btnCalculation"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:orientation="horizontal"
+                        >
 
-        <TextView
-            android:layout_marginRight="1dp"
-            android:background="@color/material_red_default"
-            android:textColor="@color/material_white_2"
-            android:gravity="center"
-            android:layout_weight="2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:textSize="11sp"
-            android:text="근로자"
-            android:id="@+id/textView59"/>
+                        <TextView
+                            android:id="@+id/txtSave"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical|right"
+                            android:text="계산"
+                            android:textColor="@color/material_white_2"
+                            android:textSize="16sp"/>
 
-        <TextView
-            android:background="@color/material_red_default"
-            android:textColor="@color/material_white_2"
-            android:gravity="center"
-            android:layout_weight="2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:textSize="11sp"
-            android:text="사업주"
-            android:id="@+id/textView60"/>
+                    </LinearLayout>
 
-      </LinearLayout>
+                </com.balysv.materialripple.MaterialRippleLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="10dp"
+              android:gravity="center_vertical"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="0dp"
+              android:layout_weight="3">
 
-      <LinearLayout
-          android:layout_marginRight="5dp"
-          android:orientation="horizontal"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content">
+            <LinearLayout
+                android:padding="1dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_marginRight="1dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:background="@color/light_gray"
-            android:gravity="center"
-            android:textColor="@color/dark_gray"
-            android:layout_weight="4"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:textSize="12sp"
-            android:text="사업주 부담액"
-            android:id="@+id/textView57"/>
+              <TextView
+                  android:layout_marginRight="1dp"
+                  android:background="@color/material_red_default"
+                  android:gravity="center"
+                  android:textColor="@color/material_white_2"
+                  android:layout_weight="4"
+                  android:layout_width="0dp"
+                  android:layout_height="match_parent"
+                  android:textSize="11sp"
+                  android:text="근로자 부담액"
+                  android:id="@+id/textView33"/>
 
-        <EditText
-            android:layout_marginRight="1dp"
-            android:background="@color/light_gray"
-            android:enabled="false"
-            android:gravity="center"
-            android:text="9.0%"
-            android:textColor="@color/dark_gray"
-            android:layout_weight="2"
-            android:layout_width="0dp"
-            android:textSize="12sp"
-            android:layout_height="match_parent"/>
+              <EditText
+                  android:paddingRight="10dp"
+                  android:gravity="right"
+                  android:paddingTop="5dp"
+                  android:paddingBottom="5dp"
+                  android:enabled="false"
+                  android:background="@color/material_white_2"
+                  android:textColor="@color/dark_gray"
+                  android:layout_weight="5"
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/edtWokerPay"/>
 
-        <EditText
-            android:layout_marginRight="1dp"
-            android:background="@color/light_gray"
-            android:enabled="false"
-            android:gravity="center"
-            android:text="4.5%"
-            android:textColor="@color/dark_gray"
-            android:layout_weight="2"
-            android:layout_width="0dp"
-            android:textSize="12sp"
-            android:layout_height="match_parent"
-            android:id="@+id/editText7"/>
+               <TextView
+                  android:gravity="center"
+                  android:textColor="@color/material_white_2"
+                  android:layout_weight="1"
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:textSize="11sp"
+                  android:text="원"
+                  android:id="@+id/textView21"/>
+            </LinearLayout>
 
-        <EditText
-            android:enabled="false"
-            android:gravity="center"
-            android:background="@color/light_gray"
-            android:text="4.5%"
-            android:textColor="@color/dark_gray"
-            android:layout_weight="2"
-            android:layout_width="0dp"
-            android:textSize="12sp"
-            android:layout_height="match_parent"
-            android:id="@+id/editText5"/>
-      </LinearLayout>
+            <LinearLayout
+                android:padding="1dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    </LinearLayout>
+              <TextView
+                  android:layout_marginRight="1dp"
+                  android:background="@color/material_red_default"
+                  android:gravity="center"
+                  android:textColor="@color/material_white_2"
+                  android:layout_weight="4"
+                  android:layout_width="0dp"
+                  android:layout_height="match_parent"
+                  android:textSize="11sp"
+                  android:text="사업주 부담액"
+                  android:id="@+id/textView34"/>
 
-  </LinearLayout>
+              <EditText
+                  android:paddingRight="10dp"
+                  android:gravity="right"
+                  android:paddingTop="5dp"
+                  android:paddingBottom="5dp"
+                  android:enabled="false"
+                  android:background="@color/material_white_2"
+                  android:textColor="@color/dark_gray"
+                  android:layout_weight="5"
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/edtonwerPay"/>
+
+              <TextView
+                  android:gravity="center"
+                  android:textColor="@color/material_white_2"
+                  android:layout_weight="1"
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:textSize="11sp"
+                  android:text="원"
+                  android:id="@+id/textView62"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:padding="1dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+              <TextView
+                  android:layout_marginRight="1dp"
+                  android:background="@color/material_red_default"
+                  android:gravity="center"
+                  android:textColor="@color/material_white_2"
+                  android:layout_weight="4"
+                  android:layout_width="0dp"
+                  android:layout_height="match_parent"
+                  android:textSize="11sp"
+                  android:text="총 액"
+                  android:id="@+id/textView55"/>
+
+              <EditText
+                  android:paddingRight="10dp"
+                  android:gravity="right"
+                  android:paddingTop="5dp"
+                  android:paddingBottom="5dp"
+                  android:enabled="false"
+                  android:background="@color/material_white_2"
+                  android:textColor="@color/dark_gray"
+                  android:layout_weight="5"
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/edtTotalPay"/>
+
+              <TextView
+                  android:gravity="center"
+                  android:textColor="@color/material_white_2"
+                  android:layout_weight="1"
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:textSize="11sp"
+                  android:text="원"
+                  android:id="@+id/textView63"/>
+            </LinearLayout>
+
+          </LinearLayout>
+
+          <LinearLayout
+              android:layout_marginTop="5dp"
+              android:gravity="top"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="0dp"
+              android:layout_weight="5">
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="1dp"
+                android:layout_marginRight="5dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+              <TextView
+                  android:layout_marginRight="1dp"
+                  android:paddingTop="5dp"
+                  android:paddingBottom="5dp"
+                  android:background="@color/material_red_default"
+                  android:textColor="@color/material_white_2"
+                  android:layout_weight="4"
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:textAppearance="?android:attr/textAppearanceSmall"
+                  android:id="@+id/textView56"/>
+
+              <TextView
+                  android:layout_marginRight="1dp"
+                  android:background="@color/material_red_default"
+                  android:textColor="@color/material_white_2"
+                  android:gravity="center"
+                  android:layout_weight="2"
+                  android:layout_width="0dp"
+                  android:layout_height="match_parent"
+                  android:textSize="11sp"
+                  android:text="전체"
+                  android:id="@+id/textView58"/>
+
+              <TextView
+                  android:layout_marginRight="1dp"
+                  android:background="@color/material_red_default"
+                  android:textColor="@color/material_white_2"
+                  android:gravity="center"
+                  android:layout_weight="2"
+                  android:layout_width="0dp"
+                  android:layout_height="match_parent"
+                  android:textSize="11sp"
+                  android:text="근로자"
+                  android:id="@+id/textView59"/>
+
+              <TextView
+                  android:background="@color/material_red_default"
+                  android:textColor="@color/material_white_2"
+                  android:gravity="center"
+                  android:layout_weight="2"
+                  android:layout_width="0dp"
+                  android:layout_height="match_parent"
+                  android:textSize="11sp"
+                  android:text="사업주"
+                  android:id="@+id/textView60"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginRight="5dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+              <TextView
+                  android:layout_marginRight="1dp"
+                  android:paddingTop="10dp"
+                  android:paddingBottom="10dp"
+                  android:background="@color/material_white_2"
+                  android:gravity="center"
+                  android:textColor="@color/dark_gray"
+                  android:layout_weight="4"
+                  android:layout_width="0dp"
+                  android:layout_height="match_parent"
+                  android:textSize="12sp"
+                  android:text="사업주 부담액"
+                  android:id="@+id/textView57"/>
+
+              <EditText
+                  android:layout_marginRight="1dp"
+                  android:background="@color/material_white_2"
+                  android:enabled="false"
+                  android:gravity="center"
+                  android:text="9.0%"
+                  android:textColor="@color/dark_gray"
+                  android:layout_weight="2"
+                  android:layout_width="0dp"
+                  android:textSize="12sp"
+                  android:layout_height="match_parent"/>
+
+              <EditText
+                  android:layout_marginRight="1dp"
+                  android:background="@color/material_white_2"
+                  android:enabled="false"
+                  android:gravity="center"
+                  android:text="4.5%"
+                  android:textColor="@color/dark_gray"
+                  android:layout_weight="2"
+                  android:layout_width="0dp"
+                  android:textSize="12sp"
+                  android:layout_height="match_parent"
+                  android:id="@+id/editText7"/>
+
+              <EditText
+                  android:enabled="false"
+                  android:gravity="center"
+                  android:background="@color/material_white_2"
+                  android:text="4.5%"
+                  android:textColor="@color/dark_gray"
+                  android:layout_weight="2"
+                  android:layout_width="0dp"
+                  android:textSize="12sp"
+                  android:layout_height="match_parent"
+                  android:id="@+id/editText5"/>
+            </LinearLayout>
+
+          </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
 
 </LinearLayout>

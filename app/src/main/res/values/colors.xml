@@ -23,13 +23,14 @@
   <color name="material_white_2">#EEEEEE</color>
   <color name="light_blue">#6BCBCA</color>
   <color name="blue">#111183</color>
-  <color name="blue_gray_action">#455A64</color>
+  <color name="blue_gray_action">#ff333333</color>
   <color name="blue_gray">#607D8B</color>
   <color name="material_blue_1">#2196F3</color>
   <color name="material_blue_2">#03A9F4</color>
   <color name="material_red_action">#D32F2F</color>
   <color name="material_red_default">#F44336</color>
   <color name="material_red_light">#fffb695e</color>
+  <color name="imsi">#FFA7A7</color>
   <color name="red">#ff0000</color>
   <color name="light_red">#dc4437</color>
   <color name="red_lebel">#fffb695e</color>

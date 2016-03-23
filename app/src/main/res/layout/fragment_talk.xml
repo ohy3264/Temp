@@ -43,7 +43,6 @@
         android:layout_height="wrap_content">
 
       <ListView
-
           android:persistentDrawingCache="animation|scrolling"
           android:layoutAnimation="@anim/anim_layout_controller"
           android:layout_width="match_parent"

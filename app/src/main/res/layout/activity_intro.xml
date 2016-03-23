@@ -38,7 +38,6 @@
         android:textSize="34sp"
         android:textStyle="bold"
         android:typeface="sans"/>
-
     <com.rey.material.widget.ProgressView
         android:id="@+id/intro_progressBar"
         app:pv_progressStyle="@style/ColorsCircularProgressDrawableStyle"
@@ -86,6 +85,11 @@
           android:layout_height="match_parent"
           android:scaleType="fitXY"/>
     </LinearLayout>
+    <ImageView
+        android:id="@+id/intro_dot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:layout_above="@+id/textView1"
+        android:layout_centerHorizontal="true" android:layout_marginBottom="39dp"/>
   </RelativeLayout>
 
 </FrameLayout>

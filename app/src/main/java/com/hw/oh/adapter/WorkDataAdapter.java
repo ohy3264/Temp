@@ -1,17 +1,19 @@
 package com.hw.oh.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hw.oh.model.WorkItem;
 import com.hw.oh.temp.R;
 import com.hw.oh.utility.HYFont;
+import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.undo.UndoAdapter;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -20,7 +22,7 @@ import java.util.Calendar;
 import java.util.List;
 
 
-public class WorkDataAdapter extends BaseAdapter {
+public class WorkDataAdapter extends ArrayAdapter<WorkItem> implements UndoAdapter {
   public static final String TAG = "WorkDataAdapter";
   public static final boolean DBUG = true;
   public static final boolean INFO = true;
@@ -35,6 +37,7 @@ public class WorkDataAdapter extends BaseAdapter {
 
   public WorkDataAdapter(Context context, ArrayList<WorkItem> objects) {
     // TODO Auto-generated constructor stub
+    super(context, R.layout.row_work_list, objects);
     mContext = context;
     mAlbaInfoList = objects;
     mFont = new HYFont(mContext);
@@ -42,20 +45,29 @@ public class WorkDataAdapter extends BaseAdapter {
     mCalEnd = Calendar.getInstance();
   }
 
-  public int getCount() {
-    // TODO Auto-generated method stub
-    return mAlbaInfoList.size();
+  @NonNull
+  @Override
+  public View getUndoView(final int position, final View convertView, @NonNull final ViewGroup parent) {
+    View view = convertView;
+    if (view == null) {
+      view = LayoutInflater.from(mContext).inflate(R.layout.undo_row, parent, false);
+    }
+    return view;
   }
 
-  public Object getItem(int position) {
-    // TODO Auto-generated method stub
-    return mAlbaInfoList.get(position);
+  @NonNull
+  @Override
+  public View getUndoClickView(@NonNull final View view) {
+    return view.findViewById(R.id.undo_row_undobutton);
+  }
+  @Override
+  public long getItemId(final int position) {
+    return getItem(position).hashCode();
   }
 
   @Override
-  public long getItemId(int position) {
-    // TODO Auto-generated method stub
-    return 0;
+  public boolean hasStableIds() {
+    return true;
   }
 
   @Override
