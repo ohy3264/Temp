@@ -35,9 +35,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.azeesoft.lib.colorpicker.ColorPickerDialog;
 import com.hw.oh.dialog.CalculSetDialog;
 import com.hw.oh.dialog.DigStyleDialog;
+import com.hw.oh.dialog.DigThemeStyleDialog;
 import com.hw.oh.dialog.DutySetDialog;
 import com.hw.oh.dialog.FontSelectDialog;
 import com.hw.oh.dialog.InsuranceSetDialog;
@@ -93,8 +93,8 @@ public class Fragment_Setting extends Fragment implements View.OnClickListener, 
   private CroutonHelper mCroutonHelper;
 
   //View
-  private LinearLayout mLinPassSet, mLinFontChange, mLinLocationChange, mLinSave, mLinLoad, mLinDialogStyle, mLinCal, mLinInsurance, mLinDuty;
-  private TextView mTxtBackupCode, mTxtCurrentLocation, mTxtSelectPass, mTxtSelectFont, mTxtStyleName, mTxtCal, mTxtInsurance, mTxtDuty;
+  private LinearLayout mLinPassSet, mLinFontChange, mLinLocationChange, mLinSave, mLinLoad, mLinDialogStyle, mLinCal, mLinInsurance, mLinDuty, mLinTheme;
+  private TextView mTxtBackupCode, mTxtCurrentLocation, mTxtSelectPass, mTxtSelectFont, mTxtStyleName, mTxtCal, mTxtInsurance, mTxtDuty, mTxtTheme;
   private EditText mEditBackupCode;
   private CheckBox mCheckVibrate;
   private CheckBox mCheckSound;
@@ -144,6 +144,7 @@ public class Fragment_Setting extends Fragment implements View.OnClickListener, 
     mTxtCal = (TextView) rootView.findViewById(R.id.txtCal);
     mTxtInsurance = (TextView) rootView.findViewById(R.id.txtInsurance);
     mTxtDuty = (TextView) rootView.findViewById(R.id.txt_duty);
+    mTxtTheme = (TextView) rootView.findViewById(R.id.txtSelectTheme);
 
     mEditBackupCode = (EditText) rootView.findViewById(R.id.edtBackUpCode);
     mCheckVibrate = (CheckBox) rootView.findViewById(R.id.chk_Vibrate);
@@ -199,6 +200,8 @@ public class Fragment_Setting extends Fragment implements View.OnClickListener, 
     mLinLoad.setOnClickListener(this);
     mLinInsurance = (LinearLayout) rootView.findViewById(R.id.linInsurance);
     mLinInsurance.setOnClickListener(this);
+    mLinTheme = (LinearLayout) rootView.findViewById(R.id.linThemeSet);
+    mLinTheme.setOnClickListener(this);
 
     mLinDuty = (LinearLayout) rootView.findViewById(R.id.linDuty);
     mLinDuty.setOnClickListener(this);
@@ -226,31 +229,7 @@ public class Fragment_Setting extends Fragment implements View.OnClickListener, 
     switch (v.getId()) {
       case R.id.linSave:
         if (!mNet.networkgetInfo()) {
-         // requetBackupDBSend();
-          //ColorPickerDialog colorPickerDialog= ColorPickerDialog.createColorPickerDialog(this);
-/*          ColorPickerDialog colorPickerDialog= ColorPickerDialog.createColorPickerDialog(getActivity(),ColorPickerDialog.DARK_THEME);
-          colorPickerDialog.setOnColorPickedListener(new ColorPickerDialog.OnColorPickedListener() {
-            @Override
-            public void onColorPicked(int color, String hexVal) {
-              //Your code here
-            }
-          });
-       //   colorPickerDialog.setHexaDecimalTextColor(Color.parse("#ffffff")); //There are many functions like this
-          colorPickerDialog.show();*/
-
-          ColorPickerDialog colorPickerDialog = new ColorPickerDialog(this, initialColor, new OnColorSelectedListener() {
-
-            @Override
-            public void onColorSelected(int color) {
-              // do action
-            }
-
-          });
-          colorPickerDialog.show();
-
-
-
-
+          requetBackupDBSend();
         } else {
           mTxtCrouton.setText("네트워크를 확인해주세요");
           mCroutonHelper.setCustomView(mCroutonView);
@@ -322,8 +301,16 @@ public class Fragment_Setting extends Fragment implements View.OnClickListener, 
         styleDialog.setTargetFragment(this, 0);
         styleDialog.setCancelable(false);
         styleDialog.show(getFragmentManager(), null);
-
         break;
+
+      case R.id.linThemeSet:
+
+        DigThemeStyleDialog themeDialog = new DigThemeStyleDialog();
+        themeDialog.setTargetFragment(this, 0);
+        themeDialog.setCancelable(false);
+        themeDialog.show(getFragmentManager(), null);
+        break;
+
       case R.id.linCal:
 
         CalculSetDialog calSetDialog = new CalculSetDialog();
@@ -556,6 +543,9 @@ public class Fragment_Setting extends Fragment implements View.OnClickListener, 
 
     //세금적용여부
     onFinishDutyDialog();
+
+    //테마설정여부
+    onFinishThemeDialog();
   }
 
   public void asyncTask_FileDown_Call(String fileName) {
@@ -815,6 +805,16 @@ public class Fragment_Setting extends Fragment implements View.OnClickListener, 
       mTxtDuty.setText("적용");
     } else {
       mTxtDuty.setText("미적용");
+    }
+  }
+
+  public void onFinishThemeDialog() {
+    if (mPref.getValue(mPref.KEY_PICKER_THEME_STYLE, 0) == 0) {
+      mTxtTheme.setText("Red");
+    } else if (mPref.getValue(mPref.KEY_PICKER_THEME_STYLE, 0) == 1) {
+      mTxtTheme.setText("Blue");
+    } else if(mPref.getValue(mPref.KEY_PICKER_THEME_STYLE, 0) == 2){
+      mTxtTheme.setText("Green");
     }
   }
 

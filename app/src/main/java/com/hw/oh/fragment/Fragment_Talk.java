@@ -67,7 +67,6 @@ public class Fragment_Talk extends Fragment implements AbsListView.OnScrollListe
   public static final boolean INFO = true;
   private static final int INITIAL_DELAY_MILLIS = 300;
 
-  private TextView mTxtGuide;
   //Flag
   private boolean mLastitemVisibleFlag = false;
   private boolean mLock = false;
@@ -183,9 +182,6 @@ public class Fragment_Talk extends Fragment implements AbsListView.OnScrollListe
     mCroutonView = getActivity().getLayoutInflater().inflate(
         R.layout.crouton_custom_view, null);
     mTxtCrouton = (TextView) mCroutonView.findViewById(R.id.txt_crouton);
-    mTxtGuide = (TextView) rootView.findViewById(R.id.txtGuide);
-    mTxtGuide.setText(Constant.GUIDE_MSG1);
-    mTxtGuide.setSelected(true);
 
 
     mProgressBar = (com.rey.material.widget.ProgressView) rootView.findViewById(R.id.progressBar);

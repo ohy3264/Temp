@@ -35,6 +35,7 @@ public class HYPreference extends Preference {
   public static final String KEY_PICKER_THEME = "picker_theme";
   public static final String KEY_DUTY_SELECTOR = "selector_duty";
   public static final String KEY_DUTY_INPUT = "duty_input";
+  public static final String KEY_PICKER_THEME_STYLE = "theme_style";
 
 
   private static Context mContext;
