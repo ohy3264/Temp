@@ -119,9 +119,9 @@ public class Fragment_Setting extends Fragment implements View.OnClickListener, 
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_setting, container, false);
 // 구글 통계
-    Tracker mTracker = ((ApplicationClass) getActivity().getApplication()).getDefaultTracker();
+   /* Tracker mTracker = ((ApplicationClass) getActivity().getApplication()).getDefaultTracker();
     mTracker.setScreenName("설정화면");
-    mTracker.send(new HitBuilders.AppViewBuilder().build());
+    mTracker.send(new HitBuilders.AppViewBuilder().build());*/
     //Utill
     mFont = new HYFont(getActivity());
     mFont.setGlobalFont((ViewGroup) rootView);

@@ -89,10 +89,10 @@ public class Fragment_Alba extends Fragment implements View.OnClickListener, Ada
         R.layout.crouton_custom_view, null);
     mTxtCrouton = (TextView) mCroutonView.findViewById(R.id.txt_crouton);
 
-    // 구글 통계
+    /*// 구글 통계
     Tracker mTracker = ((ApplicationClass) getActivity().getApplication()).getDefaultTracker();
     mTracker.setScreenName("알바리스트");
-    mTracker.send(new HitBuilders.AppViewBuilder().build());
+    mTracker.send(new HitBuilders.AppViewBuilder().build());*/
 
 
     mLin_guide = (LinearLayout) rootView.findViewById(R.id.lin_guide);

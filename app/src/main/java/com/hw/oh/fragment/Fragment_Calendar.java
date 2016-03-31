@@ -114,10 +114,10 @@ public class Fragment_Calendar extends Fragment implements OnClickListener, Yaho
     // TODO Auto-generated method stub
     View fragView = inflater.inflate(R.layout.fragment_calendar, container,
         false);
-    // 구글 통계
+    /*// 구글 통계
     Tracker mTracker = ((ApplicationClass) getActivity().getApplication()).getDefaultTracker();
     mTracker.setScreenName("알바 캘린더");
-    mTracker.send(new HitBuilders.AppViewBuilder().build());
+    mTracker.send(new HitBuilders.AppViewBuilder().build());*/
 
     // Utill Set
     mFont = new HYFont(getActivity());

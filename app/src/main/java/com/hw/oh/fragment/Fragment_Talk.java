@@ -166,9 +166,9 @@ public class Fragment_Talk extends Fragment implements AbsListView.OnScrollListe
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_talk, container, false);
     // 구글 통계
-    Tracker mTracker = ((ApplicationClass) getActivity().getApplication()).getDefaultTracker();
+   /* Tracker mTracker = ((ApplicationClass) getActivity().getApplication()).getDefaultTracker();
     mTracker.setScreenName("알바톡");
-    mTracker.send(new HitBuilders.AppViewBuilder().build());
+    mTracker.send(new HitBuilders.AppViewBuilder().build());*/
 
     //Util
     mRequestQueue = Volley.newRequestQueue(getActivity());

@@ -56,9 +56,9 @@ public class Fragment_insurance2 extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_insurance2, container, false);
     // 구글 통계
-    Tracker mTracker = ((ApplicationClass) getActivity().getApplication()).getDefaultTracker();
+   /* Tracker mTracker = ((ApplicationClass) getActivity().getApplication()).getDefaultTracker();
     mTracker.setScreenName("건강보험");
-    mTracker.send(new HitBuilders.AppViewBuilder().build());
+    mTracker.send(new HitBuilders.AppViewBuilder().build());*/
 
     //Util
     mFont = new HYFont(getActivity());
