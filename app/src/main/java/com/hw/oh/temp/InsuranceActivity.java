@@ -31,7 +31,7 @@ import it.neokree.materialtabs.MaterialTabListener;
 /**
  * Created by oh on 2015-09-09.
  */
-public class InsuranceActivity extends AppCompatActivity implements MaterialTabListener {
+public class InsuranceActivity extends BaseActivity implements MaterialTabListener {
   // Log
   private static final String TAG = "AlbaInfoActivity";
   private static final boolean DEBUG = true;

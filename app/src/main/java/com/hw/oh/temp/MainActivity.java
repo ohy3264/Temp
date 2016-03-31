@@ -51,7 +51,7 @@ import com.hw.oh.utility.HYPreference;
 import java.util.ArrayList;
 
 
-public class MainActivity extends ActionBarActivity implements View.OnClickListener{
+public class MainActivity extends BaseActivity implements View.OnClickListener{
     public static final String TAG = "MainActivity";
     public static final boolean DBUG = true;
     public static final boolean INFO = true;

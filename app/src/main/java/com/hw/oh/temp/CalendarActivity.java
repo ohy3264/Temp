@@ -30,7 +30,7 @@ import zh.wang.android.apis.yweathergetter4a.YahooWeather;
 /**
  * Created by oh on 2015-02-26. 달력
  */
-public class CalendarActivity extends ActionBarActivity {
+public class CalendarActivity extends BaseActivity {
   // Log
   private static final String TAG = "CalendarActivity";
   private static final boolean DEBUG = true;

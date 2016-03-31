@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,7 +30,7 @@ import it.neokree.materialtabs.MaterialTabListener;
 /**
  * Created by oh on 2015-05-23. 알바정보
  */
-public class AlbaInfoActivity extends ActionBarActivity implements MaterialTabListener {
+public class AlbaInfoActivity extends BaseActivity implements MaterialTabListener {
   // Log
   private static final String TAG = "AlbaInfoActivity";
   private static final boolean DEBUG = true;

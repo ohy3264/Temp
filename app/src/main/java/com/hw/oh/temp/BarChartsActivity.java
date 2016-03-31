@@ -43,7 +43,7 @@ import java.util.concurrent.CountDownLatch;
 /**
  * Created by oh on 2015-02-01. Bar 그래프
  */
-public class BarChartsActivity extends ActionBarActivity implements View.OnClickListener {
+public class BarChartsActivity extends BaseActivity implements View.OnClickListener {
   public static final String TAG = "BarChartsActivity";
   public static final boolean DBUG = true;
   public static final boolean INFO = true;

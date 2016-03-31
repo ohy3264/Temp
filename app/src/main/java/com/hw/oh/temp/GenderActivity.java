@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * Created by oh on 2015-02-01.
  */
-public class GenderActivity extends Activity implements View.OnClickListener {
+public class GenderActivity extends BaseActivity implements View.OnClickListener {
   private static final String TAG = "GenderActivity";
   private static final boolean DBUG = true;
   private static final boolean INFO = true;

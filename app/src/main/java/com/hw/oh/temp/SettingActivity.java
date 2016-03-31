@@ -20,7 +20,7 @@ import com.hw.oh.utility.HYFont;
 /**
  * Created by oh on 2015-02-26.
  */
-public class SettingActivity extends ActionBarActivity {
+public class SettingActivity extends BaseActivity {
 
   // Log
   private static final String TAG = "SettingActivity";

@@ -48,7 +48,7 @@ import java.util.Calendar;
 /**
  * Created by oh on 2015-02-02.
  */
-public class NewAlbaActivity_back extends ActionBarActivity implements View.OnClickListener, RefreshInfoDialog.RefreshDialogListener, WeekDialog.WeekDialogListener, EtcDialog.EtcDialogListener, AddInfoDialog.AddDialogListener {
+public class NewAlbaActivity_back extends BaseActivity implements View.OnClickListener, RefreshInfoDialog.RefreshDialogListener, WeekDialog.WeekDialogListener, EtcDialog.EtcDialogListener, AddInfoDialog.AddDialogListener {
   public static final String TAG = "NewPostActivity";
   public static final boolean DBUG = true;
   public static final boolean INFO = true;

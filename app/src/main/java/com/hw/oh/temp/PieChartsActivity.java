@@ -50,7 +50,7 @@ import java.util.concurrent.CountDownLatch;
 /**
  * Created by oh on 2015-02-01.
  */
-public class PieChartsActivity extends ActionBarActivity implements View.OnClickListener {
+public class PieChartsActivity extends BaseActivity implements View.OnClickListener {
   public static final String TAG = "PieChartsActivity";
   public static final boolean DBUG = true;
   public static final boolean INFO = true;

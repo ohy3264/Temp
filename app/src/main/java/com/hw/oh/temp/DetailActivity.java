@@ -75,7 +75,7 @@ import java.util.concurrent.CountDownLatch;
 /**
  * Created by oh on 2015-02-05.
  */
-public class DetailActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
+public class DetailActivity extends BaseActivity implements AdapterView.OnItemClickListener {
   //Tag
   private static Toast toast;
   private static final String TAG = "DetailActivity";

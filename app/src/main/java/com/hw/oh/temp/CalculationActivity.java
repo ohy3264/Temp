@@ -20,7 +20,7 @@ import com.hw.oh.utility.HYFont;
 /**
  * Created by oh on 2015-02-26. 모의계산
  */
-public class CalculationActivity extends ActionBarActivity {
+public class CalculationActivity extends BaseActivity {
 
   // Log
   private static final String TAG = "CalculationActivity";

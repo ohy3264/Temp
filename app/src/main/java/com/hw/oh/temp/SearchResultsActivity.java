@@ -32,7 +32,7 @@ import com.hw.oh.utility.HYPreference;
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 
-public class SearchResultsActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
+public class SearchResultsActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 
   // Log
   private static final String TAG = "SearchResultsActivity";

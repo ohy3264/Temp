@@ -37,7 +37,7 @@ import java.util.concurrent.CountDownLatch;
 /**
  * Created by oh on 2015-02-26. 지역선택 액티비티
  */
-public class LocationSelectActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
+public class LocationSelectActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 
   // Log
   private static final String TAG = "LocationSelectActivity";

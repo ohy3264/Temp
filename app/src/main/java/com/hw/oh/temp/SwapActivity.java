@@ -14,7 +14,7 @@ import com.hw.oh.utility.HYFont;
 
 import java.util.ArrayList;
 
-public class SwapActivity extends AppCompatActivity {
+public class SwapActivity extends BaseActivity {
   public static final String TAG = "SwapActivity";
   private ArrayList<PartTimeInfo> mAlbaInfoList = new ArrayList<PartTimeInfo>();
   private Toolbar mToolbar;

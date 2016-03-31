@@ -18,7 +18,7 @@ import com.hw.oh.utility.HYPreference;
 /**
  * Created by oh on 2015-02-26.
  */
-public class PassActivity extends ActionBarActivity {
+public class PassActivity extends BaseActivity {
 
   // Log
   private static final String TAG = "PassActivity";

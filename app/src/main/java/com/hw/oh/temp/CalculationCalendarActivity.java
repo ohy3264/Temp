@@ -20,7 +20,7 @@ import com.hw.oh.utility.HYFont;
 /**
  * Created by oh on 2015-02-26. 계산화면
  */
-public class CalculationCalendarActivity extends ActionBarActivity {
+public class CalculationCalendarActivity extends BaseActivity {
 
   // Log
   private static final String TAG = "CalculationCalendarActivity";

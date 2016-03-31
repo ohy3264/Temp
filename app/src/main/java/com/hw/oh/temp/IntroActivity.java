@@ -44,7 +44,7 @@ import java.util.Map;
 /**
  * Created by oh on 2015-02-01.
  */
-public class IntroActivity extends Activity {
+public class IntroActivity extends BaseActivity {
   public static final String TAG = "IntroActivity";
   public static final boolean DBUG = true;
   public static final boolean INFO = true;

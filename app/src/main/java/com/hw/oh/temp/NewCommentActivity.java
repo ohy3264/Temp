@@ -42,7 +42,7 @@ import java.util.concurrent.CountDownLatch;
 /**
  * Created by oh on 2015-02-02.
  */
-public class NewCommentActivity extends ActionBarActivity implements View.OnClickListener {
+public class NewCommentActivity extends BaseActivity implements View.OnClickListener {
   public static final String TAG = "NewCommentActivity";
   public static final boolean DBUG = true;
   public static final boolean INFO = true;

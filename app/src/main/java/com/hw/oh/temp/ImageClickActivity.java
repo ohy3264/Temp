@@ -26,7 +26,7 @@ import com.hw.oh.volley.utility.FadeInImageListener;
 /**
  * Created by oh on 2015-02-20.
  */
-public class ImageClickActivity extends ActionBarActivity implements View.OnTouchListener {
+public class ImageClickActivity extends BaseActivity implements View.OnTouchListener {
   private static final String TAG = "ImageClickActivity";
   private static final boolean DBUG = true;
   private static final boolean INFO = true;
