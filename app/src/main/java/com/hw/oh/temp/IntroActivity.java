@@ -10,6 +10,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -91,10 +92,10 @@ String base64EncodedPublicKey = getResources().getString(R.string.base64EncodedP
     ViewGroup root = (ViewGroup) findViewById(android.R.id.content);
     mFont.setGlobalFont(root);
 
-    // 구글 통계
-    Tracker mTracker = ((ApplicationClass) getApplication()).getDefaultTracker();
+  /*  // 구글 통계
+    Tracker mTracker = ((MultiDexApplication) getApplication()).getDefaultTracker();
     mTracker.setScreenName("스플래쉬");
-    mTracker.send(new HitBuilders.AppViewBuilder().build());
+    mTracker.send(new HitBuilders.AppViewBuilder().build());*/
 
 
 

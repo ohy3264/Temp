@@ -4,6 +4,7 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 
 import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 
 
 /**
@@ -12,7 +13,7 @@ import android.app.Application;
  * @author David KIM
  * @since 1.0
  */
-public class ApplicationClass extends Application {
+public class ApplicationClass extends MultiDexApplication {
 
   private Tracker mTracker;
 

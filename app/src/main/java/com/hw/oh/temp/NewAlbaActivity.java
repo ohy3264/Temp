@@ -138,9 +138,9 @@ public class NewAlbaActivity extends BaseActivity implements View.OnClickListene
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_newalba_imsi);
     // 구글 통계
-    Tracker mTracker = ((ApplicationClass) getApplication()).getDefaultTracker();
+   /* Tracker mTracker = ((ApplicationClass) getApplication()).getDefaultTracker();
     mTracker.setScreenName("새로운 알바 등록");
-    mTracker.send(new HitBuilders.AppViewBuilder().build());
+    mTracker.send(new HitBuilders.AppViewBuilder().build());*/
 
 
     //Util
