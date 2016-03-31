@@ -4,7 +4,7 @@
     <layer-list>
       <item android:id="@+id/outerColor" android:bottom="1dp" android:right="1dp">
         <shape>
-          <solid android:color="@color/imsi"/>
+          <solid android:color="?attr/colorPrimaryDark"/>
           <corners android:radius="3dip"/>
         </shape>
       </item>
@@ -15,7 +15,7 @@
       <!-- CONTENT LAYER -->
       <item android:id="@+id/innerColor"  android:bottom="1dp" android:right="1dp">
         <shape>
-          <solid android:color="@color/test"/>
+          <solid android:color="?attr/colorAccent"/>
           <corners android:radius="3dip"/>
 
         </shape>

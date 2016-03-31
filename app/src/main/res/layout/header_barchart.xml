@@ -19,7 +19,7 @@
         android:layout_marginRight="2dp"
         android:layout_weight="1"
         android:layout_width="0dp"
-        android:background="@drawable/circleview_newwork"
+        android:background="@drawable/button_nomal"
         android:layout_height="fill_parent"
         android:orientation="horizontal">
       <com.balysv.materialripple.MaterialRippleLayout
@@ -54,7 +54,7 @@
         android:layout_marginLeft="2dp"
         android:layout_weight="1"
         android:layout_width="0dp"
-        android:background="@drawable/circleview_newwork"
+        android:background="@drawable/button_nomal"
         android:layout_height="fill_parent"
         android:orientation="horizontal">
 

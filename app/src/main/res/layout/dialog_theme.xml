@@ -16,14 +16,14 @@
         android:id="@+id/imageView1"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:src="@drawable/icon_gabulvalue"/>
+        android:src="@drawable/icon_theme"/>
 
     <TextView
         android:id="@+id/dig_txtStationName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
-        android:text="시작일 설정"
+        android:text="테마 설정"
         android:textSize="20sp"/>
 
   </LinearLayout>
@@ -33,17 +33,20 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content">
     <RadioGroup
-        android:id="@+id/radioGroupMonth"
+        android:id="@+id/radioGroupTheme"
         android:checkedButton="@+id/radioMonth"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
       <RadioButton
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="월급"
-          android:id="@+id/radioMonth"/>
+          android:text="RED Theme"
+          android:id="@+id/radioRed"/>
       <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content"
-                   android:text="주급" android:id="@+id/radioWeek"/>
+                   android:text="Blue Theme" android:id="@+id/radioBlue"/>
+        <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Green Theme" android:id="@+id/radioGreen"/>
+
     </RadioGroup>
   </LinearLayout>
 

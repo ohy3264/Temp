@@ -41,7 +41,7 @@
             android:layout_width="3dp"
             android:layout_height="fill_parent"
             android:layout_margin="5dp"
-            android:background="#fffb695e"
+            android:background="@drawable/lebel"
             android:orientation="horizontal"></LinearLayout>
 
         <LinearLayout
@@ -93,7 +93,7 @@
             android:layout_width="3dp"
             android:layout_height="fill_parent"
             android:layout_margin="5dp"
-            android:background="#fffb695e"
+            android:background="@drawable/lebel"
             android:orientation="horizontal"/>
 
         <LinearLayout
@@ -167,7 +167,7 @@
                   android:layout_width="3dp"
                   android:layout_height="fill_parent"
                   android:layout_margin="5dp"
-                  android:background="#fffb695e"
+                  android:background="@drawable/lebel"
                   android:orientation="horizontal"/>
 
               <LinearLayout
@@ -255,7 +255,7 @@
                   android:layout_width="3dp"
                   android:layout_height="fill_parent"
                   android:layout_margin="5dp"
-                  android:background="#fffb695e"
+                  android:background="@drawable/lebel"
                   android:orientation="horizontal"/>
 
               <LinearLayout
@@ -335,7 +335,7 @@
             android:layout_width="3dp"
             android:layout_height="fill_parent"
             android:layout_margin="5dp"
-            android:background="#fffb695e"
+            android:background="@drawable/lebel"
             android:orientation="horizontal"/>
 
         <LinearLayout
@@ -446,7 +446,7 @@
 
             <LinearLayout
                 android:id="@+id/linAddTimelebel"
-                android:background="@color/black_lebel"
+                android:background="@drawable/lebel"
                 android:layout_width="3dp"
                 android:layout_height="fill_parent"
                 android:layout_margin="5dp"
@@ -533,7 +533,7 @@
 
             <LinearLayout
                 android:id="@+id/linNightlebel"
-                android:background="@color/black_lebel"
+                android:background="@drawable/lebel"
                 android:layout_width="3dp"
                 android:layout_height="fill_parent"
                 android:layout_margin="5dp"

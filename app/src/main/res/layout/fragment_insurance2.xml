@@ -92,7 +92,7 @@
             android:layout_height="40dp"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
-            android:background="@drawable/circleview_newwork"
+            android:background="@drawable/button_nomal"
             android:gravity="right|bottom"
             android:orientation="vertical">
 
@@ -143,10 +143,10 @@
               android:layout_height="match_parent"
               android:layout_marginRight="1dp"
               android:layout_weight="4"
-              android:background="@color/material_red_default"
+              android:background="?attr/background"
               android:gravity="center"
               android:text="근로자 부담액"
-              android:textColor="@color/material_white_2"
+              android:textColor="@color/dark_gray"
               android:textSize="11sp"/>
 
           <EditText
@@ -185,10 +185,10 @@
               android:layout_height="match_parent"
               android:layout_marginRight="1dp"
               android:layout_weight="4"
-              android:background="@color/material_red_default"
+              android:background="?attr/background"
               android:gravity="center"
               android:text="사업주 부담액"
-              android:textColor="@color/material_white_2"
+              android:textColor="@color/dark_gray"
               android:textSize="11sp"/>
 
           <EditText
@@ -227,10 +227,10 @@
               android:layout_height="match_parent"
               android:layout_marginRight="1dp"
               android:layout_weight="4"
-              android:background="@color/material_red_default"
+              android:background="?attr/background"
               android:gravity="center"
               android:text="총 액"
-              android:textColor="@color/material_white_2"
+              android:textColor="@color/dark_gray"
               android:textSize="11sp"/>
 
           <EditText
@@ -279,8 +279,8 @@
               android:layout_height="wrap_content"
               android:layout_marginRight="1dp"
               android:layout_weight="4"
-              android:background="@color/material_red_default"
-              android:textColor="@color/material_white_2"
+              android:background="?attr/background"
+              android:textColor="@color/dark_gray"
               android:textSize="11sp"
               android:gravity="center_vertical|center"
               android:paddingBottom="5dp"
@@ -289,8 +289,8 @@
 
           <TextView
               android:layout_marginRight="1dp"
-              android:background="@color/material_red_default"
-              android:textColor="@color/material_white_2"
+              android:background="?attr/background"
+              android:textColor="@color/dark_gray"
               android:textSize="11sp"
               android:layout_width="0dp"
               android:layout_height="match_parent"
@@ -300,25 +300,25 @@
 
           <TextView
               android:layout_marginRight="1dp"
-              android:background="@color/material_red_default"
+              android:background="?attr/background"
               android:id="@+id/textView59"
               android:layout_width="0dp"
               android:layout_height="match_parent"
               android:layout_weight="1.5"
               android:gravity="center"
               android:text="근로자"
-              android:textColor="@color/material_white_2"
+              android:textColor="@color/dark_gray"
               android:textSize="11sp"/>
 
           <TextView
-              android:background="@color/material_red_default"
+              android:background="?attr/background"
               android:id="@+id/textView60"
               android:layout_width="0dp"
               android:layout_height="match_parent"
               android:layout_weight="1.5"
               android:gravity="center"
               android:text="사업주"
-              android:textColor="@color/material_white_2"
+              android:textColor="@color/dark_gray"
               android:textSize="11sp"/>
 
         </LinearLayout>

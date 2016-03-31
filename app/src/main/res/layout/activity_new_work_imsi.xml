@@ -97,7 +97,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10.0dip"
                     android:text="0"
-                    android:textColor="@color/red_lebel"
+                    android:textColor="?attr/colorAccent"
                     android:textSize="25.0dip"/>
 
                 <TextView
@@ -119,7 +119,7 @@
                   android:layout_marginLeft="10.0dip"
                   android:layout_marginRight="10.0dip"
                   android:text="0"
-                  android:textColor="@color/red_lebel"
+                  android:textColor="?attr/colorAccent"
                   android:textSize="25.0dip"/>
 
               <TextView
@@ -156,7 +156,7 @@
                 android:layout_marginLeft="10.0dip"
                 android:layout_marginRight="10.0dip"
                 android:text="0"
-                android:textColor="#ff13ca73"
+                android:textColor="?attr/colorPrimaryDark"
                 android:textSize="25.0dip"/>
 
             <TextView
@@ -181,7 +181,7 @@
             android:layout_width="3dp"
             android:layout_height="fill_parent"
             android:layout_margin="5dp"
-            android:background="#fffb695e"
+            android:background="?attr/colorAccent"
             android:orientation="horizontal"/>
 
         <LinearLayout
@@ -254,7 +254,7 @@
                   android:layout_width="3dp"
                   android:layout_height="fill_parent"
                   android:layout_margin="5dp"
-                  android:background="#fffb695e"
+                  android:background="?attr/colorAccent"
                   android:orientation="horizontal"/>
 
               <LinearLayout
@@ -342,7 +342,7 @@
                   android:layout_width="3dp"
                   android:layout_height="fill_parent"
                   android:layout_margin="5dp"
-                  android:background="#fffb695e"
+                  android:background="?attr/colorAccent"
                   android:orientation="horizontal"/>
 
               <LinearLayout

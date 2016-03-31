@@ -4,7 +4,7 @@
               android:layout_height="wrap_content"
               android:gravity="center_vertical"
               android:orientation="horizontal"
-              android:background="@color/material_red_action"
+              android:background="?attr/colorPrimary"
               android:minHeight="?attr/actionBarSize"
               android:padding="10dp">
 

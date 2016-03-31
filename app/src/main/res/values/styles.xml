@@ -1,28 +1,40 @@
 <resources>
-
-  <!-- Base application theme. -->
-  <style name="Base.Theme.HMKCodeApp" parent="Theme.AppCompat.NoActionBar">
-    <item name="colorPrimary">@color/my_primary</item>
-    <!--   darker variant for the status bar and contextual app bars -->
-    <item name="colorPrimaryDark">@color/my_primary_dark</item>
-    <!--   theme UI controls like checkboxes and text fields e.g. FloatActionButton -->
-    <item name="colorAccent">@color/my_accent</item>
-
-    <!-- Title Text Color -->
+  <!-- Pa theme. -->
+  <style name="ParentTheme" parent="Theme.AppCompat.NoActionBar">
     <item name="android:textColorPrimary">@color/my_primary_text</item>
-
-    <!-- color of the menu overflow icon (three vertical dots) -->
     <item name="android:textColorSecondary">@color/my_secondary_text</item>
+  </style>
+
+  <!-- Red theme. -->
+  <style name="RedTheme" parent="ParentTheme">
+    <item name="background">@color/my_primary_red_light</item>
+    <item name="colorPrimary">@color/my_primary_red</item>
+    <item name="colorPrimaryDark">@color/my_primary_red_dark</item>
+    <item name="colorAccent">@color/my_accent_red</item>
+  </style>
 
 
-    <item name="android:windowBackground">@color/window_background</item>
+
+  <style name="BlueTheme" parent="ParentTheme">
+    <item name="background">@color/my_primary_blue_light</item>
+    <item name="colorPrimary">@color/my_primary_blue</item>
+    <item name="colorPrimaryDark">@color/my_primary_blue_dark</item>
+    <item name="colorAccent">@color/my_accent_blue</item>
+  </style>
+
+  <style name="GreenTheme" parent="ParentTheme">
+
+    <item name="background">@color/my_primary_green_light</item>
+    <item name="colorPrimary">@color/my_primary_green</item>
+    <item name="colorPrimaryDark">@color/my_primary_green_dark</item>
+    <item name="colorAccent">@color/my_accent_green</item>
   </style>
 
   <!--
     Base application theme, dependent on API level. This theme is replaced
     by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
 -->
-  <style name="AppBaseTheme" parent="Base.Theme.HMKCodeApp">
+  <style name="AppBaseTheme" parent="ParentTheme">
     <!--
         Theme customizations available in newer API levels can go in
         res/values-vXX/styles.xml, while customizations related to
