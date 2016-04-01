@@ -139,9 +139,9 @@ public class NewAlbaActivity extends BaseActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newalba_imsi);
         // 구글 통계
-   /* Tracker mTracker = ((ApplicationClass) getApplication()).getDefaultTracker();
+    Tracker mTracker = ((ApplicationClass) getApplication()).getDefaultTracker();
     mTracker.setScreenName("새로운 알바 등록");
-    mTracker.send(new HitBuilders.AppViewBuilder().build());*/
+    mTracker.send(new HitBuilders.AppViewBuilder().build());
 
 
         //Util
@@ -369,46 +369,37 @@ public class NewAlbaActivity extends BaseActivity implements View.OnClickListene
 
                 //체크박스에 따른 view 상태 갱신
                 if (mFlag_WeekPay) {
-                    TypedArray a = obtainStyledAttributes(new int[]{android.R.attr.colorPrimary});
-                    resource = a.getResourceId(0, 0);
-                    //first 0 is the index in the array, second is the   default value
-                    a.recycle();
-                    mLinWeekTimelebel.setBackgroundResource(resource);
-
+                    mLinWeekTimelebel.setVisibility(View.VISIBLE);
                 } else {
-                    mLinWeekTimelebel.setBackgroundColor(getResources().getColor(R.color.black_lebel));
+                    mLinWeekTimelebel.setVisibility(View.INVISIBLE);
                 }
                 if (mFlag_EtcPay) {
-                    TypedArray a = obtainStyledAttributes(new int[]{android.R.attr.colorPrimary});
-                    resource = a.getResourceId(0, 0);
-                    //first 0 is the index in the array, second is the   default value
-                    a.recycle();
-                    mLinEtcTimelebel.setBackgroundResource(resource);
+                    mLinEtcTimelebel.setVisibility(View.VISIBLE);
                 } else {
-                    mLinEtcTimelebel.setBackgroundColor(getResources().getColor(R.color.black_lebel));
-                }/*
+                    mLinEtcTimelebel.setVisibility(View.INVISIBLE);
+                }
                 if (mFlag_AddPay) {
-                    mLinAddTimelebel.setBackgroundDrawable(ContextCompat.getDrawable(NewAlbaActivity.this, R.drawable.lebel));
+                    mLinAddTimelebel.setVisibility(View.VISIBLE);
                 } else {
-                    mLinAddTimelebel.setBackgroundColor(getResources().getColor(R.color.black_lebel));
+                    mLinAddTimelebel.setVisibility(View.INVISIBLE);
                 }
                 if (mFlag_RefreshTime) {
-                    mLinRefreshTimelebel.setBackgroundDrawable(ContextCompat.getDrawable(NewAlbaActivity.this, R.drawable.lebel));
+                    mLinRefreshTimelebel.setVisibility(View.VISIBLE);
                 } else {
-                    mLinRefreshTimelebel.setBackgroundColor(getResources().getColor(R.color.black_lebel));
+                    mLinRefreshTimelebel.setVisibility(View.INVISIBLE);
                 }
                 if (mFlag_NightAdvance) {
-                    mLinNightTimelebel.setBackgroundDrawable(ContextCompat.getDrawable(NewAlbaActivity.this, R.drawable.lebel));
+                    mLinNightTimelebel.setVisibility(View.VISIBLE);
                 } else {
-                    mLinNightTimelebel.setBackgroundColor(getResources().getColor(R.color.black_lebel));
+                    mLinNightTimelebel.setVisibility(View.INVISIBLE);
                 }
                 if (mFlag_Alarm) {
-                    mLinAlarmlebel.setBackgroundDrawable(ContextCompat.getDrawable(NewAlbaActivity.this, R.drawable.lebel));
+                    mLinAlarmlebel.setVisibility(View.VISIBLE);
                     mLinWeekSelector.setVisibility(View.VISIBLE);
                 } else {
-                    mLinAlarmlebel.setBackgroundColor(getResources().getColor(R.color.black_lebel));
+                    mLinAlarmlebel.setVisibility(View.VISIBLE);
                     mLinWeekSelector.setVisibility(View.GONE);
-                }*/
+                }
             }
         });
 

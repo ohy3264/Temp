@@ -87,7 +87,7 @@ public class WorkDataAdapter extends ArrayAdapter<WorkItem> implements UndoAdapt
       holder.mTxtMemo = (TextView) ret.findViewById(R.id.txtMemo);
       holder.mTxtGabulMoney = (TextView) ret.findViewById(R.id.txtGabulMoney);
       holder.mTxtEtc = (TextView) ret.findViewById(R.id.txtEtc);
-      holder.mLinGabulCheck = (LinearLayout) ret.findViewById(R.id.linGabulCheck);
+      //holder.mLinGabulCheck = (LinearLayout) ret.findViewById(R.id.linGabulCheck);
       holder.mLinNightView = (LinearLayout) ret.findViewById(R.id.linNightView);
       holder.mLinRefreshTime = (LinearLayout) ret.findViewById(R.id.linRefreshTime);
       holder.mLinGabulMoney = (LinearLayout) ret.findViewById(R.id.linGabulView);
@@ -118,12 +118,12 @@ public class WorkDataAdapter extends ArrayAdapter<WorkItem> implements UndoAdapt
       holder.mTxtMemo.setText(mAlbaInfoList.get(position).getSimpleMemo());
       //holder.mTxtEtc.setText(mAlbaInfoList.get(position).getWorkEtcNum()+"x "+mAlbaInfoList.get(position).getWorkEtcMoney());
       if (Boolean.parseBoolean(mAlbaInfoList.get(position).getWorkPayGabul())) {
-        holder.mLinGabulCheck.setBackgroundResource(R.drawable.circleview_gabul);
+      //  holder.mLinGabulCheck.setBackgroundResource(R.drawable.circleview_gabul);
         //holder.mTxtGabulMoney.setText("-"+mAlbaInfoList.get(position).getWorkPayGabulValue());
         holder.mLinGabulMoney.setVisibility(View.VISIBLE);
 
       } else {
-        holder.mLinGabulCheck.setBackgroundResource(R.drawable.circleview_red);
+       // holder.mLinGabulCheck.setBackgroundResource(R.drawable.circleview_red);
         holder.mLinGabulMoney.setVisibility(View.GONE);
       }
       if (Boolean.parseBoolean(mAlbaInfoList.get(position).getWorkNight())) {
@@ -165,7 +165,7 @@ public class WorkDataAdapter extends ArrayAdapter<WorkItem> implements UndoAdapt
 
   public class ViewHolder {
     private TextView mTxtTotalMoney, mTxtStartTime, mTxtEndTime, mTxtMemo, mTxtMonth, mTxtDay, mTxtGabulMoney, mTxtEtc;
-    private LinearLayout mLinGabulCheck, mLinNightView, mLinRefreshTime, mLinGabulMoney, mLinAddMoney, mLinEtc, mLinWeek;
+    private LinearLayout  mLinNightView, mLinRefreshTime, mLinGabulMoney, mLinAddMoney, mLinEtc, mLinWeek;
 
   }
 }

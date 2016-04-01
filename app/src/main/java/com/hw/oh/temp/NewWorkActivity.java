@@ -808,11 +808,11 @@ public class NewWorkActivity extends BaseActivity implements View.OnClickListene
           mRefreshTotalTime = mRefreshHour * 60 + mRefreshMin;
           break;
       }
-      mLinRefreshTimelebel.setBackgroundDrawable(ContextCompat.getDrawable(NewWorkActivity.this, R.drawable.lebel));
+      mLinRefreshTimelebel.setVisibility(View.VISIBLE);
     } else {
       mResult_refresh = 0.0;
       mRefreshTotalTime = 0;
-      mLinRefreshTimelebel.setBackgroundColor(getResources().getColor(R.color.black_lebel));
+      mLinRefreshTimelebel.setVisibility(View.INVISIBLE);
     }
     //총시간에서 야간시간을 뺀 시간이 휴식시간 보다 크지않을 때 즉 주간시간에서 차감을 할수 없을 때를 의미
 
@@ -858,13 +858,13 @@ public class NewWorkActivity extends BaseActivity implements View.OnClickListene
       Log.d("비야간", Double.toString(none_nightMoney_day));
       Log.d("야간", Double.toString(nightMoney_day));
       Log.d("토탈", Double.toString(mResult));
-      mLinNightTimelebel.setBackgroundDrawable(ContextCompat.getDrawable(NewWorkActivity.this, R.drawable.lebel));
+      mLinNightTimelebel.setVisibility(View.VISIBLE);
     } else {
       mResult = dayTimeMoney(Double.parseDouble(mEdtHourMoney.getText().toString()), Integer.parseInt(mTxtWorkHour.getText().toString()), Integer.parseInt(mTxtWorkMin.getText().toString()));
       mResult_night = 0.0;
       mTxtNightMoney.setText(Integer.toString((int) mResult_night));
       mNightTotalTime = 0;
-      mLinNightTimelebel.setBackgroundColor(getResources().getColor(R.color.black_lebel));
+      mLinNightTimelebel.setVisibility(View.INVISIBLE);
     }
 
 
@@ -872,25 +872,25 @@ public class NewWorkActivity extends BaseActivity implements View.OnClickListene
     mTxtEtcMoney.setText(mNumFomat.format(mEtcMoney * mEtcNum));
     if (mFlag_EtcPay) {
       mEtcTotal = mEtcMoney * mEtcNum;
-      mLinEtcTimelebel.setBackgroundDrawable(ContextCompat.getDrawable(NewWorkActivity.this, R.drawable.lebel));
+      mLinEtcTimelebel.setVisibility(View.VISIBLE);
     } else {
       mEtcTotal = 0;
-      mLinEtcTimelebel.setBackgroundColor(getResources().getColor(R.color.black_lebel));
+      mLinEtcTimelebel.setVisibility(View.INVISIBLE);
     }
     //주휴수당 적용
     mTxtWeekMoney.setText(mNumFomat.format(weekPaySet()));
     if (mFlag_WeekPay) {
       mWeekTotal = weekPaySet();
-      mLinWeekTimelebel.setBackgroundDrawable(ContextCompat.getDrawable(NewWorkActivity.this, R.drawable.lebel));
+      mLinWeekTimelebel.setVisibility(View.VISIBLE);
     } else {
       mWeekTotal = 0;
-      mLinWeekTimelebel.setBackgroundColor(getResources().getColor(R.color.black_lebel));
+      mLinWeekTimelebel.setVisibility(View.INVISIBLE);
     }
     //추가근무 적용
     int time_add = 0;
     mDefaultTotalTime = 0;
     if (mFlag_AddPay) {
-      mLinAddTimelebel.setBackgroundDrawable(ContextCompat.getDrawable(NewWorkActivity.this, R.drawable.lebel));
+      mLinAddTimelebel.setVisibility(View.VISIBLE);
       switch (mAddType) {
         case 0:
           if (total >= 480) {
@@ -953,7 +953,7 @@ public class NewWorkActivity extends BaseActivity implements View.OnClickListene
           break;
       }
     } else {
-      mLinAddTimelebel.setBackgroundColor(getResources().getColor(R.color.black_lebel));
+      mLinAddTimelebel.setVisibility(View.INVISIBLE);
       mResult_add = 0.0;
       mAddTotalTime = 0;
       mTxtAddMoney.setText(Integer.toString((int) mResult_add));
@@ -969,9 +969,9 @@ public class NewWorkActivity extends BaseActivity implements View.OnClickListene
     mResult_gabul = mResult;
     if (mFlag_ReceiveInAdvance) {
       mResult = mResult - mGabulMoney;
-      mLinGabulTimelebel.setBackgroundDrawable(ContextCompat.getDrawable(NewWorkActivity.this, R.drawable.lebel));
+      mLinGabulTimelebel.setVisibility(View.VISIBLE);
     } else {
-      mLinGabulTimelebel.setBackgroundColor(getResources().getColor(R.color.black_lebel));
+      mLinGabulTimelebel.setVisibility(View.INVISIBLE);
     }
 
 

@@ -1,9 +1,5 @@
 package com.hw.oh.fragment;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
@@ -35,6 +31,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.analytics.GoogleAnalytics;
 import com.hw.oh.dialog.CalculSetDialog;
 import com.hw.oh.dialog.DigStyleDialog;
 import com.hw.oh.dialog.DigThemeStyleDialog;
@@ -46,7 +43,6 @@ import com.hw.oh.model.KmaCodeItem;
 import com.hw.oh.network.RestClient;
 import com.hw.oh.sqlite.DBConstant;
 import com.hw.oh.sqlite.KmDBManager;
-import com.hw.oh.temp.ApplicationClass;
 import com.hw.oh.temp.LocationSelectActivity;
 import com.hw.oh.temp.R;
 import com.hw.oh.utility.Constant;
