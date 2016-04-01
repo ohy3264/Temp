@@ -41,7 +41,7 @@
             android:layout_width="3dp"
             android:layout_height="fill_parent"
             android:layout_margin="5dp"
-            android:background="@drawable/lebel"
+            style="?newalba_lebel_back"
             android:orientation="horizontal"></LinearLayout>
 
         <LinearLayout
@@ -892,7 +892,7 @@
               android:orientation="horizontal">
 
             <LinearLayout
-                android:background="@color/black_lebel"
+                style="?newalba_lebel_back"
                 android:layout_width="3dp"
                 android:layout_height="fill_parent"
                 android:layout_margin="5dp"

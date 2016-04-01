@@ -26,15 +26,14 @@
             android:layout_height="fill_parent">
 
           <TextView
+              style="?newalba_title_back"
               android:gravity="center_horizontal|center_vertical"
-              android:background="@drawable/circleview"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:textSize="16sp"
               android:text=""
               android:ellipsize="end"
               android:singleLine="true"
-              android:textColor="@color/material_white_1"
               android:id="@+id/txtAlbaName"/>
 
           <ImageView
@@ -93,7 +92,7 @@
                 android:layout_height="fill_parent">
 
               <ImageButton
-                  android:background="@drawable/button_nomal"
+                  style="?button_nomal"
                   android:elevation="2dp"
                   android:src="@drawable/icon_info"
                   android:textSize="11sp"
@@ -120,7 +119,7 @@
                   android:text=""
                   android:ellipsize="end"
                   android:singleLine="true"
-                  android:textColor="@color/accent_material_light"
+                  style="?text_nomal"
                   android:id="@+id/txtMoney"/>
 
               <TextView
@@ -129,7 +128,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text=""
-                  android:textColor="@color/accent_material_light"/>
+                  style="?text_nomal"/>
 
 
             </LinearLayout>

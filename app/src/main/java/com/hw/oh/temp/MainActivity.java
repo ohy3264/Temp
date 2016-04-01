@@ -196,7 +196,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
         //check_version와  check_status를 비교해서 값이 다르면 공지를 띄움
         if (!check_version.equals(check_status)) {
-            AlertDialog alert = new AlertDialog.Builder(this).setIcon(R.drawable.icon_notice)
+            AlertDialog alert = new AlertDialog.Builder(this).setIconAttribute(android.R.attr.alertDialogIcon)
                     .setTitle(R.string.app_notice)
                     .setMessage(R.string.app_notice_update)
                     .setPositiveButton("확인", new DialogInterface.OnClickListener() {

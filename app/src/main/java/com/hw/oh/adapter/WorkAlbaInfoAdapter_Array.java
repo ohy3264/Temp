@@ -118,7 +118,6 @@ public class WorkAlbaInfoAdapter_Array extends ArrayAdapter<PartTimeInfo>{
         holder.mLinWeek.setVisibility(View.GONE);
       }
 
-
     } catch (Exception e) {
       Log.e(TAG, e.toString());
     }

@@ -123,7 +123,7 @@ public class WorkDataAdapter extends ArrayAdapter<WorkItem> implements UndoAdapt
         holder.mLinGabulMoney.setVisibility(View.VISIBLE);
 
       } else {
-        holder.mLinGabulCheck.setBackgroundResource(R.drawable.circleview);
+        holder.mLinGabulCheck.setBackgroundResource(R.drawable.circleview_red);
         holder.mLinGabulMoney.setVisibility(View.GONE);
       }
       if (Boolean.parseBoolean(mAlbaInfoList.get(position).getWorkNight())) {

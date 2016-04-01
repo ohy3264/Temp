@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<!-- View styles -->
+	<attr name="newalba_title_back" format="reference" />
+	<attr name="newalba_lebel_back" format="reference" />
+	<attr name="button_nomal" format="reference" />
+	<attr name="text_nomal" format="reference" />
+
+	<!-- Attributes
+	<attr name="pageMargin" format="reference|dimension" /> -->
+
+</resources>

@@ -7,45 +7,66 @@
 
   <!-- Red theme. -->
   <style name="RedTheme" parent="ParentTheme">
+    <item name="text_nomal">@color/my_primary_red</item>
+    <item name="button_nomal">@style/btn_nomal_re</item>
+    <item name="newalba_lebel_back">@color/my_primary_red</item>
+    <item name="newalba_title_back">@style/alba_title_bg_re</item>
     <item name="background">@color/my_primary_red_light</item>
     <item name="colorPrimary">@color/my_primary_red</item>
     <item name="colorPrimaryDark">@color/my_primary_red_dark</item>
     <item name="colorAccent">@color/my_accent_red</item>
   </style>
 
-
-
+  <!-- Blue theme. -->
   <style name="BlueTheme" parent="ParentTheme">
+    <item name="text_nomal">@color/my_primary_blue</item>
+    <item name="button_nomal">@style/btn_nomal_bl</item>
+    <item name="newalba_lebel_back">@color/my_primary_blue</item>
+    <item name="newalba_title_back">@style/alba_title_bg_bl</item>
     <item name="background">@color/my_primary_blue_light</item>
     <item name="colorPrimary">@color/my_primary_blue</item>
     <item name="colorPrimaryDark">@color/my_primary_blue_dark</item>
     <item name="colorAccent">@color/my_accent_blue</item>
   </style>
 
+  <!-- Green theme. -->
   <style name="GreenTheme" parent="ParentTheme">
-
+    <item name="text_nomal">@color/my_primary_green</item>
+    <item name="button_nomal">@style/btn_nomal_gr</item>
+    <item name="newalba_lebel_back">@color/my_primary_green</item>
+    <item name="newalba_title_back">@style/alba_title_bg_gr</item>
     <item name="background">@color/my_primary_green_light</item>
     <item name="colorPrimary">@color/my_primary_green</item>
     <item name="colorPrimaryDark">@color/my_primary_green_dark</item>
     <item name="colorAccent">@color/my_accent_green</item>
   </style>
 
-  <!--
-    Base application theme, dependent on API level. This theme is replaced
-    by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
--->
   <style name="AppBaseTheme" parent="ParentTheme">
-    <!--
-        Theme customizations available in newer API levels can go in
-        res/values-vXX/styles.xml, while customizations related to
-        backward-compatibility can go here.
-    -->
+  </style>
+  <style name="AppTheme" parent="AppBaseTheme">
   </style>
 
-  <!-- Application theme. -->
-  <style name="AppTheme" parent="AppBaseTheme">
-    <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+  <!-- custom style -->
+  <style name="alba_title_bg_re">
+    <item name="android:background">@drawable/circleview_red</item>
   </style>
+  <style name="alba_title_bg_bl">
+    <item name="android:background">@drawable/circleview_blue</item>
+  </style>
+  <style name="alba_title_bg_gr">
+    <item name="android:background">@drawable/circleview_green</item>
+  </style>
+
+  <style name="btn_nomal_re">
+    <item name="android:background">@drawable/button_nomal_red</item>
+  </style>
+  <style name="btn_nomal_bl">
+    <item name="android:background">@drawable/button_nomal_blue</item>
+  </style>
+  <style name="btn_nomal_gr">
+    <item name="android:background">@drawable/button_nomal_green</item>
+  </style>
+
 
   <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
     <item name="colorAccent">@color/material_white_2</item>

@@ -1,172 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hw.oh.temp">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.hw.oh.temp" >
 
-  <uses-permission android:name="android.permission.VIBRATE"/>
-  <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-  <uses-permission android:name="android.permission.CAMERA"/>
-  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-  <uses-permission android:name="android.permission.WAKE_LOCK"/>
-  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!-- GCM permissions -->
+    <permission
+        android:name="com.hw.oh.temp.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
 
+    <uses-permission android:name="com.hw.oh.temp.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
-  <!-- GCM permissions -->
-  <permission
-      android:name="com.hw.oh.temp.permission.C2D_MESSAGE"
-      android:protectionLevel="signature"/>
+    <!-- BILLING permissions -->
+    <uses-permission android:name="com.android.vending.BILLING" />
 
-  <uses-permission android:name="com.hw.oh.temp.permission.C2D_MESSAGE"/>
-  <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+    <!-- GCM permissions -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
-  <!-- BILLING permissions -->
-  <uses-permission android:name="com.android.vending.BILLING"/>
+    <user-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-  <!-- GCM permissions -->
-  <uses-permission android:name="android.permission.INTERNET"/>
-  <user-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-
-  <application
-      android:name="android.support.multidex.MultiDexApplication"
-  android:allowBackup="true"
-      android:icon="@drawable/app_icon"
-      android:label="@string/app_name"
-      android:theme="@style/AppTheme">
-    <activity
-        android:name="com.hw.oh.temp.IntroActivity"
+    <application
+        android:name=".ApplicationClass"
+        android:allowBackup="true"
+        android:icon="@drawable/app_icon"
         android:label="@string/app_name"
-        android:screenOrientation="portrait">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN"/>
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".IntroActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        <category android:name="android.intent.category.LAUNCHER"/>
-      </intent-filter>
-    </activity>
-    <activity
-        android:name="com.google.android.gms.ads.AdActivity"
-        android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
 
-    <meta-data
-        android:name="com.google.android.gms.version"
-        android:value="@integer/google_play_services_version"/>
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
-    <activity
-        android:name="com.hw.oh.temp.MainActivity"
-        android:screenOrientation="portrait"
-        android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
-    <activity
-        android:name="com.hw.oh.temp.GenderActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name="com.hw.oh.temp.InsuranceActivity"
-        android:screenOrientation="portrait"
-        android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
-    <activity
-        android:name="com.hw.oh.temp.NewPostActivity"
-        android:screenOrientation="portrait"
-        android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
-    <activity
-        android:name="com.hw.oh.temp.CalculationActivity"
-        android:screenOrientation="portrait"
-        android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
-    <activity
-        android:name="com.hw.oh.temp.SettingActivity"
-        android:screenOrientation="portrait"
-        android:windowSoftInputMode="stateAlwaysHidden"/>
-    <activity
-        android:name="com.hw.oh.temp.TalkActivity"
-        android:screenOrientation="portrait"
-        android:windowSoftInputMode="stateAlwaysHidden"/>
-    <activity
-        android:name="com.hw.oh.temp.NewAlbaActivity"
-        android:screenOrientation="portrait"
-        android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
-    <activity
-        android:hardwareAccelerated="false"
-        android:name="com.hw.oh.temp.ImageClickActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name="com.hw.oh.temp.DetailActivity"
-        android:screenOrientation="portrait"
-        android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
-    <activity
-        android:name="com.hw.oh.temp.NewWorkActivity"
-        android:screenOrientation="portrait"
-        android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
-    <activity
-        android:name="com.hw.oh.temp.CalendarActivity"
-        android:screenOrientation="portrait"/>
-    <activity android:name="com.hw.oh.temp.AlbaInfoActivity"/>
-    <activity
-        android:name="com.hw.oh.temp.CalculationCalendarActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name="com.hw.oh.temp.PassActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name="com.hw.oh.temp.NewCommentActivity"
-        android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
-    <activity
-        android:name=".BarChartsActivity"
-        android:screenOrientation="landscape"/>
-    <activity
-        android:name=".DutyActivity"
-        android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
-    <activity
-        android:name=".LocationSelectActivity">
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <activity
+            android:name=".GenderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".InsuranceActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <activity
+            android:name=".NewPostActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <activity
+            android:name=".CalculationActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <activity
+            android:name=".SettingActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".TalkActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".NewAlbaActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <activity
+            android:name=".ImageClickActivity"
+            android:hardwareAccelerated="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <activity
+            android:name=".NewWorkActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <activity
+            android:name=".CalendarActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".AlbaInfoActivity" />
+        <activity
+            android:name=".CalculationCalendarActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PassActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".NewCommentActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+        <activity
+            android:name=".BarChartsActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".DutyActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <activity android:name=".LocationSelectActivity" >
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".SearchResultsActivity" />
+        </activity>
+        <activity
+            android:name="com.hw.oh.dialog.AlarmPopupDialog"
+            android:theme="@style/AppCompatAlertDialogStyle" />
+        <activity android:name=".SearchResultsActivity" >
 
-      <meta-data
-          android:name="android.app.default_searchable"
-          android:value=".SearchResultsActivity"/>
-    </activity>
-    <activity
-        android:name="com.hw.oh.dialog.AlarmPopupDialog"
-        android:theme="@style/AppCompatAlertDialogStyle"
-        />
-    <activity
-        android:name=".SearchResultsActivity">
+            <!-- to identify this activity as "searchable" -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
 
-      <!-- to identify this activity as "searchable" -->
-      <intent-filter>
-        <action android:name="android.intent.action.SEARCH"/>
-        <category android:name="android.intent.category.DEFAULT"/>
-      </intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
 
-      <meta-data
-          android:name="android.app.searchable"
-          android:resource="@xml/searchable"/>
-    </activity>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
+        <activity android:name=".SwapActivity" >
+        </activity>
+        <activity
+            android:name=".PieChartsActivity"
+            android:screenOrientation="portrait" />
 
-    <activity
-        android:name=".SwapActivity">  </activity>
-    <activity
-        android:name=".PieChartsActivity"
-        android:screenOrientation="portrait"/>
+        <!-- GCM receiver, service 등록 -->
+        <receiver
+            android:name="com.google.android.gcm.GCMBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
-    <!-- GCM receiver, service 등록 -->
-    <receiver
-        android:name="com.google.android.gcm.GCMBroadcastReceiver"
-        android:permission="com.google.android.c2dm.permission.SEND">
-      <intent-filter>
-        <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
-        <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
+                <category android:name="com.hw.oh.temp" />
+            </intent-filter>
+        </receiver>
 
-        <category android:name="com.hw.oh.temp"/>
-      </intent-filter>
-    </receiver>
+        <service android:name=".GCMIntentService" />
+        <service android:name="com.hw.oh.service.AlarmService" />
+        <service android:name="com.hw.oh.service.BoardListService" />
+        <service android:name="com.hw.oh.service.BoardDetailService" />
 
-    <service android:name="com.hw.oh.temp.GCMIntentService"/>
-    <service android:name="com.hw.oh.service.AlarmService"></service>
-    <service android:name="com.hw.oh.service.BoardListService"></service>
-    <service android:name="com.hw.oh.service.BoardDetailService"></service>
-
-    <meta-data
-        android:name="com.kakao.sdk.AppKey"
-        android:value="@string/kakao_app_key"/>
-  </application>
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="@string/kakao_app_key" />
+    </application>
 
 </manifest>
