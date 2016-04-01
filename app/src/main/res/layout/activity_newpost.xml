@@ -54,9 +54,8 @@
 
 
     <Button
-        android:background="@drawable/button_nomal_red"
         android:id="@+id/btnFloating"
-        style="?android:attr/buttonStyleSmall"
+        style="?button_nomal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Send"/>

@@ -2,10 +2,12 @@
 <resources>
 
 	<!-- View styles -->
-	<attr name="newalba_title_back" format="reference" />
-	<attr name="newalba_lebel_back" format="reference" />
+	<attr name="newalba_title_back" format="reference" />ç
 	<attr name="button_nomal" format="reference" />
 	<attr name="text_nomal" format="reference" />
+	<attr name="lebel" format="reference" />
+	<attr name="light_back" format="reference" />
+	<attr name="check_accent" format="reference" />
 
 	<!-- Attributes
 	<attr name="pageMargin" format="reference|dimension" /> -->

@@ -6,10 +6,14 @@
   </style>
 
   <!-- Red theme. -->
+
   <style name="RedTheme" parent="ParentTheme">
-    <item name="text_nomal">@color/my_primary_red</item>
+
+    <item name="check_accent">@style/check_accent_re</item>
+    <item name="lebel">@style/my_accent_re</item>
+    <item name="text_nomal">@style/my_accent_re</item>
     <item name="button_nomal">@style/btn_nomal_re</item>
-    <item name="newalba_lebel_back">@color/my_primary_red</item>
+    <item name="light_back">@style/my_light_re</item>
     <item name="newalba_title_back">@style/alba_title_bg_re</item>
     <item name="background">@color/my_primary_red_light</item>
     <item name="colorPrimary">@color/my_primary_red</item>
@@ -19,9 +23,11 @@
 
   <!-- Blue theme. -->
   <style name="BlueTheme" parent="ParentTheme">
-    <item name="text_nomal">@color/my_primary_blue</item>
+    <item name="check_accent">@style/check_accent_bl</item>
+    <item name="lebel">@style/my_accent_bl</item>
+    <item name="text_nomal">@style/my_accent_bl</item>
     <item name="button_nomal">@style/btn_nomal_bl</item>
-    <item name="newalba_lebel_back">@color/my_primary_blue</item>
+    <item name="light_back">@style/my_light_bl</item>
     <item name="newalba_title_back">@style/alba_title_bg_bl</item>
     <item name="background">@color/my_primary_blue_light</item>
     <item name="colorPrimary">@color/my_primary_blue</item>
@@ -31,9 +37,12 @@
 
   <!-- Green theme. -->
   <style name="GreenTheme" parent="ParentTheme">
-    <item name="text_nomal">@color/my_primary_green</item>
+    <item name="check_accent">@style/check_accent_gr</item>
+
+    <item name="lebel">@style/my_accent_gr</item>
+    <item name="text_nomal">@style/my_accent_gr</item>
     <item name="button_nomal">@style/btn_nomal_gr</item>
-    <item name="newalba_lebel_back">@color/my_primary_green</item>
+    <item name="light_back">@style/my_light_gr</item>
     <item name="newalba_title_back">@style/alba_title_bg_gr</item>
     <item name="background">@color/my_primary_green_light</item>
     <item name="colorPrimary">@color/my_primary_green</item>
@@ -49,12 +58,29 @@
   <!-- custom style -->
   <style name="alba_title_bg_re">
     <item name="android:background">@drawable/circleview_red</item>
+    <item name="android:textStyle">bold</item>
+    <item name="android:textColor">@color/material_white_2</item>
   </style>
   <style name="alba_title_bg_bl">
     <item name="android:background">@drawable/circleview_blue</item>
+    <item name="android:textColor">@color/material_white_2</item>
+    <item name="android:textStyle">bold</item>
   </style>
   <style name="alba_title_bg_gr">
     <item name="android:background">@drawable/circleview_green</item>
+    <item name="android:textColor">@color/material_white_2</item>
+    <item name="android:textStyle">bold</item>
+  </style>
+
+  <!-- check accent style -->
+  <style name="check_accent_re">
+    <item name="android:background">@drawable/check_nomal_red</item>
+  </style>
+  <style name="check_accent_bl">
+    <item name="android:background">@drawable/check_nomal_blue</item>
+  </style>
+  <style name="check_accent_gr">
+    <item name="android:background">@drawable/check_nomal_green</item>
   </style>
 
   <style name="btn_nomal_re">
@@ -67,6 +93,27 @@
     <item name="android:background">@drawable/button_nomal_green</item>
   </style>
 
+  <!-- custom accent style -->
+  <style name="my_accent_re">
+    <item name="android:background">@drawable/accent_red</item>
+  </style>
+  <style name="my_accent_bl">
+    <item name="android:background">@drawable/accent_blue</item>
+  </style>
+  <style name="my_accent_gr">
+    <item name="android:background">@drawable/accent_green</item>
+  </style>
+
+  <!-- custom light style -->
+  <style name="my_light_re">
+    <item name="android:background">@drawable/light_red</item>
+  </style>
+  <style name="my_light_bl">
+    <item name="android:background">@drawable/light_blue</item>
+  </style>
+  <style name="my_light_gr">
+    <item name="android:background">@drawable/light_green</item>
+  </style>
 
   <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
     <item name="colorAccent">@color/material_white_2</item>

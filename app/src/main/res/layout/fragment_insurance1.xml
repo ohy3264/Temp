@@ -78,7 +78,7 @@
                 android:layout_height="40dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/button_nomal_red"
+                style="?button_nomal"
                 android:gravity="right|bottom"
                 android:orientation="vertical">
 
@@ -126,7 +126,7 @@
 
               <TextView
                   android:layout_marginRight="1dp"
-                  android:background="?attr/background"
+                  style="?light_back"
                   android:gravity="center"
                   android:textColor="@color/dark_gray"
                   android:layout_weight="4"
@@ -168,7 +168,7 @@
 
               <TextView
                   android:layout_marginRight="1dp"
-                  android:background="?attr/background"
+                  style="?light_back"
                   android:gravity="center"
                   android:textColor="@color/dark_gray"
                   android:layout_weight="4"
@@ -210,7 +210,7 @@
 
               <TextView
                   android:layout_marginRight="1dp"
-                  android:background="?attr/background"
+                  style="?light_back"
                   android:gravity="center"
                   android:textColor="@color/dark_gray"
                   android:layout_weight="4"
@@ -266,7 +266,7 @@
                   android:layout_marginRight="1dp"
                   android:paddingTop="5dp"
                   android:paddingBottom="5dp"
-                  android:background="?attr/background"
+                  style="?light_back"
                   android:textColor="@color/material_white_2"
                   android:layout_weight="4"
                   android:layout_width="0dp"
@@ -276,7 +276,7 @@
 
               <TextView
                   android:layout_marginRight="1dp"
-                  android:background="?attr/background"
+                  style="?light_back"
                   android:textColor="@color/dark_gray"
                   android:gravity="center"
                   android:layout_weight="2"
@@ -299,7 +299,7 @@
                   android:id="@+id/textView59"/>
 
               <TextView
-                  android:background="?attr/background"
+                  style="?light_back"
                   android:textColor="@color/dark_gray"
                   android:gravity="center"
                   android:layout_weight="2"
