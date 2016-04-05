@@ -11,8 +11,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.hw.oh.temp.R;
 
 /**
@@ -23,14 +21,11 @@ public class NumberPickerDialog extends DialogFragment {
   private static final String TAG = "NumberPickerDialog";
 
   private View mNp;
-  private RequestQueue mRequestQueue;
   private EditText mEditText;
 
   @NonNull
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
-    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-    mRequestQueue = Volley.newRequestQueue(getActivity());
     builder.setMessage("가불금액 입력");
     Bundle bundle = getArguments();
     mNp = getNumberPickerWidget(bundle.getInt("TotalMoney"), bundle.getInt("GabulMoney"));

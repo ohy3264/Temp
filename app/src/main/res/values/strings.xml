@@ -128,8 +128,11 @@
   <string name="app_notice_update">Ver. 1.64 \n -  버그수정 \n\n
     오류발생 시 이메일이나 카톡으로 문의를 주시면 좀더 빠른개선이 가능합니다. 감사합니다 \n\n
   </string>
-  -->
+
   <string name="app_notice_update">Ver. 1.65 \n -  테마변경 추가 \n\n
+    오류발생 시 이메일이나 카톡으로 문의를 주시면 좀더 빠른개선이 가능합니다. 감사합니다 \n\n
+  </string> -->
+    <string name="app_notice_update">Ver. 1.66 \n -  테마변경 추가 (롤리팝이전 버전 에러 수정) \n\n
     오류발생 시 이메일이나 카톡으로 문의를 주시면 좀더 빠른개선이 가능합니다. 감사합니다 \n\n
   </string>
   <!-- Error 명칭 -->

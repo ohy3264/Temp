@@ -13,8 +13,6 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.util.Log;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.hw.oh.model.BoardItem;
 import com.hw.oh.utility.Constant;
 import com.hw.oh.utility.HYTime_Maximum;
@@ -46,7 +44,6 @@ public class BoardListService extends Service {
   private ArrayList<BoardItem> mBoardPrevList = new ArrayList<BoardItem>();
 
   //Utill
-  private RequestQueue mRequestQueue;
   private CountDownLatch mCountDownLatch_BoardList;
 
 
@@ -117,7 +114,6 @@ public class BoardListService extends Service {
   @Override
   public void onCreate() {
     super.onCreate();
-    mRequestQueue = Volley.newRequestQueue(getApplicationContext());
   }
 
   @Override
@@ -200,6 +196,10 @@ public class BoardListService extends Service {
       params.put("MODE", "BoardList");
       params.put("LIMIT", Integer.toString(Constant.LIMIT_START));
       ServerRequestUtils.request(this, "http://ohy3264.cafe24.com", "/Anony/api/boardListAll.php", params, listCallHandler);
+
+
+
+
     } catch (Exception e) {
       Log.d(TAG, "Splash:handler2: " + e.getMessage());
     }

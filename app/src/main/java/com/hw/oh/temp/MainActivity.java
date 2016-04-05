@@ -97,10 +97,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //Util
-       /* // 구글 통계
+        // 구글 통계
         Tracker mTracker = ((ApplicationClass) getApplication()).getDefaultTracker();
         mTracker.setScreenName("메인액티비티");
-        mTracker.send(new HitBuilders.AppViewBuilder().build());*/
+        mTracker.send(new HitBuilders.AppViewBuilder().build());
 
         mBackPressCloseHandler = new HYBackPressCloserHandler(this);
         mFont = new HYFont(this);

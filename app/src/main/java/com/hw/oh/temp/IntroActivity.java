@@ -7,6 +7,7 @@ import com.google.android.gms.analytics.Tracker;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -24,6 +25,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.hw.oh.billing.IabHelper;
 import com.hw.oh.billing.IabResult;
 import com.hw.oh.billing.Inventory;
@@ -58,6 +62,11 @@ public class IntroActivity extends BaseActivity {
   private HYPreference mPref;
   private HYNetworkInfo mNet;
   private ImageView mIntroDot;
+  /**
+   * ATTENTION: This was auto-generated to implement the App Indexing API.
+   * See https://g.co/AppIndexing/AndroidStudio for more information.
+   */
+  private GoogleApiClient client;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +80,7 @@ public class IntroActivity extends BaseActivity {
     mNet = new HYNetworkInfo(this);
 
     //InApp
-String base64EncodedPublicKey = getResources().getString(R.string.base64EncodedPublicKey);
+    String base64EncodedPublicKey = getResources().getString(R.string.base64EncodedPublicKey);
     mHelper = new IabHelper(this, base64EncodedPublicKey);
     mHelper.enableDebugLogging(true, "IAB");
     mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
@@ -92,11 +101,10 @@ String base64EncodedPublicKey = getResources().getString(R.string.base64EncodedP
     ViewGroup root = (ViewGroup) findViewById(android.R.id.content);
     mFont.setGlobalFont(root);
 
-  /*  // 구글 통계
-    Tracker mTracker = ((MultiDexApplication) getApplication()).getDefaultTracker();
+    // 구글 통계
+    Tracker mTracker = ((ApplicationClass) getApplication()).getDefaultTracker();
     mTracker.setScreenName("스플래쉬");
-    mTracker.send(new HitBuilders.AppViewBuilder().build());*/
-
+    mTracker.send(new HitBuilders.AppViewBuilder().build());
 
 
     dbinit();
@@ -137,8 +145,12 @@ String base64EncodedPublicKey = getResources().getString(R.string.base64EncodedP
         }
       }, 3000);
     }
+    // ATTENTION: This was auto-generated to implement the App Indexing API.
+    // See https://g.co/AppIndexing/AndroidStudio for more information.
+    client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
   }
-  private void introAnimation(){
+
+  private void introAnimation() {
     mIntroDot = (ImageView) findViewById(R.id.intro_dot);
 
     AnimationDrawable animation = new AnimationDrawable();
@@ -161,7 +173,7 @@ String base64EncodedPublicKey = getResources().getString(R.string.base64EncodedP
   }
 
   private IabHelper.QueryInventoryFinishedListener
-      mQueryFinishedListener = new IabHelper.QueryInventoryFinishedListener() {
+          mQueryFinishedListener = new IabHelper.QueryInventoryFinishedListener() {
     public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
       if (result.isFailure()) {
         // handle error
@@ -195,36 +207,36 @@ String base64EncodedPublicKey = getResources().getString(R.string.base64EncodedP
       Log.i(TAG, "requestUserInfoSend()");
     String url = "http://ohy3264.cafe24.com/Anony/api/memberCheck.php";
     StringRequest request = new StringRequest(Request.Method.POST, url,
-        new Response.Listener<String>() {
-          @Override
-          public void onResponse(final String response) {
-            Log.d(TAG, "onResponse :: " + response.toString());
-
-            new Handler().postDelayed(new Runnable() {
+            new Response.Listener<String>() {
               @Override
-              public void run() {
-                try {
-                  JSONObject json = new JSONObject(response);
-                  Message msg = IntentHandler.obtainMessage();
-                  Bundle bundle = new Bundle();
-                  bundle.putString("IntentFlag", json.getString("IntentFlag"));
-                  bundle.putString("Gender", json.getString("Gender"));
-                  msg.setData(bundle);
-                  IntentHandler.sendMessage(msg);
-                } catch (JSONException e) {
-                  e.printStackTrace();
+              public void onResponse(final String response) {
+                Log.d(TAG, "onResponse :: " + response.toString());
 
-                } catch (Exception e) {
-                  e.printStackTrace();
-                }
+                new Handler().postDelayed(new Runnable() {
+                  @Override
+                  public void run() {
+                    try {
+                      JSONObject json = new JSONObject(response);
+                      Message msg = IntentHandler.obtainMessage();
+                      Bundle bundle = new Bundle();
+                      bundle.putString("IntentFlag", json.getString("IntentFlag"));
+                      bundle.putString("Gender", json.getString("Gender"));
+                      msg.setData(bundle);
+                      IntentHandler.sendMessage(msg);
+                    } catch (JSONException e) {
+                      e.printStackTrace();
+
+                    } catch (Exception e) {
+                      e.printStackTrace();
+                    }
+                  }
+                }, 500);
               }
-            }, 500);
-          }
-        }, new Response.ErrorListener() {
+            }, new Response.ErrorListener() {
       @Override
       public void onErrorResponse(VolleyError e) {
         Log.d(TAG,
-            "onErrorResponse :: " + e.getLocalizedMessage());
+                "onErrorResponse :: " + e.getLocalizedMessage());
         e.printStackTrace();
       }
     }) {
@@ -305,24 +317,24 @@ String base64EncodedPublicKey = getResources().getString(R.string.base64EncodedP
       Log.i(TAG, "requestCallRest_Guide()");
     String url = "http://ohy3264.cafe24.com/Anony/api/GuideMsgs.php";
     StringRequest request = new StringRequest(Request.Method.POST, url,
-        new Response.Listener<String>() {
-          @Override
-          public void onResponse(String response) {
-            Log.d(TAG, "onResponse :: " + response.toString());
-            try {
-              JSONObject jsonObj = new JSONObject(response);
-              Constant.GUIDE_MSG1 = jsonObj.get("talkMsg").toString();
-              Constant.GUIDE_MSG2 = jsonObj.get("calendarMsg").toString();
-              Constant.GUIDE_MSG3 = jsonObj.get("newworkMsg").toString();
-            } catch (Exception e) {
-              Log.i(TAG, e.toString());
-            }
-          }
-        }, new Response.ErrorListener() {
+            new Response.Listener<String>() {
+              @Override
+              public void onResponse(String response) {
+                Log.d(TAG, "onResponse :: " + response.toString());
+                try {
+                  JSONObject jsonObj = new JSONObject(response);
+                  Constant.GUIDE_MSG1 = jsonObj.get("talkMsg").toString();
+                  Constant.GUIDE_MSG2 = jsonObj.get("calendarMsg").toString();
+                  Constant.GUIDE_MSG3 = jsonObj.get("newworkMsg").toString();
+                } catch (Exception e) {
+                  Log.i(TAG, e.toString());
+                }
+              }
+            }, new Response.ErrorListener() {
       @Override
       public void onErrorResponse(VolleyError e) {
         Log.d(TAG,
-            "onErrorResponse :: " + e.getLocalizedMessage());
+                "onErrorResponse :: " + e.getLocalizedMessage());
         e.printStackTrace();
       }
     });
@@ -334,14 +346,50 @@ String base64EncodedPublicKey = getResources().getString(R.string.base64EncodedP
   @Override
   public void onStart() {
     super.onStart();
+    // ATTENTION: This was auto-generated to implement the App Indexing API.
+    // See https://g.co/AppIndexing/AndroidStudio for more information.
+    client.connect();
     // 구글 통계
     GoogleAnalytics.getInstance(this).reportActivityStart(this);
-  };
+    // ATTENTION: This was auto-generated to implement the App Indexing API.
+    // See https://g.co/AppIndexing/AndroidStudio for more information.
+    Action viewAction = Action.newAction(
+            Action.TYPE_VIEW, // TODO: choose an action type.
+            "Intro Page", // TODO: Define a title for the content shown.
+            // TODO: If you have web page content that matches this app activity's content,
+            // make sure this auto-generated web page URL is correct.
+            // Otherwise, set the URL to null.
+            Uri.parse("http://host/path"),
+            // TODO: Make sure this auto-generated app deep link URI is correct.
+            Uri.parse("android-app://com.hw.oh.temp/http/host/path")
+    );
+    AppIndex.AppIndexApi.start(client, viewAction);
+  }
+
+  ;
 
   @Override
   public void onStop() {
     super.onStop();
+    // ATTENTION: This was auto-generated to implement the App Indexing API.
+    // See https://g.co/AppIndexing/AndroidStudio for more information.
+    Action viewAction = Action.newAction(
+            Action.TYPE_VIEW, // TODO: choose an action type.
+            "Intro Page", // TODO: Define a title for the content shown.
+            // TODO: If you have web page content that matches this app activity's content,
+            // make sure this auto-generated web page URL is correct.
+            // Otherwise, set the URL to null.
+            Uri.parse("http://host/path"),
+            // TODO: Make sure this auto-generated app deep link URI is correct.
+            Uri.parse("android-app://com.hw.oh.temp/http/host/path")
+    );
+    AppIndex.AppIndexApi.end(client, viewAction);
     // 구글 통계
     GoogleAnalytics.getInstance(this).reportActivityStop(this);
-  };
+    // ATTENTION: This was auto-generated to implement the App Indexing API.
+    // See https://g.co/AppIndexing/AndroidStudio for more information.
+    client.disconnect();
+  }
+
+  ;
 }

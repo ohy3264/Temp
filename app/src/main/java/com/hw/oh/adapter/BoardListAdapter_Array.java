@@ -9,10 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
-import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.hw.oh.model.BoardItem;
 import com.hw.oh.temp.R;
 import com.hw.oh.utility.HYFont;
@@ -28,10 +25,7 @@ public class BoardListAdapter_Array extends ArrayAdapter<BoardItem>  implements 
   private List<BoardItem> mBoardItem;
   private HYFont mFont;
   private InfoExtra mInfoExtra;
-  private RequestQueue mRequestQueue;
   private ViewHolder mHolder;
-  private ImageLoader mImageLoader;
-  private final int max_cache_size = 1000000;
   private final String mImgURI = "http://ohy3264.cafe24.com/Anony/api/uploads/Img";
 
   public BoardListAdapter_Array(Context context, ArrayList<BoardItem> objects) {
@@ -40,8 +34,6 @@ public class BoardListAdapter_Array extends ArrayAdapter<BoardItem>  implements 
     mBoardItem = objects;
     mFont = new HYFont(context);
     mInfoExtra = new InfoExtra(context);
-    mRequestQueue = Volley.newRequestQueue(context);
-    mImageLoader = new ImageLoader(mRequestQueue, new DiskBitmapCache(context.getCacheDir(), max_cache_size));
   }
   @NonNull
   @Override
@@ -71,7 +63,7 @@ public class BoardListAdapter_Array extends ArrayAdapter<BoardItem>  implements 
           .findViewById(R.id.txtPost);
       mHolder.imgGender = (ImageView) ret
           .findViewById(R.id.imgGender);
-      mHolder.networkimgProfile = (NetworkImageView) ret
+      mHolder.networkimgProfile = (ImageView) ret
           .findViewById(R.id.networkimageview);
       mHolder.txtPostType = (TextView) ret
           .findViewById(R.id.txtPostType);
@@ -121,7 +113,7 @@ public class BoardListAdapter_Array extends ArrayAdapter<BoardItem>  implements 
     if (mBoardItem.get(position).getImgState().equals("1")) {
       if (Integer.parseInt(mBoardItem.get(position).getHateCNT()) < 5) {
         mHolder.networkimgProfile.setVisibility(View.VISIBLE);
-        mHolder.networkimgProfile.setImageUrl(mImgURI + mBoardItem.get(position).get_id() + ".jpg", mImageLoader);
+        Glide.with(mContext).load(mImgURI + mBoardItem.get(position).get_id() + ".jpg").into(mHolder.networkimgProfile);
       }
     } else {
       mHolder.networkimgProfile.setVisibility(View.INVISIBLE);
@@ -134,7 +126,7 @@ public class BoardListAdapter_Array extends ArrayAdapter<BoardItem>  implements 
   public class ViewHolder {
     public TextView txtPost;
     public ImageView imgGender;
-    public NetworkImageView networkimgProfile;
+    public ImageView networkimgProfile;
     public TextView txtPostType;
     public TextView txtLikeCNT;
     public TextView txtHateCNT;

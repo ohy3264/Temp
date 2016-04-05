@@ -30,12 +30,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.hw.oh.adapter.BoardListAdapter_Array;
 import com.hw.oh.model.BoardItem;
 import com.hw.oh.service.BoardListService;
@@ -57,6 +51,12 @@ import com.tistory.whdghks913.croutonhelper.CroutonHelper;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * Created by oh on 2015-02-01.
@@ -90,7 +90,6 @@ public class Fragment_Talk extends Fragment implements AbsListView.OnScrollListe
   private InfoExtra mInfoExtra;
   private HYFont mFont;
   private HYPreference mPref;
-  private RequestQueue mRequestQueue;
   private SwipeRefreshLayout mTopPullRefresh = null; // 상단 새로고침
   private HYNetworkInfo mNet;
   private com.rey.material.widget.ProgressView mProgressBar;
@@ -166,12 +165,11 @@ public class Fragment_Talk extends Fragment implements AbsListView.OnScrollListe
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_talk, container, false);
     // 구글 통계
-   /* Tracker mTracker = ((ApplicationClass) getActivity().getApplication()).getDefaultTracker();
+    Tracker mTracker = ((ApplicationClass) getActivity().getApplication()).getDefaultTracker();
     mTracker.setScreenName("알바톡");
-    mTracker.send(new HitBuilders.AppViewBuilder().build());*/
+    mTracker.send(new HitBuilders.AppViewBuilder().build());
 
     //Util
-    mRequestQueue = Volley.newRequestQueue(getActivity());
     mFont = new HYFont(getActivity());
     mFont.setGlobalFont((ViewGroup) rootView);
     mNet = new HYNetworkInfo(getActivity());
@@ -484,29 +482,25 @@ public class Fragment_Talk extends Fragment implements AbsListView.OnScrollListe
    */
   public void registerGCM(final String regId, final String andId) {
     String url = "http://ohy3264.cafe24.com/Anony/api/registerGCM.php";
-    StringRequest postReq = new StringRequest(Request.Method.POST,
-        url, new Response.Listener<String>() {
-      public void onResponse(String paramAnonymousString) {
-        Log.d(TAG, "senAPIkey.Response:" + paramAnonymousString);
-        if (paramAnonymousString == null)
-          Log.d(TAG, "senAPIkey.Response : response null");
-      }
-    }, new Response.ErrorListener() {
-      public void onErrorResponse(
-          VolleyError paramAnonymousVolleyError) {
-        Log.d(TAG, "senAPIkey.Error.Response : "
-            + paramAnonymousVolleyError.getMessage());
-      }
-    }) {
-      protected Map<String, String> getParams() {
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("REG_ID", regId);
-        params.put("GENDER", mPref.getValue(mPref.KEY_GENDER, "0"));
-        params.put("AND_ID", andId);
-        return params;
-      }
-    };
-    this.mRequestQueue.add(postReq);
+    try {
+      OkHttpClient client = new OkHttpClient();
+      RequestBody formBody = new FormBody.Builder()
+              .add("REG_ID", regId)
+              .add("GENDER", mPref.getValue(mPref.KEY_GENDER, "0"))
+              .add("AND_ID", andId)
+              .build();
+
+      Request request = new Request.Builder()
+              .url(url)
+              .post(formBody)
+              .build();
+
+      Response response = client.newCall(request).execute();
+
+      Log.d(TAG, "onResponse :: " + response.body().string());
+    } catch (Exception e) {
+      Log.i(TAG, e.toString());
+    }
   }
 
 

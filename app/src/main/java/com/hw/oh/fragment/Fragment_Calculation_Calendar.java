@@ -154,10 +154,10 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
     mDB = new DBManager(getActivity());
     mPref = new HYPreference(getActivity());
 
-   /* // 구글 통계
+   // 구글 통계
     Tracker mTracker = ((ApplicationClass) getActivity().getApplication()).getDefaultTracker();
     mTracker.setScreenName("알바 토탈 계산");
-    mTracker.send(new HitBuilders.AppViewBuilder().build());*/
+    mTracker.send(new HitBuilders.AppViewBuilder().build());
 
     //Crouton
     mCroutonHelper = new CroutonHelper(getActivity());

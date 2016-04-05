@@ -25,8 +25,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.hw.oh.adapter.WorkAlbaInfoAdapter_Array;
 import com.hw.oh.model.PartTimeInfo;
 import com.hw.oh.sqlite.DBConstant;
@@ -69,7 +67,6 @@ public class Fragment_Alba extends Fragment implements View.OnClickListener, Ada
   //Utill
   private HYFont mFont;
   private DBManager mDB;
-  private RequestQueue mRequestQueue;
   private com.rey.material.widget.ProgressView mProgressBar;
 
 
@@ -78,7 +75,6 @@ public class Fragment_Alba extends Fragment implements View.OnClickListener, Ada
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_alba, container, false);
     //Utill
-    mRequestQueue = Volley.newRequestQueue(getActivity());
     mFont = new HYFont(getActivity());
     mFont.setGlobalFont((ViewGroup) rootView);
     mDB = new DBManager(getActivity());
@@ -89,10 +85,10 @@ public class Fragment_Alba extends Fragment implements View.OnClickListener, Ada
         R.layout.crouton_custom_view, null);
     mTxtCrouton = (TextView) mCroutonView.findViewById(R.id.txt_crouton);
 
-    /*// 구글 통계
+    // 구글 통계
     Tracker mTracker = ((ApplicationClass) getActivity().getApplication()).getDefaultTracker();
     mTracker.setScreenName("알바리스트");
-    mTracker.send(new HitBuilders.AppViewBuilder().build());*/
+    mTracker.send(new HitBuilders.AppViewBuilder().build());
 
 
     mLin_guide = (LinearLayout) rootView.findViewById(R.id.lin_guide);

@@ -93,7 +93,7 @@
           android:gravity="left"
           android:orientation="horizontal">
 
-        <com.android.volley.toolbox.NetworkImageView
+        <ImageView
             android:id="@+id/networkimageview"
             android:layout_width="@dimen/image_small"
             android:layout_height="@dimen/image_small"

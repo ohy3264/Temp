@@ -8,8 +8,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.hw.oh.temp.R;
 import com.hw.oh.utility.HYPreference;
 import com.hw.oh.utility.InfoExtra;
@@ -26,7 +24,6 @@ public class AlarmPopupDialog extends Activity {
 
   private InfoExtra mInfo;
   private HYPreference mPref;
-  private RequestQueue mRequestQueue;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +36,6 @@ public class AlarmPopupDialog extends Activity {
 
     mPref = new HYPreference(this);
     mInfo = new InfoExtra(this);
-    mRequestQueue = Volley.newRequestQueue(this);
 
     popupName = (TextView) findViewById(R.id.txtpopupName);
     popupMsg = (TextView) findViewById(R.id.txtpopupMsg);

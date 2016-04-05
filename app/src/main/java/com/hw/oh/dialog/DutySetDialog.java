@@ -17,8 +17,6 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.hw.oh.fragment.Fragment_Setting;
 import com.hw.oh.temp.R;
 import com.hw.oh.utility.HYFont;
@@ -50,7 +48,6 @@ public class DutySetDialog extends DialogFragment implements AdapterView.OnItemS
 
   // Utill
   private InfoExtra mInfoExtra;
-  private RequestQueue mRequestQueue;
   private HYFont mFont;
   private HYPreference mPref;
 
@@ -61,7 +58,6 @@ public class DutySetDialog extends DialogFragment implements AdapterView.OnItemS
     View v = mLayoutInflater.inflate(R.layout.dialog_duty, null);
     // Utill
     mInfoExtra = new InfoExtra(getActivity());
-    mRequestQueue = Volley.newRequestQueue(getActivity());
     mFont = new HYFont(getActivity());
     mFont.setGlobalFont((ViewGroup) v);
     mPref = new HYPreference(getActivity());

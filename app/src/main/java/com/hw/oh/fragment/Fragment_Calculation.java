@@ -16,9 +16,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
-import com.hw.oh.temp.ApplicationClass;
 import com.hw.oh.temp.R;
 import com.hw.oh.utility.HYFont;
 import com.tistory.whdghks913.croutonhelper.CroutonHelper;
@@ -63,7 +60,6 @@ public class Fragment_Calculation extends Fragment implements AdapterView.OnItem
   //Utill
   private NumberFormat mNumFomat = new DecimalFormat("###,###,###");
   private HYFont mFont;
-  private RequestQueue mRequestQueue;
   private CountDownLatch mCountDownLatch_BoardList;
 
 
@@ -71,7 +67,6 @@ public class Fragment_Calculation extends Fragment implements AdapterView.OnItem
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_calculation, container, false);
     //Utill
-    mRequestQueue = Volley.newRequestQueue(getActivity());
     mFont = new HYFont(getActivity());
 
     mFont.setGlobalFont((ViewGroup) rootView);

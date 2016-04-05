@@ -34,8 +34,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.hw.oh.dialog.AddInfoDialog;
 import com.hw.oh.dialog.EtcDialog;
 import com.hw.oh.dialog.MonthPayDialog;
@@ -125,7 +123,6 @@ public class NewAlbaActivity extends BaseActivity implements View.OnClickListene
     private CroutonHelper mCroutonHelper;
 
     //Utill
-    private RequestQueue mRequestQueue;
     private InfoExtra mInfoExtra;
     private HYPreference mPref;
     private HYFont mFont;
@@ -147,7 +144,6 @@ public class NewAlbaActivity extends BaseActivity implements View.OnClickListene
         //Util
         mInfoExtra = new InfoExtra(this);
         mPref = new HYPreference(this);
-        mRequestQueue = Volley.newRequestQueue(this);
         mFont = new HYFont(this);
         mDB = new DBManager(this);
 

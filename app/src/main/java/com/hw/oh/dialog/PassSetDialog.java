@@ -17,22 +17,21 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.hw.oh.fragment.Fragment_Setting;
 import com.hw.oh.temp.R;
 import com.hw.oh.utility.HYFont;
 import com.hw.oh.utility.HYPreference;
 import com.hw.oh.utility.InfoExtra;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.json.JSONObject;
+
+
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * Created by oh on 2015-06-14.
@@ -52,7 +51,6 @@ public class PassSetDialog extends DialogFragment implements TextWatcher {
 
   // Utill
   private InfoExtra mInfoExtra;
-  private RequestQueue mRequestQueue;
   private HYFont mFont;
   private HYPreference mPref;
 
@@ -63,7 +61,6 @@ public class PassSetDialog extends DialogFragment implements TextWatcher {
     View v = mLayoutInflater.inflate(R.layout.dialog_pass_set, null);
     // Utill
     mInfoExtra = new InfoExtra(getActivity());
-    mRequestQueue = Volley.newRequestQueue(getActivity());
     mFont = new HYFont(getActivity());
     mFont.setGlobalFont((ViewGroup) v);
     mPref = new HYPreference(getActivity());
@@ -152,6 +149,28 @@ public class PassSetDialog extends DialogFragment implements TextWatcher {
     if (INFO)
       Log.i(TAG, "requestCallRest_Pass()");
     String url = "http://ohy3264.cafe24.com/Anony/api/memberPass.php";
+    try {
+    OkHttpClient client = new OkHttpClient();
+    RequestBody formBody = new FormBody.Builder()
+            .add("MODE", "PassUpdate")
+            .add("ANDROID_ID", mInfoExtra.getAndroidID())
+            .add("PASS", mEdtPass1.getText().toString())
+            .build();
+
+    Request request = new Request.Builder()
+            .url(url)
+            .post(formBody)
+            .build();
+
+    Response response = client.newCall(request).execute();
+
+      Log.d(TAG, "onResponse :: " + response.body().string());
+    } catch (Exception e) {
+      Log.i(TAG, e.toString());
+    }
+  }
+
+/*
     StringRequest request = new StringRequest(Request.Method.POST, url,
         new Response.Listener<String>() {
           @Override
@@ -187,5 +206,5 @@ public class PassSetDialog extends DialogFragment implements TextWatcher {
     };
     request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, 1, 1.0f));
     mRequestQueue.add(request);
-  }
+  }*/
 }

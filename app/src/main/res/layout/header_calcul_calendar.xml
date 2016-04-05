@@ -189,8 +189,6 @@
             android:text="0일"/>
 
           <LinearLayout
-              android:layout_marginTop="2dp"
-              android:layout_marginBottom="2dp"
               android:layout_marginRight="1dp"
               android:orientation="vertical"
               android:layout_width="0dp"

@@ -14,24 +14,23 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.util.Log;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.hw.oh.model.BoardItem;
 import com.hw.oh.utility.HYPreference;
 import com.hw.oh.utility.HYTime_Maximum;
 import com.hw.oh.utility.InfoExtra;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * Created by oh on 2015-07-10.
@@ -61,7 +60,6 @@ public class BoardDetailService extends Service {
   private ArrayList<BoardItem> mCommentList = new ArrayList<BoardItem>();
 
   //Utill
-  private RequestQueue mRequestQueue;
   private InfoExtra mInfoExtra;
   private HYPreference mPref;
 
@@ -175,7 +173,6 @@ public class BoardDetailService extends Service {
     super.onCreate();
     mInfoExtra = new InfoExtra(this);
     mPref = new HYPreference(this);
-    mRequestQueue = Volley.newRequestQueue(getApplicationContext());
   }
 
   @Override
@@ -190,13 +187,24 @@ public class BoardDetailService extends Service {
     if (INFO)
       Log.i(TAG, "requestCall_Header_Info");
     String url = "http://ohy3264.cafe24.com/Anony/api/boardDetail.php";
-    StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-      @Override
-      public void onResponse(String response) {
-        Log.d(TAG, "requestCall_Header_Info - onResponse :: " + response.toString());
+    try {
+      OkHttpClient client = new OkHttpClient();
+      RequestBody formBody = new FormBody.Builder()
+              .add("MODE", "HeaderIfo")
+              .add("BSEQ", mSelectBoardID)
+              .build();
 
-        try {
-          BoardItem value = new Gson().fromJson(response, BoardItem.class);
+      Request request = new Request.Builder()
+              .url(url)
+              .post(formBody)
+              .build();
+
+      Response response = client.newCall(request).execute();
+
+      if (!response.isSuccessful()){
+        throw new IOException("Unexpected code " + response);
+      }else{
+          BoardItem value = new Gson().fromJson(response.body().toString(), BoardItem.class);
           Log.d(TAG, "value - valueid :: " + value.get_id());
           mHeaderData.set_id(value.get_id());
           mHeaderData.setUniqueID(value.getUniqueID());
@@ -210,33 +218,11 @@ public class BoardDetailService extends Service {
           mHeaderData.setRegDate(HYTime_Maximum.formatTimeString(value.getRegDate()));
           mCDL_HeaderSet.countDown();
 
-        } catch (Exception e) {
-          Log.d(TAG, "onResponse : Gson Exception");
-          mCDL_HeaderSet.countDown();
-        }
+      }
+    } catch (Exception e) { mCDL_HeaderSet.countDown();
 
-      }
-    }, new Response.ErrorListener() {
-      @Override
-      public void onErrorResponse(VolleyError e) {
-        Log.d(TAG,
-            "onErrorResponse :: " + e.getLocalizedMessage());
-        mCDL_HeaderSet.countDown();
-        e.printStackTrace();
-      }
-    }) {
-      @Override
-      protected Map<String, String> getParams() throws AuthFailureError {
-        // TODO Auto-generated method stub
-        if (DBUG) {
-        }
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("MODE", "HeaderIfo");
-        params.put("BSEQ", mSelectBoardID);
-        return params;
-      }
-    };
-    mRequestQueue.add(request);
+      Log.i(TAG, e.toString());
+    }
   }
 
   public void requestCall_CommentDel() {
@@ -245,56 +231,48 @@ public class BoardDetailService extends Service {
     mCommentList.clear();
     mCDL_CommentDel = new CountDownLatch(1);
     String url = "http://ohy3264.cafe24.com/Anony/api/commentDeleteTest.php";
-    StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-      @Override
-      public void onResponse(String response) {
-        if (DBUG)
-          Log.d(TAG, "requestCall_CommentDel - onResponse :: " + response.toString());
-        try {
-          java.lang.reflect.Type type = new TypeToken<List<BoardItem>>() {
-          }.getType();
+    try {
+      OkHttpClient client = new OkHttpClient();
+      RequestBody formBody = new FormBody.Builder()
+              .add("ID", mSelectCommentID)
+              .add("BSEQ", mSelectBoardID)
+              .build();
 
-          ArrayList<BoardItem> value = new Gson()
-              .fromJson(response, type);
+      Request request = new Request.Builder()
+              .url(url)
+              .post(formBody)
+              .build();
 
-          for (BoardItem m : value) {
-            BoardItem t = new BoardItem();
+      Response response = client.newCall(request).execute();
 
-            t.set_id(m.get_id());
-            t.setStrText(m.getStrText());
-            t.setGender(m.getGender());
-            t.setHateCNT(m.getHateCNT());
-            t.setRegDate(HYTime_Maximum.formatTimeString(m.getRegDate()));
-            t.setUniqueID(m.getUniqueID());
-            mCommentList.add(t);
-          }
-        } catch (Exception e) {
-          Log.d(TAG, "allsync.Response : Gson Exception");
+      if (!response.isSuccessful()){
+        throw new IOException("Unexpected code " + response);
+      }else{
+        java.lang.reflect.Type type = new TypeToken<List<BoardItem>>() {
+        }.getType();
+
+        ArrayList<BoardItem> value = new Gson()
+                .fromJson(response.body().toString(), type);
+
+        for (BoardItem m : value) {
+          BoardItem t = new BoardItem();
+
+          t.set_id(m.get_id());
+          t.setStrText(m.getStrText());
+          t.setGender(m.getGender());
+          t.setHateCNT(m.getHateCNT());
+          t.setRegDate(HYTime_Maximum.formatTimeString(m.getRegDate()));
+          t.setUniqueID(m.getUniqueID());
+          mCommentList.add(t);
         }
-        sendMessageToUI(MSG_DELETE_COMMENT);
         mCDL_CommentDel.countDown();
 
       }
-    }, new Response.ErrorListener() {
-      @Override
-      public void onErrorResponse(VolleyError e) {
-        Log.d(TAG,
-            "onErrorResponse :: " + e.getLocalizedMessage());
-        e.printStackTrace();
-        mCDL_CommentDel.countDown();
-      }
-    }) {
-      @Override
-      protected Map<String, String> getParams() throws AuthFailureError {
-        // TODO Auto-generated method stub
+    } catch (Exception e) {
+      mCDL_CommentDel.countDown();
 
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("ID", mSelectCommentID);
-        params.put("BSEQ", mSelectBoardID);
-        return params;
-      }
-    };
-    mRequestQueue.add(request);
+      Log.i(TAG, e.toString());
+    }
   }
 
 
@@ -305,59 +283,51 @@ public class BoardDetailService extends Service {
     mCommentList.clear();
     mCDL_CommentList = new CountDownLatch(1);
     String url = "http://ohy3264.cafe24.com/Anony/api/commentListAll.php";
-    StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-      @Override
-      public void onResponse(String response) {
-        if (DBUG)
-          Log.d(TAG, "requestCall_CommentList - onResponse :: " + response.toString());
-        try {
-          java.lang.reflect.Type type = new TypeToken<List<BoardItem>>() {
-          }.getType();
+    try {
+      OkHttpClient client = new OkHttpClient();
+      RequestBody formBody = new FormBody.Builder()
+              .add("MODE", "CommentList")
+              .add("BSEQ", mSelectBoardID)
+              .build();
 
-          ArrayList<BoardItem> value = new Gson()
-              .fromJson(response, type);
+      Request request = new Request.Builder()
+              .url(url)
+              .post(formBody)
+              .build();
 
-          for (BoardItem m : value) {
-            BoardItem t = new BoardItem();
+      Response response = client.newCall(request).execute();
 
-            t.set_id(m.get_id());
-            t.setStrText(m.getStrText());
-            t.setGender(m.getGender());
-            t.setHateCNT(m.getHateCNT());
-            t.setRegDate(HYTime_Maximum.formatTimeString(m.getRegDate()));
-            t.setUniqueID(m.getUniqueID());
+      if (!response.isSuccessful()){
+        throw new IOException("Unexpected code " + response);
+      }else{
+        java.lang.reflect.Type type = new TypeToken<List<BoardItem>>() {
+        }.getType();
+
+        ArrayList<BoardItem> value = new Gson()
+                .fromJson(response.body().toString(), type);
+
+        for (BoardItem m : value) {
+          BoardItem t = new BoardItem();
+
+          t.set_id(m.get_id());
+          t.setStrText(m.getStrText());
+          t.setGender(m.getGender());
+          t.setHateCNT(m.getHateCNT());
+          t.setRegDate(HYTime_Maximum.formatTimeString(m.getRegDate()));
+          t.setUniqueID(m.getUniqueID());
 
 
-            mCommentList.add(t);
-          }
-          mCDL_CommentList.countDown();
-        } catch (Exception e) {
-          Log.d(TAG, "allsync.Response : Gson Exception");
-          mCDL_CommentList.countDown();
+          mCommentList.add(t);
         }
-
-      }
-    }, new Response.ErrorListener() {
-      @Override
-      public void onErrorResponse(VolleyError e) {
-        Log.d(TAG,
-            "onErrorResponse :: " + e.getLocalizedMessage());
-        e.printStackTrace();
         mCDL_CommentList.countDown();
-      }
-    }) {
-      @Override
-      protected Map<String, String> getParams() throws AuthFailureError {
-        // TODO Auto-generated method stub
 
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("MODE", "CommentList");
-        params.put("BSEQ", mSelectBoardID);
-        return params;
       }
-    };
-    mRequestQueue.add(request);
-  }
+    } catch (Exception e) {
+      mCDL_CommentList.countDown();
+
+      Log.i(TAG, e.toString());
+    }
+    }
 
   public void requestNewCommentSend() {
     if (INFO)

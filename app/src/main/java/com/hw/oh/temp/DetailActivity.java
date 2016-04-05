@@ -219,10 +219,10 @@ public class DetailActivity extends BaseActivity implements AdapterView.OnItemCl
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_detail);
     // 구글 통계
-    /*Tracker mTracker = ((ApplicationClass) getApplication()).getDefaultTracker();
+    Tracker mTracker = ((ApplicationClass) getApplication()).getDefaultTracker();
     mTracker.setScreenName("게시글 상세보기");
     mTracker.send(new HitBuilders.AppViewBuilder().build());
-*/
+
     //Util
     mNet = new HYNetworkInfo(this);
     mInfoExtra = new InfoExtra(this);

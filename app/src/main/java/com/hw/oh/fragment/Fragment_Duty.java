@@ -79,9 +79,9 @@ public class Fragment_Duty extends Fragment implements AdapterView.OnItemSelecte
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_duty1, container, false);
     // 구글 통계
-   /* Tracker mTracker = ((ApplicationClass) getActivity().getApplication()).getDefaultTracker();
+    Tracker mTracker = ((ApplicationClass) getActivity().getApplication()).getDefaultTracker();
     mTracker.setScreenName("근로소득공제");
-    mTracker.send(new HitBuilders.AppViewBuilder().build());*/
+    mTracker.send(new HitBuilders.AppViewBuilder().build());
     //Util
     mFont = new HYFont(getActivity());
     mFont.setGlobalFont((ViewGroup) rootView);

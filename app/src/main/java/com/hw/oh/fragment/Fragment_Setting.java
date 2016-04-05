@@ -24,14 +24,9 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.hw.oh.dialog.CalculSetDialog;
 import com.hw.oh.dialog.DigStyleDialog;
 import com.hw.oh.dialog.DigThemeStyleDialog;
@@ -43,6 +38,7 @@ import com.hw.oh.model.KmaCodeItem;
 import com.hw.oh.network.RestClient;
 import com.hw.oh.sqlite.DBConstant;
 import com.hw.oh.sqlite.KmDBManager;
+import com.hw.oh.temp.ApplicationClass;
 import com.hw.oh.temp.LocationSelectActivity;
 import com.hw.oh.temp.R;
 import com.hw.oh.utility.Constant;
@@ -75,6 +71,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 
 /**
  * Created by oh on 2015-02-01.
@@ -101,7 +103,6 @@ public class Fragment_Setting extends Fragment implements View.OnClickListener, 
   private String mTextInsertFlag, mBackupCodeString;
 
   //Util
-  private RequestQueue mRequestQueue;
   private InfoExtra mInfoExtra;
   private HYFont mFont;
   private ProgressDialog mLoadingDialog;
@@ -115,14 +116,13 @@ public class Fragment_Setting extends Fragment implements View.OnClickListener, 
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_setting, container, false);
 // 구글 통계
-   /* Tracker mTracker = ((ApplicationClass) getActivity().getApplication()).getDefaultTracker();
+    Tracker mTracker = ((ApplicationClass) getActivity().getApplication()).getDefaultTracker();
     mTracker.setScreenName("설정화면");
-    mTracker.send(new HitBuilders.AppViewBuilder().build());*/
+    mTracker.send(new HitBuilders.AppViewBuilder().build());
     //Utill
     mFont = new HYFont(getActivity());
     mFont.setGlobalFont((ViewGroup) rootView);
     mInfoExtra = new InfoExtra(getActivity());
-    mRequestQueue = Volley.newRequestQueue(getActivity());
     mPref = new HYPreference(getActivity());
     mNet = new HYNetworkInfo(getActivity());
     kmDBManager = new KmDBManager(getActivity());
@@ -342,50 +342,41 @@ public class Fragment_Setting extends Fragment implements View.OnClickListener, 
       Log.i(TAG, "requestNewPostSend()");
     //mCDL_CommentInsert = new CountDownLatch(1);
     String url = "http://ohy3264.cafe24.com/Anony/api/backupDB_FileName.php";
-    StringRequest request = new StringRequest(Request.Method.POST, url,
-        new Response.Listener<String>() {
-          @Override
-          public void onResponse(String response) {
-            Log.d(TAG, "onResponse :: " + response.toString());
-            if (response.isEmpty()) {
-              mTxtCrouton.setText("코드를 다시 확인해주세요");
-              mCroutonHelper.setCustomView(mCroutonView);
-              mCroutonHelper.setDuration(1000);
-              mCroutonHelper.show();
-              mLoadingDialog.dismiss();
-            } else {
-              Message msg = fileNameHandler.obtainMessage();
-              //메세지 ID 설정
-              msg.what = 0;
-              //메세지 정보 설정(Object)
-              msg.obj = response.toString();
-              fileNameHandler.sendMessage(msg);
-            }
+    try {
+      OkHttpClient client = new OkHttpClient();
+      RequestBody formBody = new FormBody.Builder()
+              .add("BACKUP_CODE", mEditBackupCode.getText().toString())
+              .build();
 
-          }
-        }, new Response.ErrorListener() {
-      @Override
-      public void onErrorResponse(VolleyError e) {
-        Log.d(TAG,
-            "onErrorResponse :: " + e.getLocalizedMessage());
-        e.printStackTrace();
-        // mCDL_CommentInsert.countDown();
-      }
-    }) {
-      @Override
-      protected Map<String, String> getParams() throws AuthFailureError {
-        // TODO Auto-generated method stub
-        if (DBUG) {
+      Request request = new Request.Builder()
+              .url(url)
+              .post(formBody)
+              .build();
 
-        }
+      Response response = client.newCall(request).execute();
 
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("BACKUP_CODE", mEditBackupCode.getText().toString());
-        return params;
+      Log.d(TAG, "onResponse :: " + response.body().string());
+      if (!response.isSuccessful()){
+        mTxtCrouton.setText("코드를 다시 확인해주세요");
+        mCroutonHelper.setCustomView(mCroutonView);
+        mCroutonHelper.setDuration(1000);
+        mCroutonHelper.show();
+        mLoadingDialog.dismiss();
+        throw new IOException("Unexpected code " + response);
+      }else{
+
+        Message msg = fileNameHandler.obtainMessage();
+        //메세지 ID 설정
+        msg.what = 0;
+        //메세지 정보 설정(Object)
+        msg.obj = response.toString();
+        fileNameHandler.sendMessage(msg);
       }
 
-    };
-    mRequestQueue.add(request);
+    } catch (Exception e) {
+      Log.i(TAG, e.toString());
+    }
+
   }
 
   final Handler fileNameHandler = new Handler() {
