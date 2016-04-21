@@ -104,7 +104,7 @@ public class BoardListService extends Service {
 
         } catch (RemoteException e) {
           Log.d(TAG, e.toString());
-          // The client is dead. Remove it from the list; we are going through the list from back to front so this is safe to do inside the loop.
+          // The mOkHttpClient is dead. Remove it from the list; we are going through the list from back to front so this is safe to do inside the loop.
         }
       }
     });

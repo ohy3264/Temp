@@ -13,7 +13,6 @@ import com.hw.oh.model.BoardItem;
 import com.hw.oh.temp.R;
 import com.hw.oh.utility.HYFont;
 import com.hw.oh.utility.InfoExtra;
-import com.hw.oh.volley.utility.DiskBitmapCache;
 
 import java.util.ArrayList;
 import java.util.List;

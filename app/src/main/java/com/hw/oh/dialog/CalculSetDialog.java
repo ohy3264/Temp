@@ -60,6 +60,7 @@ public class CalculSetDialog extends DialogFragment {
         }
       }
     });
+
     // Button
     dialog_BtnOk = (TextView) v.findViewById(R.id.btnOk);
     dialog_BtnOk.setOnClickListener(new View.OnClickListener() {

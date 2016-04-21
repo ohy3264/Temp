@@ -91,7 +91,6 @@ public class FontSelectDialog extends DialogFragment {
         // Constant.FONT_NAME = getString(R.string.roboto);
         mRadioGroupFont.check(R.id.radioDefault);
         break;
-
       case 1:
         Log.i(TAG, "상상체");
         // Constant.FONT_NAME = getString(R.string.sangsang);

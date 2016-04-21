@@ -1,5 +1,6 @@
 package com.hw.oh.temp;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
@@ -15,6 +16,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -41,14 +43,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.hw.oh.adapter.CommentAdapter;
 import com.hw.oh.model.BoardItem;
 import com.hw.oh.popupWindow.ActionItem;
@@ -61,8 +55,6 @@ import com.hw.oh.utility.HYPreference;
 import com.hw.oh.utility.HYTime_Maximum;
 import com.hw.oh.utility.InfoExtra;
 import com.hw.oh.utility.ServerRequestUtils;
-import com.hw.oh.volley.utility.DiskBitmapCache;
-import com.hw.oh.volley.utility.FadeInImageListener;
 import com.tistory.whdghks913.croutonhelper.CroutonHelper;
 
 import org.json.JSONObject;
@@ -71,6 +63,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.Call;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * Created by oh on 2015-02-05.
@@ -119,8 +119,6 @@ public class DetailActivity extends BaseActivity implements AdapterView.OnItemCl
   private HYFont mFont;
   private InfoExtra mInfoExtra;
   private HYPreference mPref;
-  private RequestQueue mRequestQueue;
-  private ImageLoader mImageLoader;
   private final int max_cache_size = 1000000;
   private com.rey.material.widget.ProgressView mProgressBar;
 
@@ -229,8 +227,6 @@ public class DetailActivity extends BaseActivity implements AdapterView.OnItemCl
     mPref = new HYPreference(this);
     mFont = new HYFont(this);
     mInfor = new InfoExtra(this);
-    mRequestQueue = Volley.newRequestQueue(this);
-    mImageLoader = new ImageLoader(mRequestQueue, new DiskBitmapCache(getCacheDir(), max_cache_size));
     mProgressBar = (com.rey.material.widget.ProgressView) findViewById(R.id.progressBar);
 
     //ActionBar
@@ -345,7 +341,7 @@ public class DetailActivity extends BaseActivity implements AdapterView.OnItemCl
           //requestCall_CommentDel();
           break;
         case 1:
-          requestCall_CommentHateState();
+          requestCall_HateState();
           break;
 
       }
@@ -590,7 +586,7 @@ public class DetailActivity extends BaseActivity implements AdapterView.OnItemCl
     }
     if (mHeaderData.getImgState().equals("1") && Integer.parseInt(mHeaderData.getHateCNT()) < 5) {
       mImageDetail.setVisibility(View.VISIBLE);
-      mImageLoader.get(Constant.IMG_UPLOAD_URL + mHeaderData.get_id() + ".jpg", new FadeInImageListener(mImageDetail, this));
+      Glide.with(this).load(Constant.IMG_UPLOAD_URL + mHeaderData.get_id() + ".jpg").into(mImageDetail);
       mImageDetail.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -615,155 +611,88 @@ public class DetailActivity extends BaseActivity implements AdapterView.OnItemCl
 
   }
 
-  /*
-
-  Request method
-
-  */
-  // Request Comment Delete
-  public void requestCall_CommentDel() {
-    if (INFO)
-      Log.i(TAG, "requestCall_CommentDel");
-
-    mCDL_CommentDel = new CountDownLatch(1);
-    String url = "http://ohy3264.cafe24.com/Anony/api/commentDelete.php";
-    StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-      @Override
-      public void onResponse(String response) {
-        if (DBUG)
-          Log.d(TAG, "requestCall_CommentDel - onResponse :: " + response.toString());
-        mCDL_CommentDel.countDown();
-        Message msg = commentDelHandler.obtainMessage();
-        commentDelHandler.sendMessage(msg);
-
-      }
-    }, new Response.ErrorListener() {
-      @Override
-      public void onErrorResponse(VolleyError e) {
-        Log.d(TAG,
-            "onErrorResponse :: " + e.getLocalizedMessage());
-        e.printStackTrace();
-        mCDL_CommentDel.countDown();
-      }
-    }) {
-      @Override
-      protected Map<String, String> getParams() throws AuthFailureError {
-        // TODO Auto-generated method stub
-        if (DBUG) {
-          Log.d(TAG, "CommentID :: " + mSelectCommentID);
-          Log.d(TAG, "BSEQ :: " + mHeaderData.get_id());
-        }
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("ID", mSelectCommentID);
-        params.put("BSEQ", mSelectBoardID);
-        return params;
-      }
-    };
-    mRequestQueue.add(request);
-  }
-
-  // 신고하기 요청
-  public void requestCall_CommentHateState() {
-    if (INFO)
-      Log.i(TAG, "requestCall_CommentHateState");
-
-    String url = "http://ohy3264.cafe24.com/Anony/api/commentHateState.php";
-    StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-      @Override
-      public void onResponse(String response) {
-        if (DBUG)
-          Log.d(TAG, "requestCall_CommentHateState - onResponse :: " + response.toString());
-        if (response.trim().equals("InsertSuccess")) {
-          mTxtCrouton.setText("신고하였습니다");
-          mCroutonHelper.setCustomView(mCroutonView);
-          mCroutonHelper.setDuration(1000);
-          mCroutonHelper.show();
-
-        } else {
-          mTxtCrouton.setText("이미 신고하였습니다");
-          mCroutonHelper.setCustomView(mCroutonView);
-          mCroutonHelper.setDuration(1000);
-          mCroutonHelper.show();
-        }
-      }
-    }, new Response.ErrorListener() {
-      @Override
-      public void onErrorResponse(VolleyError e) {
-        Log.d(TAG,
-            "onErrorResponse :: " + e.getLocalizedMessage());
-        e.printStackTrace();
-      }
-    }) {
-      @Override
-      protected Map<String, String> getParams() throws AuthFailureError {
-        // TODO Auto-generated method stub
-        if (DBUG) {
-          Log.d(TAG, "BSEQ :: " + mSelectBoardID);
-        }
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("ID", mSelectCommentID);
-        params.put("ANDROID_ID", mInfor.getAndroidID());
-        return params;
-      }
-    };
-    mRequestQueue.add(request);
-  }
 
   // Request HeaderData
   public void requestCall_Header_Info() {
-    mCDL_HeaderSet = new CountDownLatch(1);
-    if (INFO)
-      Log.i(TAG, "requestCall_Header_Info");
-    String url = "http://ohy3264.cafe24.com/Anony/api/boardDetail.php";
-    StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-      @Override
-      public void onResponse(String response) {
-        Log.d(TAG, "requestCall_Header_Info - onResponse :: " + response.toString());
+    try {
+      OkHttpClient client = new OkHttpClient();
+      RequestBody formBody = new FormBody.Builder()
+              .build();
+
+      Request request = new Request.Builder()
+              .post(formBody)
+              .build();
+
+      client.newCall(request).execute();
 
 
-        try {
-          BoardItem value = new Gson().fromJson(response, BoardItem.class);
-          Log.d(TAG, "value - valueid :: " + value.get_id());
-          mHeaderData.set_id(value.get_id());
-          mHeaderData.setUniqueID(value.getUniqueID());
-          mHeaderData.setGender(value.getGender());
-          mHeaderData.setStrText(value.getStrText());
-          mHeaderData.setHitCNT(value.getHitCNT());
-          mHeaderData.setHateCNT(value.getHateCNT());
-          mHeaderData.setLikeCNT(value.getLikeCNT());
-          mHeaderData.setCommCNT(value.getCommCNT());
-          mHeaderData.setImgState(value.getImgState());
-          mHeaderData.setRegDate(HYTime_Maximum.formatTimeString(value.getRegDate()));
-          headerDataSet();
-          mCDL_HeaderSet.countDown();
+    } catch (Exception e) {
+      Log.d(TAG, "onResponse : Gson Exception");
+      mCDL_HeaderSet.countDown();
+    }
+  }
+  public class StoreBrandAsyncTask extends AsyncTask<Void, Void, String> {
+    @Override
+    protected void onPreExecute() {
+      super.onPreExecute();
+    }
+    @Override
+    protected String doInBackground(Void... params) {
 
-        } catch (Exception e) {
-          Log.d(TAG, "onResponse : Gson Exception");
-          mCDL_HeaderSet.countDown();
+      mCDL_HeaderSet = new CountDownLatch(1);
+      if (INFO)
+        Log.i(TAG, "requestCall_Header_Info");
+      String url = "http://ohy3264.cafe24.com/Anony/api/boardDetail.php";
+
+      OkHttpClient client = new OkHttpClient().newBuilder().connectTimeout(5, TimeUnit.SECONDS).build();
+      RequestBody formBody = new FormBody.Builder()
+              .add("MODE", "HeaderIfo")
+              .add("BSEQ", mSelectBoardID)
+              .build();
+
+      Request request = new Request.Builder()
+              .url(url)
+              .post(formBody)
+              .build();
+
+      Call call = client.newCall(request);
+
+      Response response = null;
+      String jsonData = null;
+
+      try {
+        response = call.execute();
+        if (response.isSuccessful()) {
+          jsonData = response.body().string();
+        } else {
+          jsonData = null;
         }
 
-      }
-    }, new Response.ErrorListener() {
-      @Override
-      public void onErrorResponse(VolleyError e) {
-        Log.d(TAG,
-            "onErrorResponse :: " + e.getLocalizedMessage());
-        mCDL_HeaderSet.countDown();
+      } catch (Exception e) {
         e.printStackTrace();
       }
-    }) {
-      @Override
-      protected Map<String, String> getParams() throws AuthFailureError {
-        // TODO Auto-generated method stub
-        if (DBUG) {
-        }
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("MODE", "HeaderIfo");
-        params.put("BSEQ", mSelectBoardID);
-        return params;
-      }
-    };
-    mRequestQueue.add(request);
+      return jsonData;
+    }
+
+    @Override
+    protected void onPostExecute(String result) {
+      super.onPostExecute(result);
+
+      Log.d(TAG, "requestCall_Header_Info - onResponse :: " + result);
+      BoardItem value = new Gson().fromJson(result, BoardItem.class);
+      mHeaderData.set_id(value.get_id());
+      mHeaderData.setUniqueID(value.getUniqueID());
+      mHeaderData.setGender(value.getGender());
+      mHeaderData.setStrText(value.getStrText());
+      mHeaderData.setHitCNT(value.getHitCNT());
+      mHeaderData.setHateCNT(value.getHateCNT());
+      mHeaderData.setLikeCNT(value.getLikeCNT());
+      mHeaderData.setCommCNT(value.getCommCNT());
+      mHeaderData.setImgState(value.getImgState());
+      mHeaderData.setRegDate(HYTime_Maximum.formatTimeString(value.getRegDate()));
+      headerDataSet();
+      mCDL_HeaderSet.countDown();
+    }
   }
 
   // Request BoardPost Delete
@@ -777,141 +706,83 @@ public class DetailActivity extends BaseActivity implements AdapterView.OnItemCl
     } catch (Exception e) {
       Log.d(TAG, "Splash:handler2: "+e.getMessage());
     }
-
-    /*if (INFO)
-      Log.i(TAG, "requestCall_BoardPostDel");
-
-    mCDL_BoardPostDel = new CountDownLatch(1);
-    String url = "http://ohy3264.cafe24.com/Anony/api/boardPostDelete.php";
-    StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-      @Override
-      public void onResponse(String response) {
-        if (DBUG)
-          Log.d(TAG, "requestCall_BoardPostDel - onResponse :: " + response.toString());
-        mCDL_BoardPostDel.countDown();
-        Message msg = IntentDelHandler.obtainMessage();
-        IntentDelHandler.sendMessage(msg);
-
-      }
-    }, new Response.ErrorListener() {
-      @Override
-      public void onErrorResponse(VolleyError e) {
-        Log.d(TAG,
-            "onErrorResponse :: " + e.getLocalizedMessage());
-        e.printStackTrace();
-        mCDL_BoardPostDel.countDown();
-      }
-    }) {
-      @Override
-      protected Map<String, String> getParams() throws AuthFailureError {
-        // TODO Auto-generated method stub
-        if (DBUG) {
-          Log.d(TAG, "BSEQ :: " + mHeaderData.get_id());
-        }
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("MODE", "BoardPostDelete");
-        params.put("BSEQ", mHeaderData.get_id());
-        return params;
-      }
-    };
-    mRequestQueue.add(request);*/
   }
-
-
-
-
 
   public void requestCall_LikeState() {
     if (INFO)
       Log.i(TAG, "requestCall_LikeState");
 
     String url = "http://ohy3264.cafe24.com/Anony/api/UserLikeHateState.php";
-    StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-      @Override
-      public void onResponse(String response) {
-        if (DBUG)
-          Log.d(TAG, "requestCall_LikeState - onResponse :: " + response.toString());
-        if (response.trim().equals("InsertSuccess")) {
-          requestCall_Header_Info();
+    try {
+      OkHttpClient client = new OkHttpClient();
+      RequestBody formBody = new FormBody.Builder()
+              .add("MODE", "LikeState")
+              .add("BSEQ", mHeaderData.get_id())
+              .add("ANDROID_ID", mInfor.getAndroidID())
+              .build();
 
-        } else {
-          mTxtCrouton.setText("이미 추천하였습니다");
-          mCroutonHelper.setCustomView(mCroutonView);
-          mCroutonHelper.setDuration(1000);
-          mCroutonHelper.show();
-        }
+      Request request = new Request.Builder()
+              .url(url)
+              .post(formBody)
+              .build();
+
+      Response response = client.newCall(request).execute();
+      Log.d(TAG, "requestCall_LikeState - onResponse :: " + response.toString());
+      if (response.body().toString().trim().equals("InsertSuccess")) {
+        requestCall_Header_Info();
 
 
+
+      } else {
+        mTxtCrouton.setText("이미 추천하였습니다");
+        mCroutonHelper.setCustomView(mCroutonView);
+        mCroutonHelper.setDuration(1000);
+        mCroutonHelper.show();
       }
-    }, new Response.ErrorListener() {
-      @Override
-      public void onErrorResponse(VolleyError e) {
-        Log.d(TAG,
-            "onErrorResponse :: " + e.getLocalizedMessage());
-        e.printStackTrace();
-      }
-    }) {
-      @Override
-      protected Map<String, String> getParams() throws AuthFailureError {
-        // TODO Auto-generated method stub
-        if (DBUG) {
-          Log.d(TAG, "BSEQ :: " + mHeaderData.get_id());
-        }
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("MODE", "LikeState");
-        params.put("BSEQ", mHeaderData.get_id());
-        params.put("ANDROID_ID", mInfor.getAndroidID());
-        return params;
-      }
-    };
-    mRequestQueue.add(request);
+    }catch (Exception e ){
+      Log.d(TAG, "requestCall_LikeState - exception :: " + e.toString());
+
+    }
+
   }
 
   public void requestCall_HateState() {
     if (INFO)
       Log.i(TAG, "requestCall_HateState");
-
     String url = "http://ohy3264.cafe24.com/Anony/api/UserLikeHateState.php";
-    StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-      @Override
-      public void onResponse(String response) {
-        if (DBUG)
-          Log.d(TAG, "requestCall_HateState - onResponse :: " + response.toString());
-        if (response.trim().equals("InsertSuccess")) {
-          requestCall_Header_Info();
 
-        } else {
-          mTxtCrouton.setText("이미 신고한 글입니다");
-          mCroutonHelper.setCustomView(mCroutonView);
-          mCroutonHelper.setDuration(1000);
-          mCroutonHelper.show();
-        }
+    try {
+      OkHttpClient client = new OkHttpClient();
+      RequestBody formBody = new FormBody.Builder()
+              .add("MODE", "HateState")
+              .add("BSEQ", mHeaderData.get_id())
+              .add("ANDROID_ID", mInfor.getAndroidID())
+              .build();
 
+      Request request = new Request.Builder()
+              .url(url)
+              .post(formBody)
+              .build();
 
+      Response response = client.newCall(request).execute();
+      Log.d(TAG, "requestCall_HateState - onResponse :: " + response.toString());
+      if (response.body().toString().trim().equals("InsertSuccess")) {
+        requestCall_Header_Info();
+
+      } else {
+        mTxtCrouton.setText("이미 신고한 글입니다");
+        mCroutonHelper.setCustomView(mCroutonView);
+        mCroutonHelper.setDuration(1000);
+        mCroutonHelper.show();
       }
-    }, new Response.ErrorListener() {
-      @Override
-      public void onErrorResponse(VolleyError e) {
-        Log.d(TAG,
-            "onErrorResponse :: " + e.getLocalizedMessage());
-        e.printStackTrace();
-      }
-    }) {
-      @Override
-      protected Map<String, String> getParams() throws AuthFailureError {
-        // TODO Auto-generated method stub
-        if (DBUG) {
-          Log.d(TAG, "BSEQ :: " + mHeaderData.get_id());
-        }
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("MODE", "HateState");
-        params.put("BSEQ", mHeaderData.get_id());
-        params.put("ANDROID_ID", mInfor.getAndroidID());
-        return params;
-      }
-    };
-    mRequestQueue.add(request);
+    }catch (Exception e){
+      Log.d(TAG, "requestCall_HateState - exception :: " + e.toString());
+    }
   }
+
+
+
+
 
   // Intent Handler
   final Handler IntentDelHandler = new android.os.Handler() {

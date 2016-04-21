@@ -11,12 +11,6 @@ import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.hw.oh.utility.Constant;
 import com.hw.oh.utility.HYPreference;
 
@@ -25,6 +19,12 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * <pre>
@@ -151,30 +151,25 @@ public class GCMIntentService extends GCMBaseIntentService {
    * @Explanation : regID 서버에 등록 요청
    */
   public void registerGCM(final String regId) {
-    RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
     String url = "http://ohy3264.cafe24.com/Anony/api/registerGCM.php";
-    StringRequest postReq = new StringRequest(Request.Method.POST,
-        url, new Response.Listener<String>() {
-      public void onResponse(String paramAnonymousString) {
-        Log.d(TAG, "senAPIkey.Response:" + paramAnonymousString);
-        if (paramAnonymousString == null)
-          Log.d(TAG, "senAPIkey.Response : response null");
-      }
-    }, new Response.ErrorListener() {
-      public void onErrorResponse(
-          VolleyError paramAnonymousVolleyError) {
-        Log.d(TAG, "senAPIkey.Error.Response : "
-            + paramAnonymousVolleyError.getMessage());
-      }
+    try {
+      OkHttpClient client = new OkHttpClient();
+      RequestBody formBody = new FormBody.Builder()
+              .add("REG_ID", regId)
+              .build();
 
-    }) {
-      protected Map<String, String> getParams() {
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("REG_ID", regId);
-        //  params.put("USER_ID", Constant.LOGIN_ID);
-        return params;
-      }
-    };
-    requestQueue.add(postReq);
+      Request request = new Request.Builder()
+              .url(url)
+              .post(formBody)
+              .build();
+
+      Response response = client.newCall(request).execute();
+      Log.d(TAG, "senAPIkey.Response:" + response.body().toString());
+        if (response.body().toString() == null)
+          Log.d(TAG, "senAPIkey.Response : response null");
+
+    }catch (Exception e){
+      Log.d(TAG, "senAPIkey.Response - exception :: " + e.toString());
+    }
   }
 }

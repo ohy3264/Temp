@@ -220,7 +220,7 @@
               android:background="@drawable/edit_text_bg"
               android:layout_width="60dp"
               android:layout_height="wrap_content"
-              android:inputType="number"
+              android:inputType="numberDecimal"
               android:ems="10"
               android:text="0"
               android:id="@+id/edtDuty"/>

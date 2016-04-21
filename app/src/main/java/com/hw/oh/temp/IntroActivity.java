@@ -17,14 +17,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -45,6 +37,12 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 
 /**
  * Created by oh on 2015-02-01.
@@ -57,7 +55,6 @@ public class IntroActivity extends BaseActivity {
   private IabHelper mHelper;
 
   private InfoExtra mInfoExtra;
-  private RequestQueue mRequestQueue;
   private HYFont mFont;
   private HYPreference mPref;
   private HYNetworkInfo mNet;
@@ -73,7 +70,6 @@ public class IntroActivity extends BaseActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_intro);
     //util
-    mRequestQueue = Volley.newRequestQueue(this);
     mInfoExtra = new InfoExtra(this);
     mFont = new HYFont(this);
     mPref = new HYPreference(this);
@@ -206,56 +202,30 @@ public class IntroActivity extends BaseActivity {
     if (INFO)
       Log.i(TAG, "requestUserInfoSend()");
     String url = "http://ohy3264.cafe24.com/Anony/api/memberCheck.php";
-    StringRequest request = new StringRequest(Request.Method.POST, url,
-            new Response.Listener<String>() {
-              @Override
-              public void onResponse(final String response) {
-                Log.d(TAG, "onResponse :: " + response.toString());
+    try {
+      OkHttpClient client = new OkHttpClient();
+      RequestBody formBody = new FormBody.Builder()
+              .add("MODE", "LoginCheck")
+              .add("ANDROID_ID", mInfoExtra.getAndroidID())
+              .build();
 
-                new Handler().postDelayed(new Runnable() {
-                  @Override
-                  public void run() {
-                    try {
-                      JSONObject json = new JSONObject(response);
-                      Message msg = IntentHandler.obtainMessage();
-                      Bundle bundle = new Bundle();
-                      bundle.putString("IntentFlag", json.getString("IntentFlag"));
-                      bundle.putString("Gender", json.getString("Gender"));
-                      msg.setData(bundle);
-                      IntentHandler.sendMessage(msg);
-                    } catch (JSONException e) {
-                      e.printStackTrace();
+      Request request = new Request.Builder()
+              .url(url)
+              .post(formBody)
+              .build();
 
-                    } catch (Exception e) {
-                      e.printStackTrace();
-                    }
-                  }
-                }, 500);
-              }
-            }, new Response.ErrorListener() {
-      @Override
-      public void onErrorResponse(VolleyError e) {
-        Log.d(TAG,
-                "onErrorResponse :: " + e.getLocalizedMessage());
-        e.printStackTrace();
-      }
-    }) {
-      @Override
-      protected Map<String, String> getParams() throws AuthFailureError {
-        // TODO Auto-generated method stub
-        if (DBUG) {
+      Response response = client.newCall(request).execute();
 
-        }
-
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("MODE", "LoginCheck");
-        params.put("ANDROID_ID", mInfoExtra.getAndroidID());
-        return params;
-      }
-
-    };
-    request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, 1, 1.0f));
-    mRequestQueue.add(request);
+        JSONObject json = new JSONObject(response.body().toString());
+        Message msg = IntentHandler.obtainMessage();
+        Bundle bundle = new Bundle();
+        bundle.putString("IntentFlag", json.getString("IntentFlag"));
+        bundle.putString("Gender", json.getString("Gender"));
+        msg.setData(bundle);
+        IntentHandler.sendMessage(msg);
+      }catch (Exception e){
+      Log.d(TAG, "requestCall_HateState - exception :: " + e.toString());
+    }
   }
 
   final Handler IntentHandler = new Handler() {
@@ -316,30 +286,27 @@ public class IntroActivity extends BaseActivity {
     if (INFO)
       Log.i(TAG, "requestCallRest_Guide()");
     String url = "http://ohy3264.cafe24.com/Anony/api/GuideMsgs.php";
-    StringRequest request = new StringRequest(Request.Method.POST, url,
-            new Response.Listener<String>() {
-              @Override
-              public void onResponse(String response) {
-                Log.d(TAG, "onResponse :: " + response.toString());
-                try {
-                  JSONObject jsonObj = new JSONObject(response);
-                  Constant.GUIDE_MSG1 = jsonObj.get("talkMsg").toString();
-                  Constant.GUIDE_MSG2 = jsonObj.get("calendarMsg").toString();
-                  Constant.GUIDE_MSG3 = jsonObj.get("newworkMsg").toString();
-                } catch (Exception e) {
-                  Log.i(TAG, e.toString());
-                }
-              }
-            }, new Response.ErrorListener() {
-      @Override
-      public void onErrorResponse(VolleyError e) {
-        Log.d(TAG,
-                "onErrorResponse :: " + e.getLocalizedMessage());
-        e.printStackTrace();
-      }
-    });
-    request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, 1, 1.0f));
-    mRequestQueue.add(request);
+    try {
+      OkHttpClient client = new OkHttpClient();
+      RequestBody formBody = new FormBody.Builder()
+              .add("MODE", "LoginCheck")
+              .add("ANDROID_ID", mInfoExtra.getAndroidID())
+              .build();
+
+      Request request = new Request.Builder()
+              .url(url)
+              .post(formBody)
+              .build();
+
+      Response response = client.newCall(request).execute();
+
+      JSONObject jsonObj = new JSONObject(response.body().toString());
+      Constant.GUIDE_MSG1 = jsonObj.get("talkMsg").toString();
+      Constant.GUIDE_MSG2 = jsonObj.get("calendarMsg").toString();
+      Constant.GUIDE_MSG3 = jsonObj.get("newworkMsg").toString();
+    }catch (Exception e){
+      Log.d(TAG, "requestCall_HateState - exception :: " + e.toString());
+    }
   }
 
 

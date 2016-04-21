@@ -66,9 +66,9 @@ public class EtcDialog extends DialogFragment {
     mEdtEtcMoney = (EditText) v.findViewById(R.id.edtEtcMoney);
     mEdtEtcMoney.setText(Integer.toString(mEtcMoney));
     mNumberPicker = (NumberPicker) v.findViewById(R.id.numberPicker1);
-    mNumberPicker.setValue(mEtcNum);
     mNumberPicker.setMinValue(1);
     mNumberPicker.setMaxValue(100);
+    mNumberPicker.setValue(mEtcNum);
 
     // Button
     dialog_BtnOk = (TextView) v.findViewById(R.id.btnOk);

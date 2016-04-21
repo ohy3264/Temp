@@ -12,6 +12,8 @@ import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -22,7 +24,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -43,13 +48,18 @@ import com.hw.oh.model.DetailCalItem;
 import com.hw.oh.model.PartTimeItem;
 import com.hw.oh.sqlite.DBManager;
 import com.hw.oh.utility.Constant;
+import com.hw.oh.utility.DigitTextView;
 import com.hw.oh.utility.HYFont;
 import com.hw.oh.utility.HYPreference;
 import com.tistory.whdghks913.croutonhelper.CroutonHelper;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by oh on 2015-02-21.
@@ -102,9 +112,6 @@ public class NewWorkActivity extends BaseActivity implements View.OnClickListene
   private int mAddMin = 0;
   private DetailCalItem mDetailCalItem;
 
-  //Circle Progress
-  ProgressBar pb;
-  ObjectAnimator animationA, animationB;
 
   //View
   private TextView mTxtStartTime_hour, mTxtStartTime_min, mTxtEndTime_hour, mTxtEndTime_min, mTxtAddMoney, mTxtNightMoney;
@@ -118,11 +125,13 @@ public class NewWorkActivity extends BaseActivity implements View.OnClickListene
   private TextView mTxtGabulMoney;
   private TextView mTxtEtcMoney;
   private TextView mTxtWeekMoney;
-  private TextView mTxtSave, mTxt_newWorkGuide;
+  private TextView mTxtSave;
+  private TextView mTxtRemainWorkTime, mTxtRemainWorkTimeTitle;
   private CheckBox mChkReceiveInAdvance, mChkNightMoney, mChkRefreshTime, mChkAddMoney, mChk_etcMoney, mChk_WeekMoney;
-  private LinearLayout mLinStartTime, mLinEndTime, mLinGabulValue, mLinRefreshTime, mLinEtc, mLinWeek, mLinAddTime;
+  private LinearLayout mLinStartTime, mLinEndTime, mLinGabulValue, mLinRefreshTime, mLinEtc, mLinWeek, mLinAddTime, linRemainWorkedTime;
   private LinearLayout mLinSave, mLinAddTimelebel, mLinNightTimelebel, mLinEtcTimelebel, mLinWeekTimelebel, mLinRefreshTimelebel, mLinGabulTimelebel;
-  private LinearLayout mLinNewWorkView;
+
+  private DigitTextView digit1, digit2, digit3;
 
   private RadioGroup mRadioRefresh;
   private int mRefreshState = 0;
@@ -138,11 +147,14 @@ public class NewWorkActivity extends BaseActivity implements View.OnClickListene
   private HYFont mFont;
   private HYPreference mPref;
 
+  //flag
+  boolean timeCountFlag = false;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_new_work_imsi);
-// 구글 통계
+    // 구글 통계
     Tracker mTracker = ((ApplicationClass) getApplication()).getDefaultTracker();
     mTracker.setScreenName("새로운 일급 등록");
     mTracker.send(new HitBuilders.AppViewBuilder().build());
@@ -153,6 +165,7 @@ public class NewWorkActivity extends BaseActivity implements View.OnClickListene
     ViewGroup root = (ViewGroup) findViewById(android.R.id.content);
     mFont.setGlobalFont(root);
     mDBManager = new DBManager(this);
+
     //Crouton
     mCroutonHelper = new CroutonHelper(this);
     mCroutonView = getLayoutInflater().inflate(
@@ -177,15 +190,11 @@ public class NewWorkActivity extends BaseActivity implements View.OnClickListene
       @Override
       public void afterTextChanged(Editable s) {
         if (!s.toString().isEmpty()) {
-
           workHourSet();
           mTxtResult.setText(mResult_st);
         }
       }
     });
-    mTxt_newWorkGuide = (TextView) findViewById(R.id.txt_newWorkGuide);
-    mTxt_newWorkGuide.setText(Constant.GUIDE_MSG3);
-    mTxt_newWorkGuide.setSelected(true); //포커싱
     mTxtStartDay = (TextView) findViewById(R.id.txtStartDay);
     mTxtEndDay = (TextView) findViewById(R.id.txtEndDay);
 
@@ -227,8 +236,10 @@ public class NewWorkActivity extends BaseActivity implements View.OnClickListene
     mLinWeekTimelebel = (LinearLayout) findViewById(R.id.linWeeklebel);
     mLinRefreshTimelebel = (LinearLayout) findViewById(R.id.linRefreshlebel);
     mLinGabulTimelebel = (LinearLayout) findViewById(R.id.linGabullebel);
+    linRemainWorkedTime = (LinearLayout) findViewById(R.id.linRemainWorkedTime);
 
-
+    mTxtRemainWorkTime = (TextView) findViewById(R.id.txtRemainWorked);
+    mTxtRemainWorkTimeTitle = (TextView) findViewById(R.id.txtRemainWorkedTitle);
     mLinSave.setOnClickListener(this);
     mLinWeek.setOnClickListener(this);
     mLinEtc.setOnClickListener(this);
@@ -238,10 +249,9 @@ public class NewWorkActivity extends BaseActivity implements View.OnClickListene
     mLinEndTime.setOnClickListener(this);
     mLinAddTime.setOnClickListener(this);
 
-
-    //PB Set
-    pb = (ProgressBar) findViewById(R.id.progressDemo);
-    setProgressBarIndeterminateVisibility(false);
+    digit1 = (DigitTextView) findViewById(R.id.digitTextView1);
+    digit2 = (DigitTextView) findViewById(R.id.digitTextView2);
+    digit3 = (DigitTextView) findViewById(R.id.digitTextView3);
 
     //Intent Get
     mAlbaName = getIntent().getStringExtra("ALBA_NAME");
@@ -381,6 +391,7 @@ public class NewWorkActivity extends BaseActivity implements View.OnClickListene
         mTxtRefreshView2.setText(mRefreshMin + " 분 휴식");
         break;
     }
+
     //추가 체크
     mChkAddMoney = (CheckBox) findViewById(R.id.chk_addMoney);
     mChkAddMoney.setChecked(mFlag_AddPay);
@@ -434,6 +445,25 @@ public class NewWorkActivity extends BaseActivity implements View.OnClickListene
     }
 
     workHourSet();
+  }
+
+  @Override
+  protected void onResume() {
+    super.onResume();
+    timeCountFlag = true;
+
+  }
+
+  @Override
+  protected void onPause() {
+    super.onPause();
+    timeCountFlag = false;
+  }
+
+  @Override
+  protected void onDestroy() {
+    super.onDestroy();
+    timeCountFlag = false;
   }
 
   public double weekPaySet() {
@@ -746,6 +776,11 @@ public class NewWorkActivity extends BaseActivity implements View.OnClickListene
 
     startCal.set(Calendar.SECOND, 0);
     endCal.set(Calendar.SECOND, 0);
+    Calendar current = Calendar.getInstance();
+    long diffTime = timeDiff(current, endCal);
+    diffTimeRequest(diffTime);
+
+
     Log.d("시작시간", startCal.getTime().toString());
     Log.d("종료시간", endCal.getTime().toString());
     Log.d("야간시작시간1", nightStartCal.getTime().toString());
@@ -756,7 +791,6 @@ public class NewWorkActivity extends BaseActivity implements View.OnClickListene
     if (nightStartCal2.getTimeInMillis() >= startCal.getTimeInMillis()) {
       night = 0;
     }
-
 
     //시작 시간이 종료시간보다 작을떄 까지 반복
     while (startCal.getTimeInMillis() <= endCal.getTimeInMillis()) {
@@ -1065,6 +1099,16 @@ public class NewWorkActivity extends BaseActivity implements View.OnClickListene
     return super.onOptionsItemSelected(item);
   }
 
+  public void diffTimeRequest(long diffTime){
+
+    timeCountHandler.removeMessages(0);
+    Message msg = timeCountHandler.obtainMessage();
+    msg.arg1 = (int)diffTime;
+    msg.arg2 = 0; //첫번째 요청 0 재귀하면서 1로 변경
+    timeCountHandler.sendMessageDelayed(msg, 1000);
+
+  }
+
 
   public void AlertDialog_AlbaDel() {
     AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -1157,39 +1201,8 @@ public class NewWorkActivity extends BaseActivity implements View.OnClickListene
   }
 
 
-  public void pbAniSet() {
-    int workTotal = Integer.parseInt(mTxtWorkHour.getText().toString()) * 60 + Integer.parseInt(mTxtWorkMin.getText().toString());
-    Log.i("workTotal : ", "" + workTotal);
-    if (workTotal <= 720) {
-      Log.i("startTime : ", "" + mStartHour * 60 + mStartMin);
-      pb.setRotation(((mStartHour * 30) + (int) (mStartMin * 0.5)) - 1); //1시간에 30도 1분에 0.5도
-      pb.setMax(1440);
-      pb.setProgress(0);
-      pb.setSecondaryProgress(0);
-      animationA = ObjectAnimator.ofInt(pb, "progress", -1, workTotal);
-      animationA.setDuration(5000); //in milliseconds
-      animationA.setInterpolator(new DecelerateInterpolator());
-      animationA.start();
-    } else if (workTotal > 720) {
-      /*Log.i("startTime : ", "" + Integer.toString(mStartHour * 60 + mStartMin));
-      Log.i("progress : ", "" + 720);
-      pb.setRotation((mStartHour * 30) + (int) (mStartMin * 0.5)); //1시간에 30도 1분에 0.5도
-      pb.setMax(720);
-      pb.setProgress(0);
-      animationA = ObjectAnimator.ofInt(pb, "progress", 0, 720);
-      animationA.setDuration(5000); //in milliseconds
-      animationA.setInterpolator(new DecelerateInterpolator());
-      animationA.start();
 
-      Log.i("secProgress : ", Integer.toString(workTotal - 720));
-      pb.setSecondaryProgress(0);
-      animationB = ObjectAnimator.ofInt(pb, "secondaryProgress", -1, workTotal - 720);
-      animationB.setDuration(5000); //in milliseconds
-      animationB.setInterpolator(new DecelerateInterpolator());
-      animationB.setStartDelay(5000);
-      animationB.start();*/
-    }
-  }
+
   @Override
   public void onStart() {
     super.onStart();
@@ -1203,4 +1216,72 @@ public class NewWorkActivity extends BaseActivity implements View.OnClickListene
     // 구글 통계
     GoogleAnalytics.getInstance(this).reportActivityStop(this);
   };
+
+  public long timeDiff(Calendar currentTime, Calendar finishTime){
+    Log.d("hwoh", "현재시간 " + currentTime.getTime().toString());
+    Log.d("hwoh", "종료시간 " + finishTime.getTime().toString());
+
+    long diffSec = (finishTime.getTimeInMillis() - currentTime.getTimeInMillis());
+
+    return  diffSec;
+  }
+
+  Handler timeCountHandler = new Handler(){
+
+    @Override
+    public void handleMessage(Message msg) {
+      super.handleMessage(msg);
+      int diffsec = msg.arg1;
+      int fristCheck = msg.arg2;
+      diffsec = diffsec - 1000;
+      Message tempMsg = obtainMessage();
+      tempMsg.arg1 = diffsec;
+      //mTxtRemainWorkTime.setText(convertMillis(diffsec));
+      ArrayList<Integer> time =  convertArrayList(diffsec);
+
+      if(fristCheck == 0){
+        digit1.resetValue(time.get(0));
+        digit2.resetValue(time.get(1));
+        digit3.resetValue(time.get(2));
+      }else {
+        digit1.setValue(time.get(0));
+        digit2.setValue(time.get(1));
+        if(time.get(2) == 59){
+          digit3.resetValue(time.get(2));
+        }else{
+          digit3.setValue(time.get(2));
+        }
+      }
+
+      tempMsg.arg2 = 1;
+      if(diffsec > 0 && timeCountFlag){
+        timeCountHandler.sendMessageDelayed(tempMsg, 1000);
+        linRemainWorkedTime.setVisibility(View.VISIBLE);
+      }else{
+        //재귀탈출
+        linRemainWorkedTime.setVisibility(View.GONE);
+        Log.i("hwoh", "재귀탈출 current Timecount : " +diffsec);
+      }
+    }
+  };
+  public  String convertMillis(long millis){
+
+    long s = (millis / 1000) % 60;
+    long m = (millis / (1000 * 60)) % 60;
+    long h = (millis / (1000 * 60 * 60)) % 24;
+    String time = String.format("%02d:%02d:%02d",h,m,s);
+    return time;
+  }
+  public ArrayList<Integer> convertArrayList(long millis){
+    long s = (millis / 1000) % 60;
+    long m = (millis / (1000 * 60)) % 60;
+    long h = (millis / (1000 * 60 * 60)) % 24;
+    ArrayList<Integer> time =  new ArrayList<Integer>();
+    time.add((int)h);
+    time.add((int)m);
+    time.add((int) s);
+    return time;
+  }
+
+
 }

@@ -10,19 +10,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.hw.oh.utility.HYFont;
 import com.hw.oh.utility.HYPreference;
 import com.hw.oh.utility.InfoExtra;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * Created by oh on 2015-02-01.
@@ -35,7 +34,6 @@ public class GenderActivity extends BaseActivity implements View.OnClickListener
 
   //Utill
   private HYFont mFont;
-  private RequestQueue mRequestQueue;
   private InfoExtra mInfoExtra;
   private HYPreference mPref;
 
@@ -44,7 +42,6 @@ public class GenderActivity extends BaseActivity implements View.OnClickListener
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_gender);
     //Utill
-    mRequestQueue = Volley.newRequestQueue(this);
     mInfoExtra = new InfoExtra(this);
     mPref = new HYPreference(this);
     mFont = new HYFont(this);
@@ -77,39 +74,28 @@ public class GenderActivity extends BaseActivity implements View.OnClickListener
     if (INFO)
       Log.i(TAG, "requestUserInfoSend()");
     String url = "http://ohy3264.cafe24.com/Anony/api/insertMember.php";
-    StringRequest request = new StringRequest(Request.Method.POST, url,
-        new Response.Listener<String>() {
-          @Override
-          public void onResponse(String response) {
-            Log.d(TAG, "onResponse :: " + response);
-            Message msg = IntentHandler.obtainMessage();
-            IntentHandler.sendMessage(msg);
+    try {
+      OkHttpClient client = new OkHttpClient();
+      RequestBody formBody = new FormBody.Builder()
+              .add("MODE", "InsertUser")
+              .add("ANDROID_ID", mInfoExtra.getAndroidID())
+              .add("GENDER", Integer.toString(gender))
+              .build();
 
-            mPref.put(mPref.KEY_GENDER, Integer.toString(gender));
+      Request request = new Request.Builder()
+              .url(url)
+              .post(formBody)
+              .build();
 
-          }
-        }, new Response.ErrorListener() {
-      @Override
-      public void onErrorResponse(VolleyError e) {
-        Log.d(TAG,
-            "onErrorResponse :: " + e.getLocalizedMessage());
-        e.printStackTrace();
-      }
-    }) {
-      @Override
-      protected Map<String, String> getParams() throws AuthFailureError {
-        // TODO Auto-generated method stub
-        if (DBUG) {
+      Response response = client.newCall(request).execute();
+      Log.d(TAG, "requestCall_HateState - onResponse :: " + response.toString());
+      Message msg = IntentHandler.obtainMessage();
+      IntentHandler.sendMessage(msg);
+      mPref.put(mPref.KEY_GENDER, Integer.toString(gender));
 
-        }
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("MODE", "InsertUser");
-        params.put("ANDROID_ID", mInfoExtra.getAndroidID());
-        params.put("GENDER", Integer.toString(gender));
-        return params;
-      }
-    };
-    mRequestQueue.add(request);
+    }catch (Exception e){
+      Log.d(TAG, "requestCall_HateState - exception :: " + e.toString());
+    }
   }
 
 

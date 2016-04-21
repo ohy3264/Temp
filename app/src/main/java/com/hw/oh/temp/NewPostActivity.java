@@ -30,8 +30,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.hw.oh.network.RestClient;
 import com.hw.oh.utility.Constant;
 import com.hw.oh.utility.HYFont;
@@ -72,7 +70,6 @@ public class NewPostActivity extends BaseActivity implements View.OnClickListene
   //View
   private Toolbar mToolbar;
   private EditText mEdtNewPost;
-  private RequestQueue mRequestQueue;
   private Button mBtnFloating;
   private ImageView mPhotoImageView;
 
@@ -108,7 +105,6 @@ public class NewPostActivity extends BaseActivity implements View.OnClickListene
     mNet = new HYNetworkInfo(this);
     mInfoExtra = new InfoExtra(this);
     mPref = new HYPreference(this);
-    mRequestQueue = Volley.newRequestQueue(this);
     mFont = new HYFont(this);
     ViewGroup root = (ViewGroup) findViewById(android.R.id.content);
     mFont.setGlobalFont(root);

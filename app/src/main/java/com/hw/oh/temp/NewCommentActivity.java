@@ -22,22 +22,23 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.hw.oh.utility.Constant;
 import com.hw.oh.utility.HYFont;
 import com.hw.oh.utility.HYPreference;
 import com.hw.oh.utility.InfoExtra;
 import com.tistory.whdghks913.croutonhelper.CroutonHelper;
 
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * Created by oh on 2015-02-02.
@@ -49,7 +50,6 @@ public class NewCommentActivity extends BaseActivity implements View.OnClickList
   //View
   private Toolbar mToolbar;
   private EditText mEdtNewPost;
-  private RequestQueue mRequestQueue;
   private ImageButton mBtnFloating;
   //Crouton
   private View mCroutonView;
@@ -71,7 +71,6 @@ public class NewCommentActivity extends BaseActivity implements View.OnClickList
     //Util
     mInfoExtra = new InfoExtra(this);
     mPref = new HYPreference(this);
-    mRequestQueue = Volley.newRequestQueue(this);
     mFont = new HYFont(this);
     ViewGroup root = (ViewGroup) findViewById(android.R.id.content);
     mFont.setGlobalFont(root);
@@ -145,43 +144,32 @@ public class NewCommentActivity extends BaseActivity implements View.OnClickList
       Log.i(TAG, "requestNewPostSend()");
     mCDL_CommentInsert = new CountDownLatch(1);
     String url = "http://ohy3264.cafe24.com/Anony/api/newCommentSave.php";
-    StringRequest request = new StringRequest(Request.Method.POST, url,
-        new Response.Listener<String>() {
-          @Override
-          public void onResponse(String response) {
-            Log.d(TAG, "onResponse :: " + response.toString());
-            mIntentFlag = new Gson().fromJson(response, Result.class);
-            Message msg = IntentHandler.obtainMessage();
-            IntentHandler.sendMessage(msg);
-            mCDL_CommentInsert.countDown();
-          }
-        }, new Response.ErrorListener() {
-      @Override
-      public void onErrorResponse(VolleyError e) {
-        Log.d(TAG,
-            "onErrorResponse :: " + e.getLocalizedMessage());
-        e.printStackTrace();
-        mCDL_CommentInsert.countDown();
-      }
-    }) {
-      @Override
-      protected Map<String, String> getParams() throws AuthFailureError {
-        // TODO Auto-generated method stub
-        if (DBUG) {
+    try {
+      OkHttpClient client = new OkHttpClient();
+      RequestBody formBody = new FormBody.Builder()
+              .add("MODE", "NewPostSend")
+              .add("BSEQ", getIntent().getStringExtra("Bseq"))
+              .add("ANDROID_ID", mInfoExtra.getAndroidID())
+              .add("GENDER", mPref.getValue(mPref.KEY_GENDER, "0"))
+              .add("NEW_COMMENT", mEdtNewPost.getText().toString())
+              .build();
+      Request request = new Request.Builder()
+              .url(url)
+              .post(formBody)
+              .build();
 
-        }
+      Response response = client.newCall(request).execute();
 
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("MODE", "NewPostSend");
-        params.put("BSEQ", getIntent().getStringExtra("Bseq"));
-        params.put("ANDROID_ID", mInfoExtra.getAndroidID());
-        params.put("GENDER", mPref.getValue(mPref.KEY_GENDER, "0"));
-        params.put("NEW_COMMENT", mEdtNewPost.getText().toString());
-        return params;
-      }
+      Log.d(TAG, "onResponse :: " + response.toString());
+      mIntentFlag = new Gson().fromJson(response.body().toString(), Result.class);
+      Message msg = IntentHandler.obtainMessage();
+      IntentHandler.sendMessage(msg);
+      mCDL_CommentInsert.countDown();
+    }catch (Exception e){
+      Log.d(TAG, "requestNewPostSend - exception :: " + e.toString());
+      mCDL_CommentInsert.countDown();
+    }
 
-    };
-    mRequestQueue.add(request);
   }
 
   final Handler IntentHandler = new Handler() {

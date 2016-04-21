@@ -3,7 +3,6 @@ package com.hw.oh.service;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import android.app.ProgressDialog;
 import android.app.Service;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -21,11 +20,12 @@ import com.hw.oh.utility.InfoExtra;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
+
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -49,8 +49,6 @@ public class BoardDetailService extends Service {
   public static final int MSG_SET_DETAIL_COMMENT_ALL = 5; // 코멘트 전체 응답
 
   Messenger mClients;
-  //Flag
-  private boolean mResponeEmpty = false;
 
   //Data
   private String mEdtCommnet;
@@ -67,8 +65,19 @@ public class BoardDetailService extends Service {
   private CountDownLatch mCDL_HeaderSet;
   private CountDownLatch mCDL_CommentInsert;
   private CountDownLatch mCDL_CommentList;
-  private CountDownLatch mCDL_BoardPostDel;
   private CountDownLatch mCDL_CommentDel;
+
+  // okHttp 네트워크 유틸
+  OkHttpClient mOkHttpClient = new OkHttpClient();
+  Call post(String url, RequestBody formBody, Callback callback) throws IOException {
+    Request request = new Request.Builder()
+            .url(url)
+            .post(formBody)
+            .build();
+    Call call = mOkHttpClient.newCall(request);
+    call.enqueue(callback);
+    return call;
+  }
 
 
   //클라이언트로 부터 메시지 수신하는 핸들러
@@ -114,57 +123,53 @@ public class BoardDetailService extends Service {
   }
 
   private void sendMessageToUI(final int flag) {
-    new Handler().post(new Runnable() {
-      @Override
-      public void run() {
-        Log.d(TAG, "sendMessageToUI");
-        Bundle b = new Bundle();
-        Message msg;
+    Log.d(TAG, "sendMessageToUI");
+    Bundle b = new Bundle();
+    Message msg;
 
-        if (DBUG) {
-          Log.d(TAG, "ID : " + mHeaderData.get_id());
-          Log.d(TAG, "Unique : " + mHeaderData.getUniqueID());
-          Log.d(TAG, "Gender : " + mHeaderData.getGender());
-          Log.d(TAG, "StrText : " + mHeaderData.getStrText());
-          Log.d(TAG, "LIKE : " + mHeaderData.getLikeCNT());
-          Log.d(TAG, "COMMENT : " + mHeaderData.getCommCNT());
-          Log.d(TAG, "HATE : " + mHeaderData.getHateCNT());
-        }
+    if (DBUG) {
+      Log.d(TAG, "ID : " + mHeaderData.get_id());
+      Log.d(TAG, "Unique : " + mHeaderData.getUniqueID());
+      Log.d(TAG, "Gender : " + mHeaderData.getGender());
+      Log.d(TAG, "StrText : " + mHeaderData.getStrText());
+      Log.d(TAG, "LIKE : " + mHeaderData.getLikeCNT());
+      Log.d(TAG, "COMMENT : " + mHeaderData.getCommCNT());
+      Log.d(TAG, "HATE : " + mHeaderData.getHateCNT());
+    }
 
-        for (int i = 0; i < mCommentList.size(); i++) {
-          Log.i(TAG, mCommentList.get(i).getStrText());
-        }
-        try {
-          switch (flag) {
-            case MSG_REGISTER_CLIENT:
-              b.putSerializable("HEADER_DATA", mHeaderData);
-              b.putSerializable("COMMENT_LIST", mCommentList);
-              msg = Message.obtain(null, MSG_SET_DETAIL_HEADER_VALUE);
-              msg.setData(b);
-              mClients.send(msg);
-              break;
+    for (int i = 0; i < mCommentList.size(); i++) {
+      Log.i(TAG, mCommentList.get(i).getStrText());
+    }
+    try {
+      switch (flag) {
+        case MSG_REGISTER_CLIENT:
+          b.putSerializable("HEADER_DATA", mHeaderData);
+          b.putSerializable("COMMENT_LIST", mCommentList);
+          msg = Message.obtain(null, MSG_SET_DETAIL_HEADER_VALUE);
+          msg.setData(b);
+          mClients.send(msg);
+          break;
 
-            case MSG_REGISTER_COMMENT:
+        case MSG_REGISTER_COMMENT:
 
-              b.putSerializable("COMMENT_LIST", mCommentList);
-              msg = Message.obtain(null, MSG_SET_DETAIL_COMMENT_ALL);
-              msg.setData(b);
-              mClients.send(msg);
-              break;
+          b.putSerializable("COMMENT_LIST", mCommentList);
+          msg = Message.obtain(null, MSG_SET_DETAIL_COMMENT_ALL);
+          msg.setData(b);
+          mClients.send(msg);
+          break;
 
-            case MSG_DELETE_COMMENT:
-              b.putSerializable("COMMENT_LIST", mCommentList);
-              msg = Message.obtain(null, MSG_SET_DETAIL_COMMENT_ALL);
-              msg.setData(b);
-              mClients.send(msg);
-              break;
-          }
-        } catch (RemoteException e) {
-          Log.d(TAG, e.toString());
-          // The client is dead. Remove it from the list; we are going through the list from back to front so this is safe to do inside the loop.
-        }
+        case MSG_DELETE_COMMENT:
+          b.putSerializable("COMMENT_LIST", mCommentList);
+          msg = Message.obtain(null, MSG_SET_DETAIL_COMMENT_ALL);
+          msg.setData(b);
+          mClients.send(msg);
+          break;
       }
-    });
+    } catch (RemoteException e) {
+      Log.d(TAG, e.toString());
+      // The mOkHttpClient is dead. Remove it from the list; we are going through the list from back to front so this is safe to do inside the loop.
+    }
+
   }
 
 
@@ -187,41 +192,44 @@ public class BoardDetailService extends Service {
     if (INFO)
       Log.i(TAG, "requestCall_Header_Info");
     String url = "http://ohy3264.cafe24.com/Anony/api/boardDetail.php";
-    try {
-      OkHttpClient client = new OkHttpClient();
+
       RequestBody formBody = new FormBody.Builder()
               .add("MODE", "HeaderIfo")
               .add("BSEQ", mSelectBoardID)
               .build();
-
-      Request request = new Request.Builder()
-              .url(url)
-              .post(formBody)
-              .build();
-
-      Response response = client.newCall(request).execute();
-
-      if (!response.isSuccessful()){
-        throw new IOException("Unexpected code " + response);
-      }else{
-          BoardItem value = new Gson().fromJson(response.body().toString(), BoardItem.class);
-          Log.d(TAG, "value - valueid :: " + value.get_id());
-          mHeaderData.set_id(value.get_id());
-          mHeaderData.setUniqueID(value.getUniqueID());
-          mHeaderData.setGender(value.getGender());
-          mHeaderData.setStrText(value.getStrText());
-          mHeaderData.setHitCNT(value.getHitCNT());
-          mHeaderData.setHateCNT(value.getHateCNT());
-          mHeaderData.setLikeCNT(value.getLikeCNT());
-          mHeaderData.setCommCNT(value.getCommCNT());
-          mHeaderData.setImgState(value.getImgState());
-          mHeaderData.setRegDate(HYTime_Maximum.formatTimeString(value.getRegDate()));
+    try {
+      post(url, formBody, new Callback() {
+        @Override
+        public void onFailure(Call call, IOException e) {
+          Log.i(TAG, "onFailure : " + e.toString());
           mCDL_HeaderSet.countDown();
+        }
 
-      }
-    } catch (Exception e) { mCDL_HeaderSet.countDown();
+        @Override
+        public void onResponse(Call call, Response response) throws IOException {
+          String  jsonData = response.body().string();
 
-      Log.i(TAG, e.toString());
+            Log.d(TAG, "value - valueid :: " + response.body().toString());
+            BoardItem value = new Gson().fromJson(jsonData, BoardItem.class);
+
+          if(value != null) {
+            mHeaderData.set_id(value.get_id());
+            mHeaderData.setUniqueID(value.getUniqueID());
+            mHeaderData.setGender(value.getGender());
+            mHeaderData.setStrText(value.getStrText());
+            mHeaderData.setHitCNT(value.getHitCNT());
+            mHeaderData.setHateCNT(value.getHateCNT());
+            mHeaderData.setLikeCNT(value.getLikeCNT());
+            mHeaderData.setCommCNT(value.getCommCNT());
+            mHeaderData.setImgState(value.getImgState());
+            mHeaderData.setRegDate(HYTime_Maximum.formatTimeString(value.getRegDate()));
+          }
+          mCDL_HeaderSet.countDown();
+        }
+      });
+    } catch (Exception e) {
+      e.printStackTrace();
+      mCDL_HeaderSet.countDown();
     }
   }
 
@@ -231,123 +239,28 @@ public class BoardDetailService extends Service {
     mCommentList.clear();
     mCDL_CommentDel = new CountDownLatch(1);
     String url = "http://ohy3264.cafe24.com/Anony/api/commentDeleteTest.php";
-    try {
-      OkHttpClient client = new OkHttpClient();
       RequestBody formBody = new FormBody.Builder()
               .add("ID", mSelectCommentID)
               .add("BSEQ", mSelectBoardID)
               .build();
-
-      Request request = new Request.Builder()
-              .url(url)
-              .post(formBody)
-              .build();
-
-      Response response = client.newCall(request).execute();
-
-      if (!response.isSuccessful()){
-        throw new IOException("Unexpected code " + response);
-      }else{
-        java.lang.reflect.Type type = new TypeToken<List<BoardItem>>() {
-        }.getType();
-
-        ArrayList<BoardItem> value = new Gson()
-                .fromJson(response.body().toString(), type);
-
-        for (BoardItem m : value) {
-          BoardItem t = new BoardItem();
-
-          t.set_id(m.get_id());
-          t.setStrText(m.getStrText());
-          t.setGender(m.getGender());
-          t.setHateCNT(m.getHateCNT());
-          t.setRegDate(HYTime_Maximum.formatTimeString(m.getRegDate()));
-          t.setUniqueID(m.getUniqueID());
-          mCommentList.add(t);
-        }
-        mCDL_CommentDel.countDown();
-
-      }
-    } catch (Exception e) {
-      mCDL_CommentDel.countDown();
-
-      Log.i(TAG, e.toString());
-    }
-  }
-
-
-  // Request CommentData
-  public void requestCall_CommentList() {
-    if (INFO)
-      Log.i(TAG, "requestCall_CommentList");
-    mCommentList.clear();
-    mCDL_CommentList = new CountDownLatch(1);
-    String url = "http://ohy3264.cafe24.com/Anony/api/commentListAll.php";
     try {
-      OkHttpClient client = new OkHttpClient();
-      RequestBody formBody = new FormBody.Builder()
-              .add("MODE", "CommentList")
-              .add("BSEQ", mSelectBoardID)
-              .build();
-
-      Request request = new Request.Builder()
-              .url(url)
-              .post(formBody)
-              .build();
-
-      Response response = client.newCall(request).execute();
-
-      if (!response.isSuccessful()){
-        throw new IOException("Unexpected code " + response);
-      }else{
-        java.lang.reflect.Type type = new TypeToken<List<BoardItem>>() {
-        }.getType();
-
-        ArrayList<BoardItem> value = new Gson()
-                .fromJson(response.body().toString(), type);
-
-        for (BoardItem m : value) {
-          BoardItem t = new BoardItem();
-
-          t.set_id(m.get_id());
-          t.setStrText(m.getStrText());
-          t.setGender(m.getGender());
-          t.setHateCNT(m.getHateCNT());
-          t.setRegDate(HYTime_Maximum.formatTimeString(m.getRegDate()));
-          t.setUniqueID(m.getUniqueID());
-
-
-          mCommentList.add(t);
+      post(url, formBody, new Callback() {
+        @Override
+        public void onFailure(Call call, IOException e) {
+          Log.i(TAG, "onFailure : " + e.toString());
+          mCDL_CommentDel.countDown();
         }
-        mCDL_CommentList.countDown();
 
-      }
-    } catch (Exception e) {
-      mCDL_CommentList.countDown();
+        @Override
+        public void onResponse(Call call, Response response) throws IOException {
+          String jsonData = response.body().string();
+            java.lang.reflect.Type type = new TypeToken<List<BoardItem>>() {
+            }.getType();
 
-      Log.i(TAG, e.toString());
-    }
-    }
+            ArrayList<BoardItem> value = new Gson()
+                    .fromJson(jsonData, type);
 
-  public void requestNewCommentSend() {
-    if (INFO)
-      Log.i(TAG, "requestNewPostSend()");
-    mCommentList.clear();
-    mCDL_CommentInsert = new CountDownLatch(1);
-    String url = "http://ohy3264.cafe24.com/Anony/api/newCommentSaveTest.php";
-    StringRequest request = new StringRequest(Request.Method.POST, url,
-        new Response.Listener<String>() {
-          @Override
-          public void onResponse(String response) {
-            if (DBUG)
-              Log.d(TAG, "requestCall_CommentList - onResponse :: " + response.toString());
-            try {
-              java.lang.reflect.Type type = new TypeToken<List<BoardItem>>() {
-              }.getType();
-
-              ArrayList<BoardItem> value = new Gson()
-                  .fromJson(response, type);
-
+            if(value != null) {
               for (BoardItem m : value) {
                 BoardItem t = new BoardItem();
 
@@ -359,37 +272,128 @@ public class BoardDetailService extends Service {
                 t.setUniqueID(m.getUniqueID());
                 mCommentList.add(t);
               }
-            } catch (Exception e) {
-              Log.d(TAG, "allsync.Response : Gson Exception");
+            }
+          sendMessageToUI(MSG_DELETE_COMMENT);
+          mCDL_CommentDel.countDown();
+
+        }
+      });
+    } catch (Exception e) {
+      e.printStackTrace();
+      mCDL_CommentDel.countDown();
+    }
+  }
+
+
+  // Request CommentData
+  public void requestCall_CommentList() {
+    if (INFO)
+      Log.i(TAG, "requestCall_CommentList");
+    mCommentList.clear();
+    mCDL_CommentList = new CountDownLatch(1);
+    String url = "http://ohy3264.cafe24.com/Anony/api/commentListAll.php";
+    RequestBody formBody = new FormBody.Builder()
+            .add("MODE", "CommentList")
+            .add("BSEQ", mSelectBoardID)
+            .build();
+    try {
+      post(url, formBody, new Callback() {
+        @Override
+        public void onFailure(Call call, IOException e) {
+          Log.i(TAG, "onFailure : " + e.toString());
+          mCDL_CommentList.countDown();
+        }
+
+        @Override
+        public void onResponse(Call call, Response response) throws IOException {
+          String jsonData = response.body().string();
+          Log.i(TAG, "requestCall_CommentList : " + jsonData);
+
+            java.lang.reflect.Type type = new TypeToken<List<BoardItem>>() {
+            }.getType();
+
+            ArrayList<BoardItem> value = new Gson()
+                    .fromJson(jsonData, type);
+            if(value != null) {
+              for (BoardItem m : value) {
+                BoardItem t = new BoardItem();
+
+                t.set_id(m.get_id());
+                t.setStrText(m.getStrText());
+                t.setGender(m.getGender());
+                t.setHateCNT(m.getHateCNT());
+                t.setRegDate(HYTime_Maximum.formatTimeString(m.getRegDate()));
+                t.setUniqueID(m.getUniqueID());
+
+                mCommentList.add(t);
+              }
+            }
+          mCDL_CommentList.countDown();
+        }
+      });
+    } catch (Exception e) {
+      e.printStackTrace();
+      mCDL_CommentList.countDown();
+    }
+  }
+
+  public void requestNewCommentSend() {
+    if (INFO)
+      Log.i(TAG, "requestNewPostSend()");
+    mCommentList.clear();
+    mCDL_CommentInsert = new CountDownLatch(1);
+    String url = "http://ohy3264.cafe24.com/Anony/api/newCommentSaveTest.php";
+    RequestBody formBody = new FormBody.Builder()
+            .add("MODE", "NewPostSend")
+            .add("BSEQ", mHeaderData.get_id())
+            .add("B_ANDROID_ID", mHeaderData.getUniqueID())
+            .add("ANDROID_ID", mInfoExtra.getAndroidID())
+            .add("GENDER", mPref.getValue(mPref.KEY_GENDER, "0"))
+            .add("NEW_COMMENT", mEdtCommnet)
+            .build();
+    try {
+      post(url, formBody, new Callback() {
+        @Override
+        public void onFailure(Call call, IOException e) {
+          Log.i(TAG, "onFailure : " + e.toString());
+          mCDL_CommentInsert.countDown();
+        }
+
+        @Override
+        public void onResponse(Call call, Response response) throws IOException {
+          String jsonData = response.body().string();
+
+          if(!"".equals(jsonData) || jsonData != null) {
+            java.lang.reflect.Type type = new TypeToken<List<BoardItem>>() {
+            }.getType();
+
+            ArrayList<BoardItem> value = new Gson()
+                    .fromJson(jsonData, type);
+
+            if(value != null) {
+              for (BoardItem m : value) {
+                BoardItem t = new BoardItem();
+
+                t.set_id(m.get_id());
+                t.setStrText(m.getStrText());
+                t.setGender(m.getGender());
+                t.setHateCNT(m.getHateCNT());
+                t.setRegDate(HYTime_Maximum.formatTimeString(m.getRegDate()));
+                t.setUniqueID(m.getUniqueID());
+                mCommentList.add(t);
+              }
             }
             sendMessageToUI(MSG_REGISTER_COMMENT);
-            mCDL_CommentInsert.countDown();
           }
-        }, new Response.ErrorListener() {
-      @Override
-      public void onErrorResponse(VolleyError e) {
-        Log.d(TAG,
-            "onErrorResponse :: " + e.getLocalizedMessage());
-        e.printStackTrace();
-        mCDL_CommentInsert.countDown();
-      }
-    }) {
-      @Override
-      protected Map<String, String> getParams() throws AuthFailureError {
-        // TODO Auto-generated method stub
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("MODE", "NewPostSend");
-        params.put("BSEQ", mHeaderData.get_id());
-        params.put("B_ANDROID_ID", mHeaderData.getUniqueID());
-        params.put("ANDROID_ID", mInfoExtra.getAndroidID());
-        params.put("GENDER", mPref.getValue(mPref.KEY_GENDER, "0"));
-        params.put("NEW_COMMENT", mEdtCommnet);
-        return params;
-      }
-
-    };
-    mRequestQueue.add(request);
+          mCDL_CommentInsert.countDown();
+        }
+      });
+    }catch(Exception e){
+      e.printStackTrace();
+      mCDL_CommentInsert.countDown();
+    }
   }
+
 
 
   // asyncTask Call
@@ -402,13 +406,11 @@ public class BoardDetailService extends Service {
 
   // asyncTask :: HeaderData, CommentData 요청
   private class asyncTask_BoardList extends AsyncTask<Void, Integer, Void> {
-    private ProgressDialog mLoadingDialog;
 
     @Override
     protected void onPreExecute() {
       // TODO Auto-generated method stub
       super.onPreExecute();
-
       mCommentList.clear();
     }
 
@@ -435,6 +437,5 @@ public class BoardDetailService extends Service {
       sendMessageToUI(MSG_REGISTER_CLIENT);
 
     }
-
   }
 }

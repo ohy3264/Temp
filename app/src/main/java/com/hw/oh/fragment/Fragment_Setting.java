@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.google.gson.Gson;
 import com.hw.oh.dialog.CalculSetDialog;
 import com.hw.oh.dialog.DigStyleDialog;
 import com.hw.oh.dialog.DigThemeStyleDialog;
@@ -34,6 +35,7 @@ import com.hw.oh.dialog.DutySetDialog;
 import com.hw.oh.dialog.FontSelectDialog;
 import com.hw.oh.dialog.InsuranceSetDialog;
 import com.hw.oh.dialog.PassSetDialog;
+import com.hw.oh.model.BoardItem;
 import com.hw.oh.model.KmaCodeItem;
 import com.hw.oh.network.RestClient;
 import com.hw.oh.sqlite.DBConstant;
@@ -47,6 +49,7 @@ import com.hw.oh.utility.HYDatabaseBackup;
 import com.hw.oh.utility.HYFont;
 import com.hw.oh.utility.HYNetworkInfo;
 import com.hw.oh.utility.HYPreference;
+import com.hw.oh.utility.HYTime_Maximum;
 import com.hw.oh.utility.InfoExtra;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -71,6 +74,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -111,6 +116,19 @@ public class Fragment_Setting extends Fragment implements View.OnClickListener, 
   private KmDBManager kmDBManager;
   private CountDownLatch CDLGpsLatch;
   private CountDownLatch CDLKmaDistanceLatch;
+
+  // okHttp 네트워크 유틸
+  OkHttpClient mOkHttpClient = new OkHttpClient();
+  Call post(String url, RequestBody formBody, Callback callback) throws IOException {
+    Request request = new Request.Builder()
+            .url(url)
+            .post(formBody)
+            .build();
+    Call call = mOkHttpClient.newCall(request);
+    call.enqueue(callback);
+    return call;
+  }
+
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -330,61 +348,48 @@ public class Fragment_Setting extends Fragment implements View.OnClickListener, 
     }
   }
 
-  public interface listDialogListener {
-    public void onClick(int i);
-
-  }
 
   public void requestBackupFileName() {
     mLoadingDialog = showLoadingDialog(getActivity(), true);
     mLoadingDialog.show();
     if (INFO)
-      Log.i(TAG, "requestNewPostSend()");
-    //mCDL_CommentInsert = new CountDownLatch(1);
+      Log.i(TAG, "requestBackupFileName()");
     String url = "http://ohy3264.cafe24.com/Anony/api/backupDB_FileName.php";
     try {
-      OkHttpClient client = new OkHttpClient();
       RequestBody formBody = new FormBody.Builder()
               .add("BACKUP_CODE", mEditBackupCode.getText().toString())
               .build();
+      post(url, formBody, new Callback() {
+        @Override
+        public void onFailure(Call call, IOException e) {
+          Log.i(TAG, "onFailure : " + e.toString());
+          mTxtCrouton.setText("코드를 다시 확인해주세요");
+          mCroutonHelper.setCustomView(mCroutonView);
+          mCroutonHelper.setDuration(1000);
+          mCroutonHelper.show();
+          mLoadingDialog.dismiss();
+        }
 
-      Request request = new Request.Builder()
-              .url(url)
-              .post(formBody)
-              .build();
-
-      Response response = client.newCall(request).execute();
-
-      Log.d(TAG, "onResponse :: " + response.body().string());
-      if (!response.isSuccessful()){
-        mTxtCrouton.setText("코드를 다시 확인해주세요");
-        mCroutonHelper.setCustomView(mCroutonView);
-        mCroutonHelper.setDuration(1000);
-        mCroutonHelper.show();
-        mLoadingDialog.dismiss();
-        throw new IOException("Unexpected code " + response);
-      }else{
-
-        Message msg = fileNameHandler.obtainMessage();
-        //메세지 ID 설정
-        msg.what = 0;
-        //메세지 정보 설정(Object)
-        msg.obj = response.toString();
-        fileNameHandler.sendMessage(msg);
-      }
-
+        @Override
+        public void onResponse(Call call, Response response) throws IOException {
+          String  jsonData = response.body().string();
+          Log.d(TAG, "value - valueid :: " + response.body().toString());
+          Message msg = fileNameHandler.obtainMessage();
+          //메세지 ID 설정
+          msg.what = 0;
+          //메세지 정보 설정(Object)
+          msg.obj = jsonData;
+          fileNameHandler.sendMessage(msg);
+        }
+      });
     } catch (Exception e) {
-      Log.i(TAG, e.toString());
+      e.printStackTrace();
     }
-
   }
 
   final Handler fileNameHandler = new Handler() {
     public void handleMessage(Message msg) {
       asyncTask_FileDown_Call("" + msg.obj);
-         /*   android.os.Process.killProcess(android.os.Process.myPid());
-            Intent intent = getActivity().getPackageManager().getLaunchIntentForPackage(getActivity().getPackageName());
-            getActivity().startActivity(intent);*/
 
     }
   };
@@ -521,7 +526,6 @@ public class Fragment_Setting extends Fragment implements View.OnClickListener, 
     // 캘리더 기간선택 상태
     onFinishCalDialog();
 
-
     //날짜설정스타일일
     onFinishStyleDialog();
 
@@ -537,7 +541,7 @@ public class Fragment_Setting extends Fragment implements View.OnClickListener, 
 
   public void asyncTask_FileDown_Call(String fileName) {
     if (INFO)
-      Log.i(TAG, "asyncTask_BoardList_Call");
+      Log.i(TAG, "asyncTask_FileDown_Call");
     new asyncTask_FileDown().execute(fileName);
   }
 

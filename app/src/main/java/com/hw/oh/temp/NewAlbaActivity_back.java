@@ -26,8 +26,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.hw.oh.dialog.AddInfoDialog;
 import com.hw.oh.dialog.EtcDialog;
 import com.hw.oh.dialog.RefreshInfoDialog;
@@ -103,7 +101,6 @@ public class NewAlbaActivity_back extends BaseActivity implements View.OnClickLi
   private TextView mTxtStartDay, mTxtEndDay;
 
   //Utill
-  private RequestQueue mRequestQueue;
   private InfoExtra mInfoExtra;
   private HYPreference mPref;
   private HYFont mFont;
@@ -119,7 +116,6 @@ public class NewAlbaActivity_back extends BaseActivity implements View.OnClickLi
     //Util
     mInfoExtra = new InfoExtra(this);
     mPref = new HYPreference(this);
-    mRequestQueue = Volley.newRequestQueue(this);
     mFont = new HYFont(this);
     mDB = new DBManager(this);
 

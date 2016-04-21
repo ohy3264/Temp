@@ -139,8 +139,6 @@ public class DutySetDialog extends DialogFragment implements AdapterView.OnItemS
             mLinDutyCustom.setVisibility(View.VISIBLE);
             break;
         }
-
-
       }
     });
 
@@ -174,7 +172,6 @@ public class DutySetDialog extends DialogFragment implements AdapterView.OnItemS
     });
     init();
     mBuilder.setView(v);
-
     return mBuilder.create();
   }
 
@@ -189,18 +186,15 @@ public class DutySetDialog extends DialogFragment implements AdapterView.OnItemS
         dutySelectorFlag = 0;
         mRadioGroupDuty.check(R.id.chk_duty1);
         break;
-
       case 1:
         dutySelectorFlag = 1;
         mRadioGroupDuty.check(R.id.chk_duty2);
         break;
-
       case 2:
         dutySelectorFlag = 2;
         mRadioGroupDuty.check(R.id.chk_duty3);
         break;
     }
-
     mEdtDuty.setText(mPref.getValue(mPref.KEY_DUTY_INPUT, "0"));
     mSpinner1.setSelection(mPref.getValue(mPref.KEY_DUTY_PERSON_1, mPersonNumber1) - 1);
     mSpinner2.setSelection(mPref.getValue(mPref.KEY_DUTY_PERSON_2, mPersonNumber2));
@@ -212,7 +206,6 @@ public class DutySetDialog extends DialogFragment implements AdapterView.OnItemS
   public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
     switch (parent.getId()) {
       case R.id.spinner:
-
         mPersonNumber1 = position + 1;
         break;
       case R.id.spinner2:

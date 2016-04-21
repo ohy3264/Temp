@@ -59,12 +59,7 @@ public class CalendarResultDialog extends DialogFragment {
     mFont.setGlobalFont((ViewGroup) v);
 
     mRadioGroupAdd = (RadioGroup) v.findViewById(R.id.radioGroupAdd);
-    Bundle bundle = getArguments();/*
-        mFlag = bundle.getInt("addType");
-
-        mAddHour = bundle.getInt("addHour");
-        mAddMin = bundle.getInt("addMin");
-        mTotalTime = bundle.getInt("totalTime");*/
+    Bundle bundle = getArguments();
 
 
     mLinAddPersonallyView = (LinearLayout) v.findViewById(R.id.linAddPersonallyView);
