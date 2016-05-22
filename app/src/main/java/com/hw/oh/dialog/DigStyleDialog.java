@@ -18,7 +18,7 @@ import com.hw.oh.utility.HYFont;
 import com.hw.oh.utility.HYPreference;
 
 
-public class DigStyleDialog extends DialogFragment {
+public class DigStyleDialog extends android.support.v4.app.DialogFragment {
 
   // Log
   private static final String TAG = "DigStyleDialog";

@@ -10,6 +10,12 @@
   <string name="hello_world">Hello world!</string>
   <string name="action_settings">Settings</string>
   <string name="action_send">Send</string>
+    <!-- Error 명칭 -->
+    <string name="error_network">인터넷 연결상태를 확인해 주세요.</string>
+    <string name="error_common">일시적인 오류입니다. 잠시 후에 다시 시도해 주세요.</string>
+    <string name="error_wrong_param">파라미터 오류가 발생했습니다.</string>
+    <string name="error_wifi_network">WiFi 연결상태를 확인해 주세요.</string>
+
   <!-- Calendar -->
   <string name="sunday">일</string>
   <string name="monday">월</string>
@@ -142,7 +148,6 @@
     오류발생 시 이메일이나 카톡으로 문의를 주시면 좀더 빠른개선이 가능합니다. 감사합니다 \n\n
     </string>
   <!-- Error 명칭 -->
-  <string name="error_network">인터넷 연결상태를 확인해 주세요.</string>
   <string name="error_etc">에러가 발생하였습니다.</string>
 
 </resources>

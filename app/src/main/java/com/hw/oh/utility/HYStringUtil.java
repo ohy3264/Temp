@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * Created by oh on 2015-03-20.
  */
-public class HYStringUtill {
+public class HYStringUtil {
   public static String[] splitFunction(String ktype) {     //ktype을 받는다.
 
     String[] array = ktype.split("-");     //콤마 구분자로 배열에 ktype저장

@@ -12,19 +12,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.hw.oh.fragment.Fragment_Setting;
-import com.hw.oh.temp.IntroActivity;
 import com.hw.oh.temp.MainActivity;
 import com.hw.oh.temp.R;
 import com.hw.oh.utility.HYFont;
 import com.hw.oh.utility.HYPreference;
 
 
-public class DigThemeStyleDialog extends DialogFragment {
+public class DigThemeStyleDialog extends android.support.v4.app.DialogFragment {
 
   // Log
   private static final String TAG = "DigThemeStyleDialog";

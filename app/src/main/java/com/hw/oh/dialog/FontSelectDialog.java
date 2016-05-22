@@ -19,7 +19,7 @@ import com.hw.oh.utility.HYPreference;
 /**
  * Created by oh on 2015-06-14.
  */
-public class FontSelectDialog extends DialogFragment {
+public class FontSelectDialog extends android.support.v4.app.DialogFragment {
   // Log
   private static final String TAG = "FontSelectDialog";
   private static final boolean DEBUG = true;

@@ -17,7 +17,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -34,9 +33,10 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.hw.oh.network.RestClient;
+import com.hw.oh.utility.CommonUtil;
 import com.hw.oh.utility.Constant;
 import com.hw.oh.utility.HYFont;
-import com.hw.oh.utility.HYNetworkInfo;
+import com.hw.oh.utility.NetworkUtil;
 import com.hw.oh.utility.HYPreference;
 import com.hw.oh.utility.InfoExtra;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -91,7 +91,7 @@ public class NewPostActivity extends BaseActivity implements View.OnClickListene
   private InfoExtra mInfoExtra;
   private HYPreference mPref;
   private HYFont mFont;
-  private HYNetworkInfo mNet;
+  private NetworkUtil mNet;
 
   //Image
   private String mUri = "";
@@ -110,7 +110,6 @@ public class NewPostActivity extends BaseActivity implements View.OnClickListene
     mTracker.send(new HitBuilders.AppViewBuilder().build());
 
     //Utill
-    mNet = new HYNetworkInfo(this);
     mInfoExtra = new InfoExtra(this);
     mPref = new HYPreference(this);
     mFont = new HYFont(this);
@@ -156,7 +155,7 @@ public class NewPostActivity extends BaseActivity implements View.OnClickListene
   @Override
   public void onClick(View v) {
     if (v.getId() == R.id.btnFloating) {
-      if (!mNet.networkgetInfo()) {
+      if (NetworkUtil.isConnect(this)) {
         if (!mEdtNewPost.getText().toString().isEmpty()) {
           //  requestNewPostSend();
           requetNewImageSend();
@@ -250,7 +249,7 @@ public class NewPostActivity extends BaseActivity implements View.OnClickListene
   public void requetNewImageSend() {
     RequestParams params = new RequestParams();
     params.put("MODE", "NewPostSend");
-    params.put("ANDROID_ID", mInfoExtra.getAndroidID());
+    params.put("ANDROID_ID", CommonUtil.getAndroidID(this));
     params.put("GENDER", mPref.getValue(mPref.KEY_GENDER, "0"));
     params.put("NEW_POST", mEdtNewPost.getText().toString());
     try {

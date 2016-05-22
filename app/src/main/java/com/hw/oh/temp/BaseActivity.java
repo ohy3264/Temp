@@ -7,20 +7,32 @@ import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.hw.oh.utility.HYFont;
 import com.hw.oh.utility.HYPreference;
+
+import butterknife.ButterKnife;
 
 /**
  * Created by ohyowan on 2016. 3. 27..
  */
 public class BaseActivity extends AppCompatActivity {
     private HYPreference mPref;
+    private HYFont mFont;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Utill
         mPref = new HYPreference(this);
+        mFont = new HYFont(this);
+        //Theme
         setTheme();
+
+        //Font
+        ViewGroup root = (ViewGroup) findViewById(android.R.id.content);
+        mFont.setGlobalFont(root);
         super.onCreate(savedInstanceState);
     }
 

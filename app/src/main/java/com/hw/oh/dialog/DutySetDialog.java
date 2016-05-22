@@ -26,7 +26,7 @@ import com.hw.oh.utility.InfoExtra;
 /**
  * Created by oh on 2015-06-14.
  */
-public class DutySetDialog extends DialogFragment implements AdapterView.OnItemSelectedListener {
+public class DutySetDialog extends android.support.v4.app.DialogFragment implements AdapterView.OnItemSelectedListener {
   // Log
   private static final String TAG = "CalculSetDialog";
   private static final boolean DEBUG = true;

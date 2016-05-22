@@ -51,7 +51,7 @@ import com.hw.oh.utility.Constant;
 import com.hw.oh.utility.HYExcelWrite;
 import com.hw.oh.utility.HYFont;
 import com.hw.oh.utility.HYPreference;
-import com.hw.oh.utility.HYStringUtill;
+import com.hw.oh.utility.HYStringUtil;
 import com.nhaarman.listviewanimations.appearance.simple.AlphaInAnimationAdapter;
 import com.nhaarman.listviewanimations.itemmanipulation.DynamicListView;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
@@ -236,8 +236,8 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
   public void datePickerSet() {
     //DatePicker Data Set
     if (!mPref.getValue(mPref.KEY_BAR_PERIOD_CHECK, false)) {
-       /* mPeriod_start = HYStringUtill.splitFunction(mPref.getValue(mPref.KEY_BAR_PERIOD_START, mYear + "-" + mMonth + "-" + mDay));
-        mPeriod_end = HYStringUtill.splitFunction(mPref.getValue(mPref.KEY_BAR_PERIOD_END, mYear + "-" + mMonth + "-" + mDay));*/
+       /* mPeriod_start = HYStringUtil.splitFunction(mPref.getValue(mPref.KEY_BAR_PERIOD_START, mYear + "-" + mMonth + "-" + mDay));
+        mPeriod_end = HYStringUtil.splitFunction(mPref.getValue(mPref.KEY_BAR_PERIOD_END, mYear + "-" + mMonth + "-" + mDay));*/
 
       CalendarInfo Info = mDB.selectCalendar(mPartInfoData.getAlbaname());
       if ((Info instanceof CalendarInfo)) {
@@ -1017,7 +1017,7 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
         Log.d("Storage Max Count : ", String.valueOf(filepath.length));
       }
       File path = new File(filepath[0].getPath() + "/");
-      String filename = HYStringUtill.getRandomString(6) + ".jpg";
+      String filename = HYStringUtil.getRandomString(6) + ".jpg";
 
       if (!path.isDirectory()) {
         path.mkdirs();

@@ -14,6 +14,7 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.util.Log;
 import com.hw.oh.model.BoardItem;
+import com.hw.oh.utility.CommonUtil;
 import com.hw.oh.utility.HYPreference;
 import com.hw.oh.utility.HYTime_Maximum;
 import com.hw.oh.utility.InfoExtra;
@@ -347,7 +348,7 @@ public class BoardDetailService extends Service {
             .add("MODE", "NewPostSend")
             .add("BSEQ", mHeaderData.get_id())
             .add("B_ANDROID_ID", mHeaderData.getUniqueID())
-            .add("ANDROID_ID", mInfoExtra.getAndroidID())
+            .add("ANDROID_ID", CommonUtil.getAndroidID(getApplicationContext()))
             .add("GENDER", mPref.getValue(mPref.KEY_GENDER, "0"))
             .add("NEW_COMMENT", mEdtCommnet)
             .build();

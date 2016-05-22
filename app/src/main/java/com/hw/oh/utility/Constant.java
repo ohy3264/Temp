@@ -6,6 +6,7 @@ package com.hw.oh.utility;
 public class Constant {
   public static final String LOG = "HWOH";
   public static String IMG_UPLOAD_URL = "http://ohy3264.cafe24.com/Anony/api/uploads/Img";
+  public static String SERVER_URL = "http://ohy3264.cafe24.com";
   public static String GUIDE_MSG1 = "";
   public static String GUIDE_MSG2 = "";
   public static String GUIDE_MSG3 = "";

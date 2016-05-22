@@ -65,7 +65,7 @@ public class SettingActivity extends BaseActivity {
     }
 
     mFragment_Setting = new Fragment_Setting();
-    getFragmentManager().beginTransaction().replace(R.id.container, mFragment_Setting).commit();
+    getSupportFragmentManager().beginTransaction().replace(R.id.container, mFragment_Setting).commit();
 
     // ADmob
     if (Constant.ADMOB) {

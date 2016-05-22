@@ -135,7 +135,7 @@ public class HYExcelWrite {
     row++;
 
     for (WorkItem tem : data) {
-      sh.addCell(new jxl.write.Label(0, row, HYStringUtill.dateFunction(tem.getYear(), tem.getMonth(), tem.getDay()), textFormat));
+      sh.addCell(new jxl.write.Label(0, row, HYStringUtil.dateFunction(tem.getYear(), tem.getMonth(), tem.getDay()), textFormat));
       sh.addCell(new jxl.write.DateTime(1, row, HYTimeUtill.timeReturn(Integer.parseInt(tem.getStartTimeHour()), Integer.parseInt(tem.getStartTimeMin())), timeformat));
       sh.addCell(new jxl.write.DateTime(2, row, HYTimeUtill.timeReturn(Integer.parseInt(tem.getEndTimeHour()), Integer.parseInt(tem.getEndTimeMin())), timeformat));
       sh.addCell(new jxl.write.DateTime(3, row, HYTimeUtill.timeReturn(Integer.parseInt(tem.getDayTimeHour()), Integer.parseInt(tem.getDayTimeMin())), timeformat));

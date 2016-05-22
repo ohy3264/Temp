@@ -5,7 +5,6 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -31,7 +30,7 @@ import com.hw.oh.sqlite.DBConstant;
 import com.hw.oh.sqlite.DBManager;
 import com.hw.oh.utility.HYFont;
 import com.hw.oh.utility.HYPreference;
-import com.hw.oh.utility.HYStringUtill;
+import com.hw.oh.utility.HYStringUtil;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -293,8 +292,8 @@ public class BarChartsActivity extends BaseActivity implements View.OnClickListe
   // 초기 데이트 피커 셋팅
   public void datePickerSet() {
     //DatePicker Data Set
-    mPeriod_start = HYStringUtill.splitFunction(mPref.getValue(mPref.KEY_BAR_PERIOD_START, mYear + "-" + 0 + "-" + 1));
-    mPeriod_end = HYStringUtill.splitFunction(mPref.getValue(mPref.KEY_BAR_PERIOD_END, mYear + "-" + 11 + "-" + 31));
+    mPeriod_start = HYStringUtil.splitFunction(mPref.getValue(mPref.KEY_BAR_PERIOD_START, mYear + "-" + 0 + "-" + 1));
+    mPeriod_end = HYStringUtil.splitFunction(mPref.getValue(mPref.KEY_BAR_PERIOD_END, mYear + "-" + 11 + "-" + 31));
 
     mStartYear = Integer.parseInt(mPeriod_start[0]);
     mStartMonth = Integer.parseInt(mPeriod_start[1]);

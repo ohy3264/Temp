@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -21,10 +22,15 @@ import com.google.gson.Gson;
 import com.hw.oh.fragment.Fragment_Setting;
 import com.hw.oh.model.BoardItem;
 import com.hw.oh.temp.R;
+import com.hw.oh.utility.CommonUtil;
+import com.hw.oh.utility.Constant;
 import com.hw.oh.utility.HYFont;
 import com.hw.oh.utility.HYPreference;
 import com.hw.oh.utility.HYTime_Maximum;
 import com.hw.oh.utility.InfoExtra;
+import com.hw.oh.utility.JSONParserUtil;
+import com.hw.oh.utility.OkHttpUtils;
+
 import java.io.IOException;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -37,7 +43,7 @@ import okhttp3.Response;
 /**
  * Created by oh on 2015-06-14.
  */
-public class PassSetDialog extends DialogFragment implements TextWatcher {
+public class PassSetDialog extends android.support.v4.app.DialogFragment implements TextWatcher {
   // Log
   private static final String TAG = "PassSetDialog";
   private static final boolean DEBUG = true;
@@ -54,18 +60,6 @@ public class PassSetDialog extends DialogFragment implements TextWatcher {
   private InfoExtra mInfoExtra;
   private HYFont mFont;
   private HYPreference mPref;
-
-  // okHttp 네트워크 유틸
-  OkHttpClient mOkHttpClient = new OkHttpClient();
-  Call post(String url, RequestBody formBody, Callback callback) throws IOException {
-    Request request = new Request.Builder()
-            .url(url)
-            .post(formBody)
-            .build();
-    Call call = mOkHttpClient.newCall(request);
-    call.enqueue(callback);
-    return call;
-  }
 
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -161,27 +155,29 @@ public class PassSetDialog extends DialogFragment implements TextWatcher {
   public void requestCallRest_Pass() {
     if (INFO)
       Log.i(TAG, "requestCallRest_Pass()");
-    String url = "http://ohy3264.cafe24.com/Anony/api/memberPass.php";
     RequestBody formBody = new FormBody.Builder()
             .add("MODE", "PassUpdate")
-            .add("ANDROID_ID", mInfoExtra.getAndroidID())
+            .add("ANDROID_ID", CommonUtil.getAndroidID(getActivity()))
             .add("PASS", mEdtPass1.getText().toString())
             .build();
-
     try {
-      post(url, formBody, new Callback() {
+      OkHttpUtils.post(getActivity(), Constant.SERVER_URL, "/Anony/api/memberPass.php", formBody, new Callback() {
         @Override
         public void onFailure(Call call, IOException e) {
-          Log.i(TAG, "onFailure : " + e.toString());
+          Log.d(TAG, "requestCallRest_Pass - onFailure :: " + e.toString());
         }
 
         @Override
         public void onResponse(Call call, Response response) throws IOException {
-          Log.d(TAG, "onResponse :: " + response.body().string());
+          Log.i("Response", " " + response.code());
+          final String results = response.body().string();
+          Log.i("OkHTTP Results: ", results);
         }
       });
     } catch (Exception e) {
-      e.printStackTrace();
+      Log.d(TAG, "requestCallRest_Pass - exception :: " + e.toString());
+
     }
+
   }
 }

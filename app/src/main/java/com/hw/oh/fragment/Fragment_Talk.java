@@ -37,9 +37,10 @@ import com.hw.oh.temp.ApplicationClass;
 import com.hw.oh.temp.DetailActivity;
 import com.hw.oh.temp.NewPostActivity;
 import com.hw.oh.temp.R;
+import com.hw.oh.utility.CommonUtil;
 import com.hw.oh.utility.Constant;
 import com.hw.oh.utility.HYFont;
-import com.hw.oh.utility.HYNetworkInfo;
+import com.hw.oh.utility.NetworkUtil;
 import com.hw.oh.utility.HYPreference;
 import com.hw.oh.utility.InfoExtra;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
@@ -49,8 +50,6 @@ import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.tistory.whdghks913.croutonhelper.CroutonHelper;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -91,7 +90,6 @@ public class Fragment_Talk extends Fragment implements AbsListView.OnScrollListe
   private HYFont mFont;
   private HYPreference mPref;
   private SwipeRefreshLayout mTopPullRefresh = null; // 상단 새로고침
-  private HYNetworkInfo mNet;
   private com.rey.material.widget.ProgressView mProgressBar;
 
 
@@ -172,7 +170,6 @@ public class Fragment_Talk extends Fragment implements AbsListView.OnScrollListe
     //Util
     mFont = new HYFont(getActivity());
     mFont.setGlobalFont((ViewGroup) rootView);
-    mNet = new HYNetworkInfo(getActivity());
     mInfoExtra = new InfoExtra(getActivity());
     mPref = new HYPreference(getActivity());
     //Crouton
@@ -276,7 +273,7 @@ public class Fragment_Talk extends Fragment implements AbsListView.OnScrollListe
   }
 
   public void inits() {
-    if (!mNet.networkgetInfo()) {
+    if (NetworkUtil.isConnect(getActivity())) {
       registerGCM();
       setAdapter();
       // asyncTask_BoardList_Call();
@@ -464,7 +461,7 @@ public class Fragment_Talk extends Fragment implements AbsListView.OnScrollListe
         Log.i("LoginActivity", "GCM ID 발급 요청 :" + regId);
       } else {
         Log.i("LoginActivity", "이미 등록되어 있는 단말 : " + regId);
-        registerGCM(regId, mInfoExtra.getAndroidID());
+        registerGCM(regId, CommonUtil.getAndroidID(getActivity()));
       }
     } catch (Exception e) {
       Log.e(TAG, "This Device can't use GCM");

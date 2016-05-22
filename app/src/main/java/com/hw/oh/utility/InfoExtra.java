@@ -14,29 +14,6 @@ public class InfoExtra {
   }
 
 
-  public String getAndroidID() {
 
-    return android.provider.Settings.Secure.getString(
-        mContext.getContentResolver(),
-        android.provider.Settings.Secure.ANDROID_ID);
-  }
-
-  public String getAppName() {
-    String appName = null;
-    try {
-      appName = (String) mContext.getPackageManager()
-          .getApplicationLabel(
-              mContext.getPackageManager().getApplicationInfo(
-                  mContext.getPackageName(),
-                  PackageManager.GET_UNINSTALLED_PACKAGES));
-      return appName;
-    } catch (NameNotFoundException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-      appName = "null";
-    }
-    return appName;
-
-  }
 
 }

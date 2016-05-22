@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.hw.oh.model.BoardItem;
 import com.hw.oh.temp.R;
+import com.hw.oh.utility.CommonUtil;
 import com.hw.oh.utility.HYFont;
 import com.hw.oh.utility.InfoExtra;
 
@@ -105,7 +106,7 @@ public class BoardListAdapter extends BaseAdapter {
       mHolder.imgGender.setImageResource(R.drawable.icon_woman);
     }
     //수신, 발신
-    if (mBoardItem.get(position).getUniqueID().equals(mInfoExtra.getAndroidID())) {
+    if (mBoardItem.get(position).getUniqueID().equals(CommonUtil.getAndroidID(mContext))) {
       mHolder.txtPostType.setText("Send");
     } else {
       mHolder.txtPostType.setText("From");

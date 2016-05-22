@@ -14,12 +14,9 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -47,14 +44,13 @@ import com.hw.oh.sqlite.DBManager;
 import com.hw.oh.utility.Constant;
 import com.hw.oh.utility.HYFont;
 import com.hw.oh.utility.HYPreference;
-import com.hw.oh.utility.HYStringUtill;
+import com.hw.oh.utility.HYStringUtil;
 import com.hw.oh.utility.InfoExtra;
 import com.tistory.whdghks913.croutonhelper.CroutonHelper;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Calendar;
-import java.util.logging.Handler;
 
 /**
  * Created by oh on 2015-02-02.
@@ -285,7 +281,7 @@ public class NewAlbaActivity extends BaseActivity implements View.OnClickListene
                 mTxtWeekMoney.setText("한주간의 근로시간이 15시간 이상 시 적용");
                 mTxtRefreshView1.setText("4시간 마다");
                 mTxtRefreshView2.setText("30분 휴식");
-                mWeekItem.setRequestCode(HYStringUtill.getRandomKey(4));
+                mWeekItem.setRequestCode(HYStringUtil.getRandomKey(4));
                 break;
             case "UPDATE":
                 mTxtSave.setText("수정하기");
@@ -439,7 +435,7 @@ public class NewAlbaActivity extends BaseActivity implements View.OnClickListene
                         Log.i(TAG, Integer.toString(result.getColumnIndex("requestCode")));
                     } else {
                         mWeekItem.setAlbaName(mPartInfoData_Intent.getAlbaname());
-                        mWeekItem.setRequestCode(HYStringUtill.getRandomKey(4));
+                        mWeekItem.setRequestCode(HYStringUtil.getRandomKey(4));
                         mWeekItem.setSun(false);
                         mWeekItem.setMon(false);
                         mWeekItem.setThu(false);

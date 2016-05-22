@@ -20,7 +20,7 @@ import com.hw.oh.utility.InfoExtra;
 /**
  * Created by oh on 2015-06-14.
  */
-public class CalculSetDialog extends DialogFragment {
+public class CalculSetDialog extends android.support.v4.app.DialogFragment {
   // Log
   private static final String TAG = "CalculSetDialog";
   private static final boolean DEBUG = true;

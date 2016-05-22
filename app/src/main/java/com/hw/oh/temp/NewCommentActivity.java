@@ -25,6 +25,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.hw.oh.utility.CommonUtil;
 import com.hw.oh.utility.Constant;
 import com.hw.oh.utility.HYFont;
 import com.hw.oh.utility.HYPreference;
@@ -158,7 +159,7 @@ public class NewCommentActivity extends BaseActivity implements View.OnClickList
       RequestBody formBody = new FormBody.Builder()
               .add("MODE", "NewPostSend")
               .add("BSEQ", getIntent().getStringExtra("Bseq"))
-              .add("ANDROID_ID", mInfoExtra.getAndroidID())
+              .add("ANDROID_ID", CommonUtil.getAndroidID(this))
               .add("GENDER", mPref.getValue(mPref.KEY_GENDER, "0"))
               .add("NEW_COMMENT", mEdtNewPost.getText().toString())
               .build();

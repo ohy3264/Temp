@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.hw.oh.model.WeekWeatherItem;
 import com.hw.oh.temp.R;
 import com.hw.oh.utility.HYFont;
-import com.hw.oh.utility.HYStringUtill;
+import com.hw.oh.utility.HYStringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,9 +68,9 @@ public class WeekWeatherAdapter extends BaseAdapter {
     }
     try {
       try {
-        holder.txtDay.setText(HYStringUtill.yoilFunction(mCategoryList.get(position).getDay()));
-        holder.txtDate.setText(HYStringUtill.monthFunction(HYStringUtill.spaceFunction(mCategoryList.get(position).getDate())[1]) + " " +
-            HYStringUtill.spaceFunction(mCategoryList.get(position).getDate())[0]);
+        holder.txtDay.setText(HYStringUtil.yoilFunction(mCategoryList.get(position).getDay()));
+        holder.txtDate.setText(HYStringUtil.monthFunction(HYStringUtil.spaceFunction(mCategoryList.get(position).getDate())[1]) + " " +
+            HYStringUtil.spaceFunction(mCategoryList.get(position).getDate())[0]);
         holder.txtHigh.setText(mCategoryList.get(position).getHighTemp());
         holder.txtLow.setText(mCategoryList.get(position).getLowTemp());
         holder.imageTemp.setImageBitmap(mCategoryList.get(position).getTempImg());

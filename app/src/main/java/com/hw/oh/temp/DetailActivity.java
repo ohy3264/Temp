@@ -23,7 +23,6 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -48,9 +47,10 @@ import com.hw.oh.model.BoardItem;
 import com.hw.oh.popupWindow.ActionItem;
 import com.hw.oh.popupWindow.QuickAction;
 import com.hw.oh.service.BoardDetailService;
+import com.hw.oh.utility.CommonUtil;
 import com.hw.oh.utility.Constant;
 import com.hw.oh.utility.HYFont;
-import com.hw.oh.utility.HYNetworkInfo;
+import com.hw.oh.utility.NetworkUtil;
 import com.hw.oh.utility.HYPreference;
 import com.hw.oh.utility.HYTime_Maximum;
 import com.hw.oh.utility.InfoExtra;
@@ -61,7 +61,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -114,10 +113,7 @@ public class DetailActivity extends BaseActivity implements AdapterView.OnItemCl
   private QuickAction mCommentMenuQuick;
 
   // Utill
-  private HYNetworkInfo mNet;
-  private InfoExtra mInfor;
   private HYFont mFont;
-  private InfoExtra mInfoExtra;
   private HYPreference mPref;
   private final int max_cache_size = 1000000;
   private com.rey.material.widget.ProgressView mProgressBar;
@@ -222,11 +218,8 @@ public class DetailActivity extends BaseActivity implements AdapterView.OnItemCl
     mTracker.send(new HitBuilders.AppViewBuilder().build());
 
     //Util
-    mNet = new HYNetworkInfo(this);
-    mInfoExtra = new InfoExtra(this);
     mPref = new HYPreference(this);
     mFont = new HYFont(this);
-    mInfor = new InfoExtra(this);
     mProgressBar = (com.rey.material.widget.ProgressView) findViewById(R.id.progressBar);
 
     //ActionBar
@@ -251,7 +244,7 @@ public class DetailActivity extends BaseActivity implements AdapterView.OnItemCl
     mBtnFloating.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        if (!mNet.networkgetInfo()) {
+        if (NetworkUtil.isConnect(getApplicationContext())) {
           if (!mEdtNewPost.getText().toString().isEmpty()) {
             mBtnFloating.setEnabled(false);
             mProgressBar.setVisibility(View.VISIBLE);
@@ -405,7 +398,7 @@ public class DetailActivity extends BaseActivity implements AdapterView.OnItemCl
   @Override
   protected void onResume() {
     super.onResume();
-    if (!mNet.networkgetInfo()) {
+    if (NetworkUtil.isConnect(this)) {
       switch (Constant.REFRESH_DETAIL_FLAG) {
         case 0:
           if (INFO)
@@ -466,7 +459,7 @@ public class DetailActivity extends BaseActivity implements AdapterView.OnItemCl
     mCommentMenuQuick = new QuickAction(this, QuickAction.HORIZONTAL);
 
     if (this.mCommentMenuQuick != null) {
-      if (mInfoExtra.getAndroidID().equals(mCommentList.get(position - 1).getUniqueID()))
+      if (CommonUtil.getAndroidID(this).equals(mCommentList.get(position - 1).getUniqueID()))
         this.mCommentMenuQuick.addActionItem(actionItem1);
       this.mCommentMenuQuick.addActionItem(actionItem2);
       this.mCommentMenuQuick
@@ -500,7 +493,7 @@ public class DetailActivity extends BaseActivity implements AdapterView.OnItemCl
 
         break;
       case R.id.action_delete:
-        if (!mNet.networkgetInfo()) {
+        if (NetworkUtil.isConnect(this)) {
           AlertDialog_BoardDel();
         } else {
 
@@ -511,7 +504,7 @@ public class DetailActivity extends BaseActivity implements AdapterView.OnItemCl
         }
         break;
       case R.id.action_like:
-        if (!mNet.networkgetInfo()) {
+        if (NetworkUtil.isConnect(this)) {
           requestCall_LikeState();
         } else {
 
@@ -523,7 +516,7 @@ public class DetailActivity extends BaseActivity implements AdapterView.OnItemCl
 
         break;
       case R.id.action_report:
-        if (!mNet.networkgetInfo()) {
+        if (NetworkUtil.isConnect(this)) {
           requestCall_HateState();
         } else {
           mTxtCrouton.setText("네트워크를 확인해주세요");
@@ -600,7 +593,7 @@ public class DetailActivity extends BaseActivity implements AdapterView.OnItemCl
       });
     }
 
-    if (!mHeaderData.getUniqueID().equals(mInfor.getAndroidID())) {
+    if (!mHeaderData.getUniqueID().equals(CommonUtil.getAndroidID(this))) {
       mMenuFlag = true;
     } else {
       mMenuFlag = false;
@@ -718,7 +711,7 @@ public class DetailActivity extends BaseActivity implements AdapterView.OnItemCl
       RequestBody formBody = new FormBody.Builder()
               .add("MODE", "LikeState")
               .add("BSEQ", mHeaderData.get_id())
-              .add("ANDROID_ID", mInfor.getAndroidID())
+              .add("ANDROID_ID", CommonUtil.getAndroidID(this))
               .build();
 
       Request request = new Request.Builder()
@@ -756,7 +749,7 @@ public class DetailActivity extends BaseActivity implements AdapterView.OnItemCl
       RequestBody formBody = new FormBody.Builder()
               .add("MODE", "HateState")
               .add("BSEQ", mHeaderData.get_id())
-              .add("ANDROID_ID", mInfor.getAndroidID())
+              .add("ANDROID_ID", CommonUtil.getAndroidID(this))
               .build();
 
       Request request = new Request.Builder()
