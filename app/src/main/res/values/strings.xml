@@ -131,10 +131,16 @@
 
   <string name="app_notice_update">Ver. 1.65 \n -  테마변경 추가 \n\n
     오류발생 시 이메일이나 카톡으로 문의를 주시면 좀더 빠른개선이 가능합니다. 감사합니다 \n\n
-  </string> -->
+  </string>
     <string name="app_notice_update">Ver. 1.66 \n -  테마변경 추가 (롤리팝이전 버전 에러 수정) \n\n
     오류발생 시 이메일이나 카톡으로 문의를 주시면 좀더 빠른개선이 가능합니다. 감사합니다 \n\n
-  </string>
+  </string
+     <string name="app_notice_update">Ver. 1.70 \n - 퇴근까지 남은시간 추가\n - 세금직접설정 시 소수점 추가\n - 기타수당 기존입력 저장 \n\n
+    오류발생 시 이메일이나 카톡으로 문의를 주시면 좀더 빠른개선이 가능합니다. 감사합니다 \n\n
+  </string>>-->
+    <string name="app_notice_update">Ver. 1.71 \n - 출근까지 남은시간 추가\n
+    오류발생 시 이메일이나 카톡으로 문의를 주시면 좀더 빠른개선이 가능합니다. 감사합니다 \n\n
+    </string>
   <!-- Error 명칭 -->
   <string name="error_network">인터넷 연결상태를 확인해 주세요.</string>
   <string name="error_etc">에러가 발생하였습니다.</string>

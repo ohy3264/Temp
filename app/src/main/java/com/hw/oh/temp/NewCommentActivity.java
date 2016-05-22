@@ -3,6 +3,9 @@ package com.hw.oh.temp;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.gson.Gson;
 
 import android.annotation.TargetApi;
@@ -68,6 +71,12 @@ public class NewCommentActivity extends BaseActivity implements View.OnClickList
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_newcomment);
+    // 구글 통계
+    Tracker mTracker = ((ApplicationClass) getApplication()).getDefaultTracker();
+    mTracker.setScreenName(" 새로운 댓글 쓰기화면_(NewCommentActivity)");
+    mTracker.send(new HitBuilders.AppViewBuilder().build());
+
+
     //Util
     mInfoExtra = new InfoExtra(this);
     mPref = new HYPreference(this);
@@ -195,4 +204,17 @@ public class NewCommentActivity extends BaseActivity implements View.OnClickList
       BoardInsertResult = boardInsertResult;
     }
   }
+  @Override
+  public void onStart() {
+    super.onStart();
+    // 구글 통계
+    GoogleAnalytics.getInstance(this).reportActivityStart(this);
+  };
+
+  @Override
+  public void onStop() {
+    super.onStop();
+    // 구글 통계
+    GoogleAnalytics.getInstance(this).reportActivityStop(this);
+  };
 }

@@ -373,7 +373,7 @@ public class Fragment_Setting extends Fragment implements View.OnClickListener, 
         @Override
         public void onResponse(Call call, Response response) throws IOException {
           String  jsonData = response.body().string();
-          Log.d(TAG, "value - valueid :: " + response.body().toString());
+          Log.d(TAG, "value - valueid :: " + jsonData);
           Message msg = fileNameHandler.obtainMessage();
           //메세지 ID 설정
           msg.what = 0;
@@ -389,7 +389,7 @@ public class Fragment_Setting extends Fragment implements View.OnClickListener, 
 
   final Handler fileNameHandler = new Handler() {
     public void handleMessage(Message msg) {
-      asyncTask_FileDown_Call("" + msg.obj);
+      asyncTask_FileDown_Call(msg.obj.toString());
 
     }
   };
@@ -582,6 +582,7 @@ public class Fragment_Setting extends Fragment implements View.OnClickListener, 
 
   void downloadFile(String _url, String _name) {
     try {
+      Log.i("hwoh", _url + _name);
       URL u = new URL(_url + _name);
       DataInputStream stream = new DataInputStream(u.openStream());
       byte[] buffer = IOUtils.toByteArray(stream);

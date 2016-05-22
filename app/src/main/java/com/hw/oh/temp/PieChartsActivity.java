@@ -106,7 +106,7 @@ public class PieChartsActivity extends BaseActivity implements View.OnClickListe
     setContentView(R.layout.activity_piechart);
     // 구글 통계
     Tracker mTracker = ((ApplicationClass) getApplication()).getDefaultTracker();
-    mTracker.setScreenName("알바별 원형 차트");
+    mTracker.setScreenName("알바별 원형 차트_(PieChartsActivity)");
     mTracker.send(new HitBuilders.AppViewBuilder().build());
 
     //Util

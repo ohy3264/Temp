@@ -24,6 +24,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.hw.oh.adapter.LocationAdapter;
 import com.hw.oh.sqlite.KmDBManager;
 import com.hw.oh.utility.Constant;
@@ -68,6 +71,11 @@ public class LocationSelectActivity extends BaseActivity implements AdapterView.
     mFont.setGlobalFont(root);
     kmDBManager = new KmDBManager(this);
     mPref = new HYPreference(this);
+
+    // 구글 통계
+    Tracker mTracker = ((ApplicationClass) getApplication()).getDefaultTracker();
+    mTracker.setScreenName("위치선택화면_(LocationSelectActivity)");
+    mTracker.send(new HitBuilders.AppViewBuilder().build());
 
     //ActionBar
     mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -214,6 +222,19 @@ public class LocationSelectActivity extends BaseActivity implements AdapterView.
     InputMethodManager manager = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
     manager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
   }
+  @Override
+  public void onStart() {
+    super.onStart();
+    // 구글 통계
+    GoogleAnalytics.getInstance(this).reportActivityStart(this);
+  };
+
+  @Override
+  public void onStop() {
+    super.onStop();
+    // 구글 통계
+    GoogleAnalytics.getInstance(this).reportActivityStop(this);
+  };
 
 
 }

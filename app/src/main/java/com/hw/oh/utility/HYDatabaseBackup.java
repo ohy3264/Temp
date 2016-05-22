@@ -28,13 +28,16 @@ public class HYDatabaseBackup {
 
       Log.i(TAG, sd.getAbsolutePath());
       Log.i(TAG, data.getAbsolutePath());
-      if (sd.canWrite()) {
+
+      String state = Environment.getExternalStorageState();
+      if (Environment.MEDIA_MOUNTED.equals(state)) {
+        Log.d("Test", "sdcard mounted and writable");
         File[] filepath = ContextCompat.getExternalFilesDirs(context, null);
         String currentDBPath = context.getDatabasePath(DBConstant.DATABASE_NAME).toString();
         //String backupDBPath = filepath[0].getPath(); // From SD directory.
         String backupDBPath = context.getFilesDir().toString(); // From Internal Storage
-        File backupDB = new File(currentDBPath);
         File currentDB = new File(backupDBPath + "/" + DBConstant.DATABASE_NAME);
+        File backupDB = new File(currentDBPath);
         Log.i(TAG, currentDBPath);
         Log.i(TAG, backupDBPath);
 
@@ -44,9 +47,19 @@ public class HYDatabaseBackup {
         src.close();
         dst.close();
         Toast.makeText(context, "Import Successful!",
-            Toast.LENGTH_SHORT).show();
+                Toast.LENGTH_SHORT).show();
 
       }
+      else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+        Log.d("Test", "sdcard mounted readonly");
+
+      }
+      else {
+        Log.d("Test", "sdcard state: " + state);
+
+      }
+
+
     } catch (Exception e) {
       Log.e(TAG, e.toString());
 
@@ -54,6 +67,30 @@ public class HYDatabaseBackup {
           .show();
 
     }
+
+
+    try {
+      File sd = Environment.getExternalStorageDirectory();
+      File data = Environment.getDataDirectory();
+
+      if (sd.canWrite()) {
+        String currentDBPath = "//data//package name//databases//database_name";
+        String backupDBPath = DBConstant.DATABASE_NAME;
+        File currentDB = new File(data, currentDBPath);
+        File backupDB = new File(sd, backupDBPath);
+
+        if (currentDB.exists()) {
+          FileChannel src = new FileInputStream(backupDB).getChannel();
+          FileChannel dst = new FileOutputStream(currentDB).getChannel();
+          dst.transferFrom(src, 0, src.size());
+          src.close();
+          dst.close();
+          Toast.makeText(context, "Database Restored successfully", Toast.LENGTH_SHORT).show();
+        }
+      }
+    } catch (Exception e) {
+    }
+
   }
 
   public static void exportDB(Context context) {

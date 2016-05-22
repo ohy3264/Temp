@@ -14,6 +14,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.hw.oh.fragment.Fragment_Calendar;
 import com.hw.oh.model.PartTimeInfo;
 import com.hw.oh.model.WeekWeatherItem;
@@ -99,6 +102,25 @@ public class CalendarActivity extends BaseActivity {
       AdRequest adRequest = new AdRequest.Builder().build();
       ad.loadAd(adRequest);
     }
+
+    // 구글 통계
+    Tracker mTracker = ((ApplicationClass) getApplication()).getDefaultTracker();
+    mTracker.setScreenName("달력 화면 (CalendarActivity)");
+    mTracker.send(new HitBuilders.AppViewBuilder().build());
   }
+
+  @Override
+  public void onStart() {
+    super.onStart();
+    // 구글 통계
+    GoogleAnalytics.getInstance(this).reportActivityStart(this);
+  };
+
+  @Override
+  public void onStop() {
+    super.onStop();
+    // 구글 통계
+    GoogleAnalytics.getInstance(this).reportActivityStop(this);
+  };
 }
 

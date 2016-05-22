@@ -45,7 +45,7 @@ import okhttp3.Response;
 
 
 /**
- * Created by oh on 2015-02-01.
+ * 로딩화면
  */
 public class IntroActivity extends BaseActivity {
   public static final String TAG = "IntroActivity";
@@ -102,9 +102,8 @@ public class IntroActivity extends BaseActivity {
     mTracker.setScreenName("스플래쉬");
     mTracker.send(new HitBuilders.AppViewBuilder().build());
 
-
     dbinit();
-/*
+
 // 인트로 애니메이션
     root.post(new Runnable() {
       @Override
@@ -112,10 +111,10 @@ public class IntroActivity extends BaseActivity {
         introAnimation();
       }
     });
-*/
+
 
     if (mNet.networkgetInfo()) {
-      requestCallRest_Guide();
+      //requestCallRest_Guide();
       requestUniqueID();
     } else {
       new Handler().postDelayed(new Runnable() {
@@ -150,10 +149,10 @@ public class IntroActivity extends BaseActivity {
     mIntroDot = (ImageView) findViewById(R.id.intro_dot);
 
     AnimationDrawable animation = new AnimationDrawable();
-    animation.addFrame(getResources().getDrawable(R.drawable.intro_img1), 300); //ms(밀리세컨드 1/1000초)
-    animation.addFrame(getResources().getDrawable(R.drawable.intro_img2), 300);
-    animation.addFrame(getResources().getDrawable(R.drawable.intro_img3), 300);
-    animation.addFrame(getResources().getDrawable(R.drawable.intro_img1), 300);
+    animation.addFrame(getResources().getDrawable(R.drawable.intro_img1), 700); //ms(밀리세컨드 1/1000초)
+    animation.addFrame(getResources().getDrawable(R.drawable.intro_img2), 700);
+    animation.addFrame(getResources().getDrawable(R.drawable.intro_img3), 700);
+    animation.addFrame(getResources().getDrawable(R.drawable.intro_img1), 700);
 
     animation.setOneShot(false);
     mIntroDot.setBackgroundDrawable(animation);
@@ -161,12 +160,20 @@ public class IntroActivity extends BaseActivity {
   }
 
 
+  /**
+   * 초기 db 세팅
+   */
+
   public void dbinit() {
     if (INFO)
       Log.i(TAG, "dbinit()");
     DBManager dbManager = new DBManager(this);
     dbManager.getWritableDatabase();
   }
+
+  /**
+   * 인앱결제 상태 체크
+   */
 
   private IabHelper.QueryInventoryFinishedListener
           mQueryFinishedListener = new IabHelper.QueryInventoryFinishedListener() {
@@ -198,6 +205,10 @@ public class IntroActivity extends BaseActivity {
     }
   };
 
+  /**
+   * 로그인 체크
+   */
+
   public void requestUniqueID() {
     if (INFO)
       Log.i(TAG, "requestUserInfoSend()");
@@ -227,6 +238,10 @@ public class IntroActivity extends BaseActivity {
       Log.d(TAG, "requestCall_HateState - exception :: " + e.toString());
     }
   }
+
+  /**
+   * 로딩화면에서 이동분기 처리
+   */
 
   final Handler IntentHandler = new Handler() {
     public void handleMessage(Message msg) {
@@ -282,6 +297,11 @@ public class IntroActivity extends BaseActivity {
     }
   };
 
+
+  /**
+   * 가이드 메시지 호출
+   */
+
   public void requestCallRest_Guide() {
     if (INFO)
       Log.i(TAG, "requestCallRest_Guide()");
@@ -333,8 +353,6 @@ public class IntroActivity extends BaseActivity {
     AppIndex.AppIndexApi.start(client, viewAction);
   }
 
-  ;
-
   @Override
   public void onStop() {
     super.onStop();
@@ -357,6 +375,4 @@ public class IntroActivity extends BaseActivity {
     // See https://g.co/AppIndexing/AndroidStudio for more information.
     client.disconnect();
   }
-
-  ;
 }

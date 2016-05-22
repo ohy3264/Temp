@@ -15,11 +15,11 @@
       android:weightSum="1">
 
     <ImageView
+
         android:layout_marginTop="60dp"
-        android:src="@drawable/app_icon"
         android:layout_width="130dp"
         android:layout_height="130dp"
-        android:id="@+id/imageView"/>
+        android:id="@+id/intro_dot"/>
   </LinearLayout>
 
   <RelativeLayout
@@ -85,11 +85,6 @@
           android:layout_height="match_parent"
           android:scaleType="fitXY"/>
     </LinearLayout>
-    <ImageView
-        android:id="@+id/intro_dot"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" android:layout_above="@+id/textView1"
-        android:layout_centerHorizontal="true" android:layout_marginBottom="39dp"/>
   </RelativeLayout>
 
 </FrameLayout>

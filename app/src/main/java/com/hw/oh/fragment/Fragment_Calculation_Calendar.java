@@ -192,6 +192,12 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
     mTxtDutyResult = (TextView) mlistViewHeader.findViewById(R.id.txtDutyResult);
     mLinDuty = (LinearLayout) mlistViewHeader.findViewById(R.id.linDuty);
     mLinInsurance = (LinearLayout) mlistViewHeader.findViewById(R.id.linInsurance);
+    mLinInsurance.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Toast.makeText(getActivity(), "test", Toast.LENGTH_LONG).show();
+      }
+    });
     mLinResult = (LinearLayout) mlistViewHeader.findViewById(R.id.lin_Result);
     mTxtInsurance1 = (TextView) mlistViewHeader.findViewById(R.id.txtInsurance1);
     mTxtInsurance2 = (TextView) mlistViewHeader.findViewById(R.id.txtInsurance2);

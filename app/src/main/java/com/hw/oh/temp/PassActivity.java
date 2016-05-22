@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.hw.oh.utility.HYFont;
 import com.hw.oh.utility.HYPreference;
 
@@ -40,6 +43,11 @@ public class PassActivity extends BaseActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_pass);
+
+    // 구글 통계
+    Tracker mTracker = ((ApplicationClass) getApplication()).getDefaultTracker();
+    mTracker.setScreenName("잠금해제화면_(PassActivity)");
+    mTracker.send(new HitBuilders.AppViewBuilder().build());
 
     //Util
     mFont = new HYFont(this);
@@ -94,6 +102,19 @@ public class PassActivity extends BaseActivity {
     return super.onOptionsItemSelected(item);
   }
 
+  @Override
+  public void onStart() {
+    super.onStart();
+    // 구글 통계
+    GoogleAnalytics.getInstance(this).reportActivityStart(this);
+  };
+
+  @Override
+  public void onStop() {
+    super.onStop();
+    // 구글 통계
+    GoogleAnalytics.getInstance(this).reportActivityStop(this);
+  };
 
 }
 

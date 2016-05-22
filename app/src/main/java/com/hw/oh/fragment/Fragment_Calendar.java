@@ -114,10 +114,6 @@ public class Fragment_Calendar extends Fragment implements OnClickListener, Yaho
     // TODO Auto-generated method stub
     View fragView = inflater.inflate(R.layout.fragment_calendar, container,
         false);
-    // 구글 통계
-    Tracker mTracker = ((ApplicationClass) getActivity().getApplication()).getDefaultTracker();
-    mTracker.setScreenName("알바 캘린더");
-    mTracker.send(new HitBuilders.AppViewBuilder().build());
 
     // Utill Set
     mFont = new HYFont(getActivity());
@@ -762,6 +758,11 @@ public class Fragment_Calendar extends Fragment implements OnClickListener, Yaho
           intent.putExtra("YEAR", Integer.toString(mYear));
           intent.putExtra("MONTH", Integer.toString(mMonth + 1));
           intent.putExtra("DAY", btn_temp.getText());
+          if (mToday.equals(todaySet(mYear, 1 + mMonth, Integer.parseInt(btn_temp.getText().toString())))) {
+            intent.putExtra("TODAY", "TODAY");
+          }else{
+            intent.putExtra("TODAY", "NONE");
+          }
           startActivity(intent);
           getActivity().overridePendingTransition(0, 0);
         }
@@ -889,17 +890,4 @@ public class Fragment_Calendar extends Fragment implements OnClickListener, Yaho
                  vibe.vibrate(pattern, 0);*/
     vibe.vibrate(50);
   }
-  @Override
-  public void onStart() {
-    super.onStart();
-    // 구글 통계
-    GoogleAnalytics.getInstance(getActivity()).reportActivityStart(getActivity());
-  };
-
-  @Override
-  public void onStop() {
-    super.onStop();
-    // 구글 통계
-    GoogleAnalytics.getInstance(getActivity()).reportActivityStop(getActivity());
-  };
 }

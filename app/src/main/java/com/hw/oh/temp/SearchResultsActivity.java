@@ -23,6 +23,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.hw.oh.adapter.LocationAdapter;
 import com.hw.oh.sqlite.KmDBManager;
 import com.hw.oh.utility.Constant;
@@ -54,6 +57,11 @@ public class SearchResultsActivity extends BaseActivity implements AdapterView.O
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_location);
+    // 구글 통계
+    Tracker mTracker = ((ApplicationClass) getApplication()).getDefaultTracker();
+    mTracker.setScreenName("지역검색결과_(SearchResultsActivity)");
+    mTracker.send(new HitBuilders.AppViewBuilder().build());
+
     //Util
     mFont = new HYFont(this);
     ViewGroup root = (ViewGroup) findViewById(android.R.id.content);
@@ -209,4 +217,17 @@ public class SearchResultsActivity extends BaseActivity implements AdapterView.O
       CDLKmaDistanceLatch.countDown();
     }
   }
+  @Override
+  public void onStart() {
+    super.onStart();
+    // 구글 통계
+    GoogleAnalytics.getInstance(this).reportActivityStart(this);
+  };
+
+  @Override
+  public void onStop() {
+    super.onStop();
+    // 구글 통계
+    GoogleAnalytics.getInstance(this).reportActivityStop(this);
+  };
 }

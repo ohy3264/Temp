@@ -30,6 +30,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.hw.oh.network.RestClient;
 import com.hw.oh.utility.Constant;
 import com.hw.oh.utility.HYFont;
@@ -101,6 +104,11 @@ public class NewPostActivity extends BaseActivity implements View.OnClickListene
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_newpost);
+    // 구글 통계
+    Tracker mTracker = ((ApplicationClass) getApplication()).getDefaultTracker();
+    mTracker.setScreenName("새글등록화면_(NewPostActivity)");
+    mTracker.send(new HitBuilders.AppViewBuilder().build());
+
     //Utill
     mNet = new HYNetworkInfo(this);
     mInfoExtra = new InfoExtra(this);
@@ -573,4 +581,17 @@ public class NewPostActivity extends BaseActivity implements View.OnClickListene
       Log.e("Debug", "error: " + ioex.getMessage(), ioex);
     }
   }
+  @Override
+  public void onStart() {
+    super.onStart();
+    // 구글 통계
+    GoogleAnalytics.getInstance(this).reportActivityStart(this);
+  };
+
+  @Override
+  public void onStop() {
+    super.onStop();
+    // 구글 통계
+    GoogleAnalytics.getInstance(this).reportActivityStop(this);
+  };
 }
