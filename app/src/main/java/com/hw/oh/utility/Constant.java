@@ -5,11 +5,8 @@ package com.hw.oh.utility;
  */
 public class Constant {
   public static final String LOG = "HWOH";
-  public static String IMG_UPLOAD_URL = "http://ohy3264.cafe24.com/Anony/api/uploads/Img";
   public static String SERVER_URL = "http://ohy3264.cafe24.com";
-  public static String GUIDE_MSG1 = "";
-  public static String GUIDE_MSG2 = "";
-  public static String GUIDE_MSG3 = "";
+  public static String IMG_UPLOAD_URL = SERVER_URL + "/Anony/api/uploads/Img";
   //Fragment_Main flag - 모든카테고리 갱신 플래그
   public static int REQUEST_NONE = 0;
   public static int REQUEST_NEWPOST = 1;

@@ -1,5 +1,7 @@
 package com.hw.oh.temp;
 
+import com.crashlytics.android.Crashlytics;
+import com.facebook.stetho.Stetho;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 
@@ -7,6 +9,8 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
+
+import io.fabric.sdk.android.Fabric;
 
 
 /**
@@ -39,5 +43,7 @@ public class ApplicationClass extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+      Stetho.initializeWithDefaults(this);
+      // Fabric.with(this, new Crashlytics());
     }
 }

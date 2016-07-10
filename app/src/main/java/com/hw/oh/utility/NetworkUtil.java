@@ -48,16 +48,4 @@ public class NetworkUtil {
     }
     return true;
   }
-  /*public static boolean connectionError(final Context context){
-
-    // 토스트 중복 방지(LYS)
-    if(toast == null){
-      toast = Toast.makeText(context, context.getResources().getString(R.string.error_network), Toast.LENGTH_LONG);
-    } else {
-      toast.cancel();
-      toast = Toast.makeText(context, context.getResources().getString(R.string.error_network), Toast.LENGTH_LONG);
-    }
-    toast.show();
-    return false;
-  }*/
 }

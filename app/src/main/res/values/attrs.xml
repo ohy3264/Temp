@@ -2,6 +2,7 @@
 <resources>
 
 	<!-- View styles -->
+	<attr name="primary_back" format="reference" />ç
 	<attr name="newalba_title_back" format="reference" />ç
 	<attr name="button_nomal" format="reference" />
 	<attr name="text_nomal" format="reference" />

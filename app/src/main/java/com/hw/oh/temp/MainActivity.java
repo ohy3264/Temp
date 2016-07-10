@@ -7,30 +7,22 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
-import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -43,21 +35,28 @@ import com.hw.oh.billing.IabResult;
 import com.hw.oh.billing.Purchase;
 import com.hw.oh.fragment.Fragment_Alba;
 import com.hw.oh.model.SampleItem;
+import com.hw.oh.temp.leftmenu.DutyActivity;
+import com.hw.oh.temp.leftmenu.SettingActivity;
+import com.hw.oh.temp.talk.TalkActivity;
 import com.hw.oh.utility.Constant;
 import com.hw.oh.utility.HYBackPressCloserHandler;
-import com.hw.oh.utility.HYFont;
 import com.hw.oh.utility.HYPreference;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener{
+
+public class MainActivity extends BaseActivity {
     public static final String TAG = "MainActivity";
     public static final boolean DBUG = true;
     public static final boolean INFO = true;
-    private Toolbar mToolbar;
-    private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
+
+    @BindView(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
+    @BindView(R.id.drawer_list)
+    ListView mDrawerList;
     private DrawerMenuAdapter mDrawerAdapter;
     private ActionBarDrawerToggle mDToggle;
 
@@ -79,11 +78,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     //Fragment
     private Fragment_Alba mFragment_Alba;
-    private FragmentManager mFragManager;
+    private android.support.v4.app.FragmentManager mFragManager;
 
     //Utill
     private HYBackPressCloserHandler mBackPressCloseHandler; // 뒤로가기 종료 핸들러
-    private HYFont mFont;
     private HYPreference mPref;
 
     //DataSet
@@ -96,24 +94,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //ButterKnife
+        ButterKnife.bind(this);
         // 구글 통계
         Tracker mTracker = ((ApplicationClass) getApplication()).getDefaultTracker();
         mTracker.setScreenName("알바등록화면_(MainActivity)");
         mTracker.send(new HitBuilders.AppViewBuilder().build());
 
-        mBackPressCloseHandler = new HYBackPressCloserHandler(this);
-        mFont = new HYFont(this);
-        ViewGroup root = (ViewGroup) findViewById(android.R.id.content);
-        mFont.setGlobalFont(root);
-        mPref = new HYPreference(this);
-        //ActionBar
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("알바매니저");
-        setSupportActionBar(mToolbar);
-        final ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
+        //Toolbar
+        setToolbar("알바매니저");
 
-        mFont.setGlobalFont((ViewGroup) mToolbar);
+        mBackPressCloseHandler = new HYBackPressCloserHandler(this);
+        mPref = new HYPreference(this);
 
         // In APP Payment
         Intent serviceIntent = new Intent("com.android.vending.billing.InAppBillingService.BIND");
@@ -134,8 +126,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             }
         });
 
-        //DrawerLayout
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         mDToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.app_name, R.string.app_name) {
             @Override
             public void onDrawerOpened(View drawerView) {
@@ -150,9 +141,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             }
         };
         mDrawerLayout.setDrawerListener(mDToggle);
+
         //DrawerList
         menuDataSet();
-        mDrawerList = (ListView) findViewById(R.id.drawer_list);
         mDrawerAdapter = new DrawerMenuAdapter(this, mMenuArrayList);
         mDrawerList.setAdapter(mDrawerAdapter);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
@@ -160,11 +151,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
         //Fragment Container
         mFragment_Alba = new Fragment_Alba();
-        mFragManager = getFragmentManager();
+        mFragManager = getSupportFragmentManager();
         mFragManager.beginTransaction().replace(R.id.container, mFragment_Alba).commit();
 
         //VersionChek
-        verCheck();
+        alertVersionMessage();
 
         // ADmob
         if (Constant.ADMOB) {
@@ -180,53 +171,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         }
 
 
-    }
-    public void verCheck(){
-        String version;
-        try {
-            PackageInfo i = getPackageManager().getPackageInfo(getPackageName(), 0);
-            version = i.versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-            version = "";
-        }
-        mPref.put(mPref.KEY_CHECK_VERSION, version);
-        String check_version = mPref.getValue(mPref.KEY_CHECK_VERSION, "");
-        String check_status = mPref.getValue(mPref.KEY_CHECK_VERSION_STATUS, "");
-
-        //check_version와  check_status를 비교해서 값이 다르면 공지를 띄움
-        if (!check_version.equals(check_status)) {
-            AlertDialog alert = new AlertDialog.Builder(this).setIconAttribute(android.R.attr.alertDialogIcon)
-                    .setTitle(R.string.app_notice)
-                    .setMessage(R.string.app_notice_update)
-                    .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    })
-                    .setNegativeButton("다시보지않기", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            String version;
-                            try {
-                                PackageInfo i = getPackageManager().getPackageInfo(getPackageName(), 0);
-                                version = i.versionName;
-                            } catch (PackageManager.NameNotFoundException e) {
-                                version = "";
-                            }
-                            mPref.put(mPref.KEY_CHECK_VERSION_STATUS, version);
-                            dialog.cancel();
-                        }
-                    }).show();
-        }
-
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-
-        }
     }
 
     @Override
@@ -285,7 +229,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                     switch (position) {
                         case 0:
                             mFragment_Alba = new Fragment_Alba();
-                            mFragManager = getFragmentManager();
+                            mFragManager = getSupportFragmentManager();
                             mFragManager.beginTransaction().replace(R.id.container, mFragment_Alba).commit();
                             break;
 
@@ -348,6 +292,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             }, 250);
         }
     }
+
 
     public boolean dispatchKeyEvent(KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_DOWN) {

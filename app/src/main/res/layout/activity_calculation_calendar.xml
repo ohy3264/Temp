@@ -16,6 +16,10 @@
       android:background="@color/button_material_light"/>
 
 
+    <LinearLayout
+        style="?check_accent"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"></LinearLayout>
   <LinearLayout
       android:visibility="gone"
       android:id="@+id/mainLayout"

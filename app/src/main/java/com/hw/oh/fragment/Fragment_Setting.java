@@ -1,7 +1,6 @@
 package com.hw.oh.fragment;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,11 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +35,7 @@ import com.hw.oh.network.RestClient;
 import com.hw.oh.sqlite.DBConstant;
 import com.hw.oh.sqlite.KmDBManager;
 import com.hw.oh.temp.ApplicationClass;
-import com.hw.oh.temp.LocationSelectActivity;
+import com.hw.oh.temp.etc.LocationSelectActivity;
 import com.hw.oh.temp.R;
 import com.hw.oh.utility.CommonUtil;
 import com.hw.oh.utility.Constant;
@@ -49,11 +44,9 @@ import com.hw.oh.utility.HYDatabaseBackup;
 import com.hw.oh.utility.HYFont;
 import com.hw.oh.utility.NetworkUtil;
 import com.hw.oh.utility.HYPreference;
-import com.hw.oh.utility.InfoExtra;
 import com.hw.oh.utility.OkHttpUtils;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-import com.tistory.whdghks913.croutonhelper.CroutonHelper;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.Header;
@@ -78,8 +71,6 @@ import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
@@ -122,9 +113,7 @@ public class Fragment_Setting extends BaseFragment {
     private String mTextInsertFlag, mBackupCodeString;
 
     //Util
-    private HYFont mFont;
     private ProgressDialog mLoadingDialog;
-    private HYPreference mPref;
     private KmDBManager kmDBManager;
     private CountDownLatch CDLGpsLatch;
     private CountDownLatch CDLKmaDistanceLatch;
@@ -138,10 +127,8 @@ public class Fragment_Setting extends BaseFragment {
         Tracker mTracker = ((ApplicationClass) getActivity().getApplication()).getDefaultTracker();
         mTracker.setScreenName("설정화면");
         mTracker.send(new HitBuilders.AppViewBuilder().build());
-        //Utill
-        mFont = new HYFont(getActivity());
-        mFont.setGlobalFont((ViewGroup) rootView);
-        mPref = new HYPreference(getActivity());
+
+        setFont(rootView);
         kmDBManager = new KmDBManager(getActivity());
         return rootView;
     }
@@ -400,10 +387,11 @@ public class Fragment_Setting extends BaseFragment {
                 if (mTextInsertFlag.equals("InsertSuccess")) {
                     if (INFO)
                         Log.i(TAG, "DB Backup 성공");
-                    if (CommonUtil.isNull(mBackupCodeString)) {
+                    if (!CommonUtil.isNull(mBackupCodeString)) {
                         Message msg = backupCodeSetHandler.obtainMessage();
                         msg.obj = mBackupCodeString;
                         backupCodeSetHandler.sendMessage(msg);
+                        mLoadingDialog.dismiss();
                     }
                 } else {
                     if (INFO)

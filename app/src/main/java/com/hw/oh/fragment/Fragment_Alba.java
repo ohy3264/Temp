@@ -1,5 +1,6 @@
 package com.hw.oh.fragment;
 
+import com.github.ybq.android.spinkit.style.ThreeBounce;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
@@ -23,6 +24,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.hw.oh.adapter.WorkAlbaInfoAdapter_Array;
@@ -30,30 +32,31 @@ import com.hw.oh.model.PartTimeInfo;
 import com.hw.oh.sqlite.DBConstant;
 import com.hw.oh.sqlite.DBManager;
 import com.hw.oh.temp.ApplicationClass;
-import com.hw.oh.temp.CalendarActivity;
-import com.hw.oh.temp.NewAlbaActivity;
-import com.hw.oh.temp.PieChartsActivity;
+import com.hw.oh.temp.process.alba.CalendarActivity;
+import com.hw.oh.temp.process.alba.NewAlbaActivity;
+import com.hw.oh.temp.charts.PieChartsActivity;
 import com.hw.oh.temp.R;
-import com.hw.oh.temp.SwapActivity;
+import com.hw.oh.temp.etc.SwapActivity;
+import com.hw.oh.temp.process.alba.TotalCalendarActivity;
 import com.hw.oh.utility.HYFont;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.tistory.whdghks913.croutonhelper.CroutonHelper;
 
 import java.util.ArrayList;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 /**
  * Created by oh on 2015-02-01.
  */
-public class Fragment_Alba extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener, NewAlbaActivity.OnDeletedListener {
+public class Fragment_Alba extends BaseFragment implements View.OnClickListener, AdapterView.OnItemClickListener {
   public static final String TAG = "Fragment_Alba";
   public static final boolean DBUG = true;
   public static final boolean INFO = true;
   private Activity mActivity;
 
   //Crouton
-  private View mCroutonView;
-  private TextView mTxtCrouton;
-  private CroutonHelper mCroutonHelper;
 
   //View
   private LinearLayout mLin_guide;
@@ -65,25 +68,13 @@ public class Fragment_Alba extends Fragment implements View.OnClickListener, Ada
   private ArrayList<PartTimeInfo> mAlbaInfoList = new ArrayList<PartTimeInfo>();
 
   //Utill
-  private HYFont mFont;
-  private DBManager mDB;
-  private com.rey.material.widget.ProgressView mProgressBar;
-
-
+  private Unbinder unbinder;
+  private ProgressBar mProgressBar;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_alba, container, false);
-    //Utill
-    mFont = new HYFont(getActivity());
-    mFont.setGlobalFont((ViewGroup) rootView);
-    mDB = new DBManager(getActivity());
-
-    //Crouton
-    mCroutonHelper = new CroutonHelper(getActivity());
-    mCroutonView = getActivity().getLayoutInflater().inflate(
-        R.layout.crouton_custom_view, null);
-    mTxtCrouton = (TextView) mCroutonView.findViewById(R.id.txt_crouton);
+    unbinder = ButterKnife.bind(this, rootView);
 
     // 구글 통계
     Tracker mTracker = ((ApplicationClass) getActivity().getApplication()).getDefaultTracker();
@@ -95,7 +86,12 @@ public class Fragment_Alba extends Fragment implements View.OnClickListener, Ada
     mListView = (ListView) rootView.findViewById(R.id.mainlistView);
     mListView.setFocusable(false);
     mListView.setOnItemClickListener(this);
-    mProgressBar = (com.rey.material.widget.ProgressView) rootView.findViewById(R.id.progressBar);
+
+    mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress);
+    ThreeBounce threeBounce = new ThreeBounce();
+    threeBounce.setColor(getThemeColor(1));
+    mProgressBar.setIndeterminateDrawable(threeBounce);
+
 
     setHasOptionsMenu(true);
 
@@ -246,6 +242,13 @@ public class Fragment_Alba extends Fragment implements View.OnClickListener, Ada
         getActivity().overridePendingTransition(0, 0);
 
         break;
+      case R.id.action_month_calendar:
+        Intent intent_total_calendar = new Intent(getActivity(), TotalCalendarActivity.class);
+        startActivity(intent_total_calendar);
+        getActivity().overridePendingTransition(0, 0);
+
+        break;
+
       case R.id.action_swap:
         Intent intent_swap = new Intent(getActivity(), SwapActivity.class);
         Bundle bundle = new Bundle();
@@ -262,19 +265,14 @@ public class Fragment_Alba extends Fragment implements View.OnClickListener, Ada
   @Override
   public void onResume() {
     super.onResume();
-    mLin_guide.setVisibility(View.GONE);
     Log.i(TAG, "onResume");
     asyncTask_AlbaList_Call();
   }
   public void guideVisibility(){
     if(mAlbaInfoList.isEmpty()){
-      Log.i(TAG, "isEmpty_TRUE");
       mLin_guide.setVisibility(View.VISIBLE);
-      //HYAnimation.VISIBLE(mLin_guide);
     }else{
-      Log.i(TAG, "isEmpty_FALSE");
       mLin_guide.setVisibility(View.GONE);
-      //HYAnimation.GONE(mLin_guide);
     }
   }
 
@@ -325,10 +323,5 @@ public class Fragment_Alba extends Fragment implements View.OnClickListener, Ada
       mProgressBar.setVisibility(View.GONE);
       guideVisibility();
     }
-  }
-
-  @Override
-  public void onDelete() {
-    guideVisibility();
   }
 }

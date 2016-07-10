@@ -1,11 +1,6 @@
 package com.hw.oh.fragment;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -28,18 +23,18 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hw.oh.dialog.WeekWeatherDialog;
+import com.github.ybq.android.spinkit.style.ThreeBounce;
 import com.hw.oh.model.PartTimeInfo;
 import com.hw.oh.model.PartTimeItem;
 import com.hw.oh.model.WeekWeatherItem;
 import com.hw.oh.sqlite.DBConstant;
 import com.hw.oh.sqlite.DBManager;
-import com.hw.oh.temp.ApplicationClass;
-import com.hw.oh.temp.CalculationCalendarActivity;
-import com.hw.oh.temp.NewWorkActivity;
+import com.hw.oh.temp.process.alba.CalculationCalendarActivity;
+import com.hw.oh.temp.process.alba.NewWorkActivity;
 import com.hw.oh.temp.R;
 import com.hw.oh.utility.Constant;
 import com.hw.oh.utility.HYFont;
@@ -52,13 +47,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import zh.wang.android.apis.yweathergetter4a.WeatherInfo;
-import zh.wang.android.apis.yweathergetter4a.YahooWeather;
-import zh.wang.android.apis.yweathergetter4a.YahooWeatherExceptionListener;
-import zh.wang.android.apis.yweathergetter4a.YahooWeatherInfoListener;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
-public class Fragment_Calendar extends Fragment implements OnClickListener, YahooWeatherInfoListener,
-    YahooWeatherExceptionListener {
+public class Fragment_Calendar extends BaseFragment implements OnClickListener {
   private static final String TAG = "Fragment_Calendar";
   public static final boolean DBUG = true;
   public static final boolean INFO = true;
@@ -86,21 +78,15 @@ public class Fragment_Calendar extends Fragment implements OnClickListener, Yaho
   private ArrayList<PartTimeItem> mPartTimeDataList = new ArrayList<PartTimeItem>();
   private PartTimeInfo mPartInfoData;
 
-  //Yahoo Weather
-  private YahooWeather mYahooWeather = YahooWeather.getInstance(5000, 5000, true);
 
   //Crouton
   private View mCroutonView;
   private TextView mTxtCrouton;
   private CroutonHelper mCroutonHelper;
-  private ArrayList<WeekWeatherItem> mWeekWeatherDataList = new ArrayList<WeekWeatherItem>();
 
   // utill
-  private HYFont mFont;
-  private HYPreference mPref;
-  private DBManager mDBManager;
   private Snackbar snackbar;
-  private com.rey.material.widget.ProgressView mProgress;
+  private ProgressBar mProgressBar;
   private SimpleDateFormat mDateFormat = new SimpleDateFormat("HH:mm");
   private NumberFormat mNumFomat = new DecimalFormat("###,###,###");
 
@@ -108,19 +94,22 @@ public class Fragment_Calendar extends Fragment implements OnClickListener, Yaho
     mPartInfoData = info;
   }
 
+  private Unbinder unbinder;
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     // TODO Auto-generated method stub
-    View fragView = inflater.inflate(R.layout.fragment_calendar, container,
+    View rootView = inflater.inflate(R.layout.fragment_calendar, container,
         false);
+    unbinder = ButterKnife.bind(this, rootView);
+    setFont(rootView);
 
     // Utill Set
-    mFont = new HYFont(getActivity());
-    mFont.setGlobalFont((ViewGroup) fragView);
-    mDBManager = new DBManager(getActivity());
-    mPref = new HYPreference(getActivity());
-    mProgress = (com.rey.material.widget.ProgressView) fragView.findViewById(R.id.progressBar);
+    mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress);
+
+    ThreeBounce threeBounce = new ThreeBounce();
+    threeBounce.setColor(getThemeColor(1));
+    mProgressBar.setIndeterminateDrawable(threeBounce);
 
     // 오늘 날짜 세팅
     mCal = Calendar.getInstance();
@@ -131,11 +120,12 @@ public class Fragment_Calendar extends Fragment implements OnClickListener, Yaho
     mToday = todaySet(this.mYear, this.mMonth + 1, this.mDay);
 
 
-    mTxtYear = (TextView) fragView.findViewById(R.id.Year);
-    mTxtMonth = (TextView) fragView.findViewById(R.id.Month);
+    mTxtYear = (TextView) rootView.findViewById(R.id.Year);
+    mTxtMonth = (TextView) rootView.findViewById(R.id.Month);
 
-    mLin_month_prev = (LinearLayout) fragView.findViewById(R.id.prev);
-    mLin_month_next = (LinearLayout) fragView.findViewById(R.id.next);
+    mLin_month_prev = (LinearLayout) rootView.findViewById(R.id.prev);
+    mLin_month_next = (LinearLayout) rootView.findViewById(R.id.next);
+
     //mImgRandom = (ImageView) fragView.findViewById(R.id.imgRandom);
     mLin_month_next.setOnClickListener(this);
     mLin_month_prev.setOnClickListener(this);
@@ -154,13 +144,13 @@ public class Fragment_Calendar extends Fragment implements OnClickListener, Yaho
       }
       int tb = getResources().getIdentifier("TextView" + (i + 1), "id",
           "com.hw.oh.temp");
-      mTxtBottom[i] = ((TextView) fragView.findViewById(tb));
+      mTxtBottom[i] = ((TextView) rootView.findViewById(tb));
       int tt = getResources().getIdentifier("TextTop" + (i + 1), "id",
           "com.hw.oh.temp");
-      mTxtTop[i] = ((TextView) fragView.findViewById(tt));
+      mTxtTop[i] = ((TextView) rootView.findViewById(tt));
       int j = getResources().getIdentifier("Button" + (i + 1), "id",
           "com.hw.oh.temp");
-      mBtn[i] = ((Button) fragView.findViewById(j));
+      mBtn[i] = ((Button) rootView.findViewById(j));
       mBtn[i].setOnClickListener(new btnDayclick(i + 1));
       mBtn[i].setOnLongClickListener(new btnDayLongclick(i + 1));
     }
@@ -177,7 +167,7 @@ public class Fragment_Calendar extends Fragment implements OnClickListener, Yaho
 
 
     setHasOptionsMenu(true);
-    return fragView;
+    return rootView;
   }
 
   @Override
@@ -192,35 +182,6 @@ public class Fragment_Calendar extends Fragment implements OnClickListener, Yaho
       case android.R.id.home:
         getActivity().finish();
         break;
-      case R.id.action_weather:
-        String addr = mPref.getValue(mPref.KEY_WEATHER_LOCATION, "");
-        if (!addr.equals("")) {
-          if (mProgress.getVisibility() == View.INVISIBLE) {
-            if (!mWeekWeatherDataList.isEmpty()) {
-              new Handler().post(new Runnable() {
-                @Override
-                public void run() {
-                  WeekWeatherDialog weekWeatherDialog = new WeekWeatherDialog();
-                  Bundle weekBundle = new Bundle();
-                  weekBundle.putSerializable("weekWeather", mWeekWeatherDataList);
-                  weekBundle.putSerializable("weekWeatherLocation", mPref.getValue(mPref.KEY_WEATHER_LOCATION, ""));
-                  weekWeatherDialog.setArguments(weekBundle);
-                  weekWeatherDialog.show(getFragmentManager(), null);
-                }
-              });
-            } else {
-              mProgress.setVisibility(View.VISIBLE);
-              searchByPlaceName(addr);
-            }
-          }
-        } else {
-          mTxtCrouton.setText("설정메뉴에서 날씨위치 선택");
-          mCroutonHelper.setCustomView(mCroutonView);
-          mCroutonHelper.setDuration(1000);
-          mCroutonHelper.show();
-        }
-
-        break;
       case R.id.action_delete:
         if (mDel_list.isEmpty()) {
           Toast.makeText(getActivity(), "달력의 일한날짜를 길게눌러보세요.", Toast.LENGTH_SHORT).show();
@@ -231,7 +192,7 @@ public class Fragment_Calendar extends Fragment implements OnClickListener, Yaho
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                   for (int i = 0; i < mDel_list.size(); i++) {
-                    mDBManager.removeData(mDel_list.get(i).toString(), mPartInfoData.getAlbaname());
+                    mDB.removeData(mDel_list.get(i).toString(), mPartInfoData.getAlbaname());
                   }
                   asyncTask_Calendar_Call();
                   totalSnackBar();
@@ -245,8 +206,6 @@ public class Fragment_Calendar extends Fragment implements OnClickListener, Yaho
                   dialog.cancel();
                 }
               }).show();
-
-
         }
         break;
       case R.id.action_calculation:
@@ -266,82 +225,6 @@ public class Fragment_Calendar extends Fragment implements OnClickListener, Yaho
   }
 
   @Override
-  public void gotWeatherInfo(WeatherInfo weatherInfo) {
-    // TODO Auto-generated method stub
-
-    if (weatherInfo != null) {
-      if (mYahooWeather.getSearchMode() == YahooWeather.SEARCH_MODE.GPS) {
-        //  mTxtAreaOfCity.setText("YOUR CURRENT LOCATION");
-      }
-
-      //WeekWeatherSet
-      mWeekWeatherDataList.clear();
-      for (int i = 0; i < YahooWeather.FORECAST_INFO_MAX_SIZE; i++) {
-        final WeatherInfo.ForecastInfo forecastInfo = weatherInfo.getForecastInfoList().get(i);
-        WeekWeatherItem item = new WeekWeatherItem();
-        item.setDay(forecastInfo.getForecastDay());
-        item.setDate(forecastInfo.getForecastDate());
-        item.setHighTemp(Integer.toString(forecastInfo.getForecastTempHigh()));
-        item.setLowTemp(Integer.toString(forecastInfo.getForecastTempLow()));
-        item.setTempStr(forecastInfo.getForecastText());
-        item.setTempImg(forecastInfo.getForecastConditionIcon());
-        item.setTempCode(forecastInfo.getForecastCode());
-        mWeekWeatherDataList.add(item);
-      }
-      new Handler().post(new Runnable() {
-        @Override
-        public void run() {
-          if (isVisible() && mProgress.getVisibility() == View.VISIBLE) {
-            WeekWeatherDialog weekWeatherDialog = new WeekWeatherDialog();
-            Bundle weekBundle = new Bundle();
-            weekBundle.putSerializable("weekWeather", mWeekWeatherDataList);
-            weekBundle.putSerializable("weekWeatherLocation", mPref.getValue(mPref.KEY_WEATHER_LOCATION, ""));
-            weekWeatherDialog.setArguments(weekBundle);
-            weekWeatherDialog.show(getFragmentManager(), null);
-            mProgress.setVisibility(View.INVISIBLE);
-          }
-        }
-      });
-
-    } else {
-
-    }
-  }
-
-  @Override
-  public void onFailConnection(final Exception e) {
-    // TODO Auto-generated method stub
-
-  }
-
-  @Override
-  public void onFailParsing(final Exception e) {
-    // TODO Auto-generated method stub
-
-  }
-
-  @Override
-  public void onFailFindLocation(final Exception e) {
-    // TODO Auto-generated method stub
-
-  }
-
-  private void searchByGPS() {
-    mYahooWeather.setNeedDownloadIcons(true);
-    mYahooWeather.setUnit(YahooWeather.UNIT.CELSIUS);
-    mYahooWeather.setSearchMode(YahooWeather.SEARCH_MODE.GPS);
-    mYahooWeather.queryYahooWeatherByGPS(getActivity(), this);
-  }
-
-  private void searchByPlaceName(String location) {
-    mYahooWeather.setNeedDownloadIcons(true);
-    mYahooWeather.setUnit(YahooWeather.UNIT.CELSIUS);
-    mYahooWeather.setSearchMode(YahooWeather.SEARCH_MODE.PLACE_NAME);
-    mYahooWeather.queryYahooWeatherByPlaceName(getActivity(), location, this);
-  }
-
-
-  @Override
   public void onResume() {
     super.onResume();
     Log.i(TAG + "_", "onResume");
@@ -359,7 +242,7 @@ public class Fragment_Calendar extends Fragment implements OnClickListener, Yaho
   @Override
   public void onPause() {
     super.onPause();
-    mProgress.setVisibility(View.INVISIBLE);
+    mProgressBar.setVisibility(View.INVISIBLE);
   }
 
   @Override
@@ -476,13 +359,13 @@ public class Fragment_Calendar extends Fragment implements OnClickListener, Yaho
     protected void onPreExecute() {
       // TODO Auto-generated method stub
       super.onPreExecute();
-      mProgress.setVisibility(View.VISIBLE);
+      mProgressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     protected Void doInBackground(Void... params) {
       // TODO Auto-generated method stub
-      Cursor result = mDBManager.selectAllData(DBConstant.TABLE_PARTTIMEDATA, DBConstant.COLUMN_ALBANAME, mPartInfoData.getAlbaname());
+      Cursor result = mDB.selectAllData(DBConstant.TABLE_PARTTIMEDATA, DBConstant.COLUMN_ALBANAME, mPartInfoData.getAlbaname());
       result.moveToFirst();
       mPartTimeDataList.clear();
       while (!result.isAfterLast()) {
@@ -503,6 +386,9 @@ public class Fragment_Calendar extends Fragment implements OnClickListener, Yaho
         item.setWorkPayNight(result.getString(result.getColumnIndex("workPayNight")));
         item.setWorkPayTotal(result.getString(result.getColumnIndex("workPayTotal")));
         item.setWorkPayAdd(result.getString(result.getColumnIndex("workPayAdd")));
+        item.setWorkAddType(result.getString(result.getColumnIndex("workAddType")));
+        item.setWorkAddHour(result.getString(result.getColumnIndex("workPayAddHour")));
+        item.setWorkAddMin(result.getString(result.getColumnIndex("workPayAddMin")));
         item.setWorkRefreshType(result.getString(result.getColumnIndex("workRefreshType")));
         item.setWorkRefreshHour(result.getString(result.getColumnIndex("workRefreshHour")));
         item.setWorkRefreshMin(result.getString(result.getColumnIndex("workRefreshMin")));
@@ -535,7 +421,7 @@ public class Fragment_Calendar extends Fragment implements OnClickListener, Yaho
         updateCal();
       }
       //totalDataSet();
-      mProgress.setVisibility(View.INVISIBLE);
+      mProgressBar.setVisibility(View.INVISIBLE);
 
     }
   }
@@ -699,7 +585,7 @@ public class Fragment_Calendar extends Fragment implements OnClickListener, Yaho
             if (INFO)
               Log.i(TAG, "NEWWORK_INTENT_UPDATE");
             Constant.NEWWORK_INTENT_FLAG = Constant.NEWWORK_INTENT_UPDATE;
-            PartTimeItem temp = mDBManager.selectOneData(DBConstant.COLUMN_DATE, mYear + "-" + (mMonth + 1) + "-" + btn_temp.getText(), DBConstant.COLUMN_ALBANAME, mPartInfoData.getAlbaname());
+            PartTimeItem temp = mDB.selectOneData(DBConstant.COLUMN_DATE, mYear + "-" + (mMonth + 1) + "-" + btn_temp.getText(), DBConstant.COLUMN_ALBANAME, mPartInfoData.getAlbaname());
             intent.putExtra("HOURMONEY", temp.getHourMoney());
             intent.putExtra("START_HOUR", temp.getStartTimeHour());
             intent.putExtra("START_MIN", temp.getStartTimeMin());
@@ -815,7 +701,7 @@ public class Fragment_Calendar extends Fragment implements OnClickListener, Yaho
       Log.d(TAG, c1.getTime().toString());
       Log.d(TAG, Integer.toString(c1.get(Calendar.YEAR)) + "-" + Integer.toString(c1.get(Calendar.MONTH) + 1) + "-" + Integer.toString(c1.get(Calendar.DATE)));
 
-      PartTimeItem results = mDBManager.selectOneData(DBConstant.COLUMN_ALBANAME, mPartInfoData.getAlbaname(), DBConstant.COLUMN_DATE, Integer.toString(c1.get(Calendar.YEAR)) + "-" + Integer.toString(c1.get(Calendar.MONTH) + 1) + "-" + Integer.toString(c1.get(Calendar.DATE)));
+      PartTimeItem results = mDB.selectOneData(DBConstant.COLUMN_ALBANAME, mPartInfoData.getAlbaname(), DBConstant.COLUMN_DATE, Integer.toString(c1.get(Calendar.YEAR)) + "-" + Integer.toString(c1.get(Calendar.MONTH) + 1) + "-" + Integer.toString(c1.get(Calendar.DATE)));
       try {
         if ((results instanceof PartTimeItem)) {
           try {

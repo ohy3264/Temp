@@ -18,48 +18,33 @@ import com.tistory.whdghks913.croutonhelper.CroutonHelper;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 
 /**
  * Created by oh on 2015-02-01.
  */
-public class Fragment_Info3 extends Fragment implements View.OnClickListener {
-  public static final String TAG = "Fragment_Info";
-  public static final boolean DBUG = true;
-  public static final boolean INFO = true;
-  //Crouton
-  private View mCroutonView;
-  private TextView mTxtCrouton;
-  private CroutonHelper mCroutonHelper;
+public class Fragment_Info3 extends BaseFragment implements View.OnClickListener {
+    public static final String TAG = "Fragment_Info";
+    public static final boolean DBUG = true;
+    public static final boolean INFO = true;
 
-  //View
-  private ListView mListView;
-  private AlbaInfoAdapter mAlbaInfoAdapter;
-  private ArrayList<String> mAlbaListData;
+    @BindView(R.id.mainlistView)
+    ListView mListView;
+    private AlbaInfoAdapter mAlbaInfoAdapter;
+    private ArrayList<String> mAlbaListData;
+    private Unbinder unbinder;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_info1, container, false);
+        unbinder = ButterKnife.bind(this, rootView);
+        setFont(rootView);
 
 
-  //Util
-  private HYFont mFont;
-  private HYPreference mPref;
-
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    View rootView = inflater.inflate(R.layout.fragment_info1, container, false);
-    //Util
-    mFont = new HYFont(getActivity());
-    mFont.setGlobalFont((ViewGroup) rootView);
-    mPref = new HYPreference(getActivity());
-
-    mFont.setGlobalFont((ViewGroup) rootView);
-
-    //Crouton
-    mCroutonHelper = new CroutonHelper(getActivity());
-    mCroutonView = getActivity().getLayoutInflater().inflate(
-        R.layout.crouton_custom_view, null);
-    mTxtCrouton = (TextView) mCroutonView.findViewById(R.id.txt_crouton);
-
-    mListView = (ListView) rootView.findViewById(R.id.mainlistView);
-
-    mAlbaListData = new ArrayList<String>();/*
+        mAlbaListData = new ArrayList<String>();/*
         mAlbaListData.add("근로계약서 작성");
         mAlbaListData.add("고용노동부의 도움받기");
         mAlbaListData.add("폭언, 성희롱 등의 부당대우");
@@ -71,22 +56,22 @@ public class Fragment_Info3 extends Fragment implements View.OnClickListener {
         mAlbaListData.add("퇴직금");*/
 
 
-    mAlbaInfoAdapter = new AlbaInfoAdapter(getActivity(), mAlbaListData);
-    mListView.setAdapter(mAlbaInfoAdapter);
-    mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-      @Override
-      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        mAlbaInfoAdapter = new AlbaInfoAdapter(getActivity(), mAlbaListData);
+        mListView.setAdapter(mAlbaInfoAdapter);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        Toast.makeText(getActivity(), Integer.toString(position), Toast.LENGTH_SHORT).show();
-      }
-    });
-    return rootView;
-  }
-
-
-  @Override
-  public void onClick(View v) {
+                Toast.makeText(getActivity(), Integer.toString(position), Toast.LENGTH_SHORT).show();
+            }
+        });
+        return rootView;
+    }
 
 
-  }
+    @Override
+    public void onClick(View v) {
+
+
+    }
 }

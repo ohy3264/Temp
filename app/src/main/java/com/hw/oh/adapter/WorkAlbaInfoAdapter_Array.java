@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hw.oh.model.PartTimeInfo;
-import com.hw.oh.temp.NewAlbaActivity;
+import com.hw.oh.temp.process.alba.NewAlbaActivity;
 import com.hw.oh.temp.R;
 import com.hw.oh.utility.HYFont;
 

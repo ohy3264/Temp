@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,51 +28,49 @@ import com.tistory.whdghks913.croutonhelper.CroutonHelper;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+
 
 /**
  * Created by oh on 2015-02-01.
  */
-public class Fragment_insurance3 extends Fragment {
+public class Fragment_insurance3 extends BaseFragment {
   public static final String TAG = "Fragment_Info";
   public static final boolean DBUG = true;
   public static final boolean INFO = true;
-  //Crouton
-  private View mCroutonView;
-  private TextView mTxtCrouton;
-  private CroutonHelper mCroutonHelper;
 
-  //View
-  private EditText mEdtWokerPay, mEdtOwnerPay, mEdtTotalPay, mEdtMonthPay;
+    //View
+    @BindView(R.id.edtWokerPay)
+    EditText mEdtWokerPay;
+    @BindView(R.id.edtonwerPay)
+    EditText mEdtOwnerPay;
+    @BindView(R.id.edtTotalPay)
+    EditText mEdtTotalPay;
+    @BindView(R.id.edtInputMonthPay)
+    EditText mEdtMonthPay;
+
   private LinearLayout mBtnCal;
 
   private long mMonthPay;
   private RadioGroup mRadioGroup;
   private int mFlag = 0;
 
-  private HYFont mFont;
-  private HYPreference mPref;
-  private NumberFormat mNumFomat = new DecimalFormat("###,###,###");
 
+    private Unbinder unbinder;
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_insurance3, container, false);
-    // 구글 통계
+      unbinder = ButterKnife.bind(this, rootView);
+      setFont(rootView);
+      // 구글 통계
    Tracker mTracker = ((ApplicationClass) getActivity().getApplication()).getDefaultTracker();
     mTracker.setScreenName("고용보험");
     mTracker.send(new HitBuilders.AppViewBuilder().build());
 
-    //Util
-    mFont = new HYFont(getActivity());
-    mFont.setGlobalFont((ViewGroup) rootView);
-    mPref = new HYPreference(getActivity());
-
-    mFont.setGlobalFont((ViewGroup) rootView);
-
-    //Crouton
-    mCroutonHelper = new CroutonHelper(getActivity());
-    mCroutonView = getActivity().getLayoutInflater().inflate(
-        R.layout.crouton_custom_view, null);
-    mTxtCrouton = (TextView) mCroutonView.findViewById(R.id.txt_crouton);
     //View
     mEdtMonthPay = (EditText) rootView.findViewById(R.id.edtInputMonthPay);
     mEdtMonthPay.addTextChangedListener(new TextWatcher() {
@@ -97,47 +96,51 @@ public class Fragment_insurance3 extends Fragment {
 
       }
     });
-    mEdtOwnerPay = (EditText) rootView.findViewById(R.id.edtonwerPay);
-    mEdtTotalPay = (EditText) rootView.findViewById(R.id.edtTotalPay);
-    mEdtWokerPay = (EditText) rootView.findViewById(R.id.edtWokerPay);
 
-    mBtnCal = (LinearLayout) rootView.findViewById(R.id.btnCalculation);
-    mBtnCal.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
+      return rootView;
+  }
+
+    @OnClick({R.id.radBtn1, R.id.radBtn2, R.id.radBtn3, R.id.radBtn4})
+    public void onRadioButtonClicked(RadioButton radioButton) {
+        // Is the button now checked?
+        boolean checked = radioButton.isChecked();
+
+        // Check which radio button was clicked
+        switch (radioButton.getId()) {
+            case R.id.radBtn1:
+                if (checked) {
+                    mFlag = 0;
+                }
+                break;
+            case R.id.radBtn2:
+                if (checked) {
+                    mFlag = 1;
+                }
+                break;
+            case R.id.radBtn3:
+                if (checked) {
+                    mFlag = 2;
+                }
+                break;
+            case R.id.radBtn4:
+                if (checked) {
+                    mFlag = 3;
+                }
+                break;
+        }
+    }
+
+    @OnClick(R.id.btnCalculation)
+    public void onClick() {
         Log.d(TAG, "클릭");
         if (mEdtMonthPay.getText().toString().equals("")) {
-          Toast.makeText(getActivity(), "월 급여를 입력해 주세요", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "월 급여를 입력해 주세요", Toast.LENGTH_SHORT).show();
         } else {
-          mEdtMonthPay.setText(mNumFomat.format(mMonthPay));
-          calculation(mMonthPay);
+            mEdtMonthPay.setText(mNumFomat.format(mMonthPay));
+            calculation(mMonthPay);
         }
-      }
-    });
+    }
 
-    mRadioGroup = (RadioGroup) rootView.findViewById(R.id.radioGroudChoice);
-    mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-      @Override
-      public void onCheckedChanged(RadioGroup group, int checkedId) {
-        switch (checkedId) {
-          case R.id.radBtn1:
-            mFlag = 0;
-            break;
-          case R.id.radBtn2:
-            mFlag = 1;
-            break;
-          case R.id.radBtn3:
-            mFlag = 2;
-            break;
-          case R.id.radBtn4:
-            mFlag = 3;
-            break;
-        }
-      }
-    });
-
-    return rootView;
-  }
 
   public void calculation(long monthPay) {
     switch (mFlag) {

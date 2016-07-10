@@ -1,10 +1,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto"
-      xmlns:tools="http://schemas.android.com/tools" tools:context=".NewPostActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".talk.NewPostActivity">
   <item android:id="@+id/action_camera" android:title="카메라"
         android:orderInCategory="100" app:showAsAction="never"/>
 
   <item android:id="@+id/action_album" android:title="앨범"
+      android:orderInCategory="100"
+      app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_album"
+        android:title="앨범"
         android:orderInCategory="100" app:showAsAction="never"/>
 </menu>
 

@@ -1,52 +1,36 @@
 package com.hw.oh.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.io.Serializable;
 
 /**
  * Created by oh on 2015-02-03.
  */
-public class BoardItem implements Parcelable, Serializable {
-  String _id;
-  String UniqueID;
-  String Gender;
-  String strText;
-  String hitCNT;
-  String likeCNT;
-  String hateCNT;
-  String commCNT;
-  String imgState;
-  String regDate;
+public class BoardItem implements Serializable {
 
-  public BoardItem() {
-  }
+  /**
+   * _id : 553
+   * UniqueID : 63351a4fa07de6d0
+   * Gender : 0
+   * strText : 라이더, 배달 시급 얼마예요?  7500받거나 6130에 건당400원 받는데
+   * 제 친구는 7500원에 건당 받는데서요
+   * hitCNT : 0
+   * likeCNT : 0
+   * hateCNT : 0
+   * commCNT : 1
+   * imgState : 0
+   * regDate : 2016-06-29 09:44:15
+   */
 
-  public BoardItem(Parcel in) {
-    readFromParcel(in);
-  }
-
-  public BoardItem(String _id, String uniqueID, String gender, String strText, String hitCNT, String likeCNT, String hateCNT, String commCNT, String imgState, String regDate) {
-    this._id = _id;
-    UniqueID = uniqueID;
-    Gender = gender;
-    this.strText = strText;
-    this.hitCNT = hitCNT;
-    this.likeCNT = likeCNT;
-    this.hateCNT = hateCNT;
-    this.commCNT = commCNT;
-    this.imgState = imgState;
-    this.regDate = regDate;
-  }
-
-  public String getImgState() {
-    return imgState;
-  }
-
-  public void setImgState(String imgState) {
-    this.imgState = imgState;
-  }
+  private String _id;
+  private String UniqueID;
+  private String Gender;
+  private String strText;
+  private String hitCNT;
+  private String likeCNT;
+  private String hateCNT;
+  private String commCNT;
+  private String imgState;
+  private String regDate;
 
   public String get_id() {
     return _id;
@@ -56,12 +40,20 @@ public class BoardItem implements Parcelable, Serializable {
     this._id = _id;
   }
 
+  public String getUniqueID() {
+    return UniqueID;
+  }
+
+  public void setUniqueID(String UniqueID) {
+    this.UniqueID = UniqueID;
+  }
+
   public String getGender() {
     return Gender;
   }
 
-  public void setGender(String gender) {
-    this.Gender = gender;
+  public void setGender(String Gender) {
+    this.Gender = Gender;
   }
 
   public String getStrText() {
@@ -70,14 +62,6 @@ public class BoardItem implements Parcelable, Serializable {
 
   public void setStrText(String strText) {
     this.strText = strText;
-  }
-
-  public String getUniqueID() {
-    return UniqueID;
-  }
-
-  public void setUniqueID(String uniqueID) {
-    UniqueID = uniqueID;
   }
 
   public String getHitCNT() {
@@ -112,65 +96,20 @@ public class BoardItem implements Parcelable, Serializable {
     this.commCNT = commCNT;
   }
 
+  public String getImgState() {
+    return imgState;
+  }
+
+  public void setImgState(String imgState) {
+    this.imgState = imgState;
+  }
+
   public String getRegDate() {
     return regDate;
   }
 
   public void setRegDate(String regDate) {
     this.regDate = regDate;
-  }
-
-  @Override
-  public int describeContents() {
-    return 0;
-  }
-
-  @Override
-  public void writeToParcel(Parcel dest, int flags) {
-    dest.writeString(_id);
-    dest.writeString(UniqueID);
-    dest.writeString(Gender);
-    dest.writeString(strText);
-    dest.writeString(hitCNT);
-    dest.writeString(likeCNT);
-    dest.writeString(hateCNT);
-    dest.writeString(commCNT);
-    dest.writeString(imgState);
-    dest.writeString(regDate);
-
-  }
-
-  private void readFromParcel(Parcel in) {
-    this._id = in.readString();
-    UniqueID = in.readString();
-    Gender = in.readString();
-    this.strText = in.readString();
-    this.hitCNT = in.readString();
-    this.likeCNT = in.readString();
-    this.hateCNT = in.readString();
-    this.commCNT = in.readString();
-    this.imgState = in.readString();
-    this.regDate = in.readString();
-  }
-
-  public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
-    public BoardItem createFromParcel(Parcel in) {
-      return new BoardItem(in);
-    }
-
-    public BoardItem[] newArray(int size) {
-      return new BoardItem[size];
-    }
-  };
-
-  public class CustomCreator implements Parcelable.Creator<BoardItem> {
-    public BoardItem createFromParcel(Parcel src) {
-      return new BoardItem(src);
-    }
-
-    public BoardItem[] newArray(int size) {
-      return new BoardItem[size];
-    }
   }
 }
 

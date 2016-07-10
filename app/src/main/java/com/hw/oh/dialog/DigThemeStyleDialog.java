@@ -37,7 +37,6 @@ public class DigThemeStyleDialog extends android.support.v4.app.DialogFragment {
   // Utill
   private HYFont mFont;
   private HYPreference mPref;
-
   private TextView dialog_BtnOk;
 
   @Override

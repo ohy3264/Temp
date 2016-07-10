@@ -1,5 +1,7 @@
 package com.hw.oh.fragment;
 
+import com.github.ybq.android.spinkit.style.CubeGrid;
+import com.github.ybq.android.spinkit.style.ThreeBounce;
 import com.google.android.gcm.GCMRegistrar;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
@@ -11,6 +13,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,39 +31,48 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.hw.oh.adapter.BoardListAdapter_Array;
 import com.hw.oh.model.BoardItem;
-import com.hw.oh.service.BoardListService;
 import com.hw.oh.temp.ApplicationClass;
-import com.hw.oh.temp.DetailActivity;
-import com.hw.oh.temp.NewPostActivity;
+import com.hw.oh.temp.BaseActivity;
+import com.hw.oh.temp.talk.TalkDetailActivity;
+import com.hw.oh.temp.talk.NewPostActivity;
 import com.hw.oh.temp.R;
 import com.hw.oh.utility.CommonUtil;
 import com.hw.oh.utility.Constant;
-import com.hw.oh.utility.HYFont;
+import com.hw.oh.utility.HYTime_Maximum;
 import com.hw.oh.utility.NetworkUtil;
 import com.hw.oh.utility.HYPreference;
-import com.hw.oh.utility.InfoExtra;
+import com.hw.oh.utility.OkHttpUtils;
+import com.hw.oh.utility.ServerRequestUtils;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.SwipeDismissAdapter;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
-import com.tistory.whdghks913.croutonhelper.CroutonHelper;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+
 
 /**
  * Created by oh on 2015-02-01.
  */
-public class Fragment_Talk extends Fragment implements AbsListView.OnScrollListener, AdapterView.OnItemClickListener, OnDismissCallback {
+public class Fragment_Talk extends BaseFragment implements AbsListView.OnScrollListener, AdapterView.OnItemClickListener, OnDismissCallback {
   public static final String TAG = "Fragment_Talk";
   public static final boolean DBUG = true;
   public static final boolean INFO = true;
@@ -78,86 +90,11 @@ public class Fragment_Talk extends Fragment implements AbsListView.OnScrollListe
   private ListView mListView;
   private BoardListAdapter_Array mBoardAdapter;
   private ArrayList<BoardItem> mBoardDataList = new ArrayList<BoardItem>();
-  private ArrayList<BoardItem> mServiceDatalist = new ArrayList<BoardItem>();
 
-  //Crouton
-  private View mCroutonView;
-  private TextView mTxtCrouton;
-  private CroutonHelper mCroutonHelper;
 
   //Util
-  private InfoExtra mInfoExtra;
-  private HYFont mFont;
-  private HYPreference mPref;
   private SwipeRefreshLayout mTopPullRefresh = null; // 상단 새로고침
-  private com.rey.material.widget.ProgressView mProgressBar;
-
-
-  // Messenger
-  private final Messenger mMessenger = new Messenger(new IncomingHandler());
-  private Messenger mService = null;
-
-  // IncomingHandler - 서비스측으로 부터 응답 메시지 수신할 핸들러
-  class IncomingHandler extends Handler {
-    @Override
-    public void handleMessage(Message msg) {
-      switch (msg.what) {
-        case BoardListService.MSG_SET_REQUEST_VALUE:
-          Log.d(TAG, "MSG_SET_STRING_VALUE");
-          mServiceDatalist.clear();
-          mServiceDatalist = msg.getData().getParcelableArrayList("Board_Data");
-          if (!mServiceDatalist.isEmpty()) {
-            switch (Constant.REFRESH_BOARD_FLAG) {
-              case 0:
-              case 1:
-              case 2:
-                mBoardDataList.clear();
-                break;
-              case 3:
-                Constant.LIMIT_START += Constant.LIMIT_ADD;
-                break;
-              case 4:
-                mBoardDataList.clear();
-                break;
-            }
-            for (int i = 0; i < mServiceDatalist.size(); i++) {
-              mBoardDataList.add(mServiceDatalist.get(i));
-            }
-          }
-          mBoardAdapter.notifyDataSetChanged();
-          mProgressBar.setVisibility(View.GONE);
-          mLock = false;
-          break;
-        default:
-          Log.d(TAG, "default");
-          super.handleMessage(msg);
-          mProgressBar.setVisibility(View.GONE);
-          mLock = false;
-      }
-    }
-  }
-
-  // Service Conn
-  private ServiceConnection mConnection = new ServiceConnection() {
-    public void onServiceConnected(ComponentName className, IBinder service) {
-      mService = new Messenger(service); // 서비스에서 전달받은 IBinder 객체를 기반으로 Messenger 인스턴스 생성
-      try {
-        Message msg = Message.obtain(null, BoardListService.MSG_REGISTER_CLIENT); //handler, arg1
-        msg.replyTo = mMessenger; //서비스측으로 부터 응답을 받길 원할 경우 사용
-        mService.send(msg);
-      } catch (RemoteException e) {
-        // In this case the service has crashed before we could even do anything with it
-      }
-    }
-
-    public void onServiceDisconnected(ComponentName className) {
-      // This is called when the connection with the service has been unexpectedly disconnected - process crashed.
-      mService = null;
-    }
-
-
-  };
-
+  private ProgressBar mProgressBar;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -168,18 +105,14 @@ public class Fragment_Talk extends Fragment implements AbsListView.OnScrollListe
     mTracker.send(new HitBuilders.AppViewBuilder().build());
 
     //Util
-    mFont = new HYFont(getActivity());
-    mFont.setGlobalFont((ViewGroup) rootView);
-    mInfoExtra = new InfoExtra(getActivity());
+    setFont(rootView);
     mPref = new HYPreference(getActivity());
-    //Crouton
-    mCroutonHelper = new CroutonHelper(getActivity());
-    mCroutonView = getActivity().getLayoutInflater().inflate(
-        R.layout.crouton_custom_view, null);
-    mTxtCrouton = (TextView) mCroutonView.findViewById(R.id.txt_crouton);
 
+    mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress);
 
-    mProgressBar = (com.rey.material.widget.ProgressView) rootView.findViewById(R.id.progressBar);
+    ThreeBounce threeBounce = new ThreeBounce();
+    threeBounce.setColor(getThemeColor(1));
+    mProgressBar.setIndeterminateDrawable(threeBounce);
 
     mListView = (ListView) rootView.findViewById(R.id.mainlistView);
     mListView.setOnScrollListener(this);
@@ -193,28 +126,23 @@ public class Fragment_Talk extends Fragment implements AbsListView.OnScrollListe
 
       @Override
       public void onRefresh() {
-        mTxtCrouton.setText("새로고침");
-        mCroutonHelper.setCustomView(mCroutonView);
-        mCroutonHelper.setDuration(5000);
-        mCroutonHelper.show();
+        showCrountToast("새로고침", 5000);
         mTopPullRefresh.postDelayed(new Runnable() {
           @Override
           public void run() {
             if (INFO)
               Log.i(TAG, "TopPullRefresh");
-
             mProgressBar.setVisibility(View.VISIBLE);
             Constant.REFRESH_BOARD_FLAG = Constant.REQUEST_TOP_REFRESH;
-            sendRefreshToService();
+            requestCallRest_BoardList();
             mTopPullRefresh.setRefreshing(false);
-            mCroutonHelper.clearCroutonsForActivity();
-
+            clearCrountToast();
           }
         }, 1000);
       }
     });
 
-    inits();
+    setAdapter();
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
       mFabNewTalk = (android.support.design.widget.FloatingActionButton) rootView.findViewById(R.id.fabNewTalk);
@@ -272,19 +200,7 @@ public class Fragment_Talk extends Fragment implements AbsListView.OnScrollListe
     return rootView;
   }
 
-  public void inits() {
-    if (NetworkUtil.isConnect(getActivity())) {
-      registerGCM();
-      setAdapter();
-      // asyncTask_BoardList_Call();
-    } else {
-      mTxtCrouton.setText("네트워크를 확인해주세요");
-      mCroutonHelper.setCustomView(mCroutonView);
-      mCroutonHelper.setDuration(1000);
-      mCroutonHelper.show();
-      mProgressBar.setVisibility(View.GONE);
-    }
-  }
+
 
 
   @Override
@@ -297,7 +213,7 @@ public class Fragment_Talk extends Fragment implements AbsListView.OnScrollListe
   @Override
   public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     Constant.REFRESH_DETAIL_FLAG = Constant.DETAIL_REQUEST_FIRST;
-    Intent intent_detail = new Intent(getActivity(), DetailActivity.class);
+    Intent intent_detail = new Intent(getActivity(), TalkDetailActivity.class);
     //intent_detail.putExtra("BoardData", mBoardDataList.get(position));
     intent_detail.putExtra("ID", mBoardDataList.get(position).get_id());
 
@@ -324,27 +240,19 @@ public class Fragment_Talk extends Fragment implements AbsListView.OnScrollListe
       Log.d(TAG, "allsync : BottomPullRefresh");
       mLock = true;
       Constant.REFRESH_BOARD_FLAG = Constant.REQUEST_BOTTOM_REFRESH;
-      sendRefreshToService();
       mProgressBar.setVisibility(View.VISIBLE);
+      requestCallRest_BoardList();
     }
   }
 
 
   public void setAdapter() {
-  /*  mBoardAdapter = new BoardListAdapter_Array(getActivity(), mBoardDataList);
-    if (mListView != null) {
-      AnimationAdapter  mAnimAdapter = new AlphaInAnimationAdapter(mBoardAdapter);
-      mAnimAdapter.setAbsListView(mListView);
-      mListView.setAdapter(mAnimAdapter);
-    }*/
-
     mBoardAdapter = new BoardListAdapter_Array(getActivity(), mBoardDataList);
     if (mListView != null) {
       SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(new SwipeDismissAdapter(mBoardAdapter, this));
       swingBottomInAnimationAdapter.setAbsListView(mListView);
       assert swingBottomInAnimationAdapter.getViewAnimator() != null;
       swingBottomInAnimationAdapter.getViewAnimator().setInitialDelayMillis(INITIAL_DELAY_MILLIS);
-
       mListView.setAdapter(swingBottomInAnimationAdapter);
     }
   }
@@ -370,14 +278,12 @@ public class Fragment_Talk extends Fragment implements AbsListView.OnScrollListe
     } else if (Constant.REFRESH_BOARD_FLAG == Constant.REQUEST_BOTTOM_REFRESH) {
       Log.d(TAG, "REQUEST_BOTTOM_REFRESH");
     }
-    mProgressBar.setVisibility(View.VISIBLE);
-    doBindService();
+    requestCallRest_BoardList();
   }
 
   @Override
   public void onStart() {
     super.onStart();
-    // 구글 통계
     GoogleAnalytics.getInstance(getActivity()).reportActivityStart(getActivity());
   };
   @Override
@@ -385,11 +291,7 @@ public class Fragment_Talk extends Fragment implements AbsListView.OnScrollListe
     super.onStop();
     if (INFO)
       Log.d(TAG, "onStop");
-    // mTimer.cancel();
-    doUnbindService();
     mProgressBar.setVisibility(View.GONE);
-    // mRequestQueue.cancelAll(TAG);
-    // 구글 통계
     GoogleAnalytics.getInstance(getActivity()).reportActivityStop(getActivity());
   }
 
@@ -401,107 +303,136 @@ public class Fragment_Talk extends Fragment implements AbsListView.OnScrollListe
     Constant.REFRESH_BOARD_FLAG = Constant.REQUEST_NONE;
   }
 
-  // 서비스  바인드
-  void doBindService() {
-    Log.i(TAG, "doBindService");
-    mIsBound = true;
-    Log.i(TAG, "Binding");
-    getActivity().bindService(new Intent(getActivity(), BoardListService.class), mConnection, Context.BIND_AUTO_CREATE);
+  // Intent Handler
+  final Handler listCallHandler = new android.os.Handler() {
+    public void handleMessage(Message msg) {
+      switch (msg.what) {
+        case -1:
+          break;
+        case 0:
+          Log.d(TAG, "onResponse :: " + msg.obj);
+          String response = msg.obj.toString();
+          Constant.RESPON_EMPTY = false;
+          if (response.trim().equals("null")) {
+            Log.d(TAG, "null");
+            Constant.RESPON_EMPTY = true;
+          } else {
+            try {
+              java.lang.reflect.Type type = new TypeToken<List<BoardItem>>() {
+              }.getType();
 
-  }
+              ArrayList<BoardItem> value = new Gson()
+                      .fromJson(response, type);
 
-  // 서비스 언 바인드
-  void doUnbindService() {
-    Log.i(TAG, "doUnbindService");
-    if (mIsBound) {
-      try {
-        Message msg = Message.obtain(null, BoardListService.MSG_UNREGISTER_CLIENT);
-        msg.replyTo = mMessenger;
-        mService.send(msg);
-      } catch (RemoteException e) {
-        // There is nothing special we need to do if the service has crashed.
-      }
-      Log.i(TAG, "un Binding");
-      getActivity().unbindService(mConnection);
-      mIsBound = false;
+              for (BoardItem m : value) {
+                BoardItem t = new BoardItem();
+                t.set_id(m.get_id());
+                t.setStrText(m.getStrText());
+                t.setGender(m.getGender());
+                t.setRegDate(HYTime_Maximum.formatTimeString(m.getRegDate()));
+                t.setUniqueID(m.getUniqueID());
+                t.setHitCNT(m.getHitCNT());
+                t.setCommCNT(m.getCommCNT());
+                t.setLikeCNT(m.getLikeCNT());
+                t.setHateCNT(m.getHateCNT());
+                t.setImgState(m.getImgState());
+                mBoardDataList.add(t);
+                Log.d(TAG, m.getStrText());
+              }
+              mBoardAdapter.notifyDataSetChanged();
+              mProgressBar.setVisibility(View.GONE);
+            } catch (Exception e) {
+              Log.d(TAG, "allsync.Response : Gson Exception");
+              mProgressBar.setVisibility(View.GONE);
+            }
+          }
+          break;
+      }//switch
     }
-  }
+  };
 
-  // 서비스 메시지 전송
-  private void sendRefreshToService() {
-    if (mIsBound) {
-      if (mService != null) {
-        try {
-          Message msg = Message.obtain(null, BoardListService.MSG_REQ_REFRESH_CLIENT);
-          msg.replyTo = mMessenger;
-          mService.send(msg);
-        } catch (RemoteException e) {
-        }
-      }
+
+  private void requestCallRest_BoardList() {
+    switch (Constant.REFRESH_BOARD_FLAG) {
+      case 0:
+      case 1:
+      case 2:
+        Constant.LIMIT_START = 0;
+        mBoardDataList.clear();
+        break;
+      case 3:
+        Constant.LIMIT_START += Constant.LIMIT_ADD;
+        break;
+      case 4:
+        Constant.LIMIT_START = 0;
+        mBoardDataList.clear();
+        break;
     }
-  }
-
-
-  /**
-   * @author : oh
-   * @MethodName : registerGCM
-   * @Day : 2014. 10. 12.
-   * @Time : 오후 5:03:12
-   * @Explanation : GCM Registrar(유저 regID 생성)
-   */
-  public void registerGCM() {
     try {
-      GCMRegistrar.checkDevice(getActivity());
-      Log.i("checkDevice", "GCM ID 발급 요청");
-      GCMRegistrar.checkManifest(getActivity());
-      Log.i("checkManifest", "GCM ID 발급 요청");
-      String regId = GCMRegistrar.getRegistrationId(getActivity());
-      if (regId.isEmpty()) {
-        GCMRegistrar.register(getActivity(), Constant.PROJECT_ID);
-        Log.i("LoginActivity", "GCM ID 발급 요청 :" + regId);
-      } else {
-        Log.i("LoginActivity", "이미 등록되어 있는 단말 : " + regId);
-        registerGCM(regId, CommonUtil.getAndroidID(getActivity()));
-      }
-    } catch (Exception e) {
-      Log.e(TAG, "This Device can't use GCM");
-    }
-  }
-
-  /**
-   * @param regId : GCM 통신을 위한 유저 고유 regID
-   * @param andId : 유저 아이디
-   * @author : oh
-   * @MethodName : sendAPIkey
-   * @Day : 2014. 10. 12.
-   * @Time : 오후 5:03:52
-   * @Explanation : regID 서버에 등록 요청
-   */
-  public void registerGCM(final String regId, final String andId) {
-    String url = "http://ohy3264.cafe24.com/Anony/api/registerGCM.php";
-    try {
-      OkHttpClient client = new OkHttpClient();
       RequestBody formBody = new FormBody.Builder()
-              .add("REG_ID", regId)
-              .add("GENDER", mPref.getValue(mPref.KEY_GENDER, "0"))
-              .add("AND_ID", andId)
+              .add("MODE", "BoardList")
+              .add("LIMIT", Integer.toString(Constant.LIMIT_START))
               .build();
+      OkHttpUtils.post(getActivity(), Constant.SERVER_URL, "/Anony/api/boardListAll.php", formBody, new Callback() {
+        Handler mainHandler = new Handler();
 
-      Request request = new Request.Builder()
-              .url(url)
-              .post(formBody)
-              .build();
+        @Override
+        public void onFailure(Call call, IOException e) {
+          mainHandler.post(new Runnable() {
+            @Override
+            public void run() {
+              Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.error_common), Toast.LENGTH_SHORT).show();
+            }
+          });
+        }
 
-      Response response = client.newCall(request).execute();
+        @Override
+        public void onResponse(Call call, Response response) throws IOException {
+          final String results = response.body().string();
+          mainHandler.post(new Runnable() {
+            @Override
+            public void run() {
+              Constant.RESPON_EMPTY = false;
+              if (results.trim().equals("null")) {
+                Log.d(TAG, "null");
+                Constant.RESPON_EMPTY = true;
+              } else {
+                try {
+                  java.lang.reflect.Type type = new TypeToken<List<BoardItem>>() {
+                  }.getType();
 
-      Log.d(TAG, "onResponse :: " + response.body().string());
+                  ArrayList<BoardItem> value = new Gson()
+                          .fromJson(results, type);
+
+                  for (BoardItem m : value) {
+                    BoardItem t = new BoardItem();
+                    t.set_id(m.get_id());
+                    t.setStrText(m.getStrText());
+                    t.setGender(m.getGender());
+                    t.setRegDate(HYTime_Maximum.formatTimeString(m.getRegDate()));
+                    t.setUniqueID(m.getUniqueID());
+                    t.setHitCNT(m.getHitCNT());
+                    t.setCommCNT(m.getCommCNT());
+                    t.setLikeCNT(m.getLikeCNT());
+                    t.setHateCNT(m.getHateCNT());
+                    t.setImgState(m.getImgState());
+                    mBoardDataList.add(t);
+                    Log.d(TAG, m.getStrText());
+                  }
+                  mBoardAdapter.notifyDataSetChanged();
+                  mProgressBar.setVisibility(View.GONE);
+                } catch (Exception e) {
+                  Log.d(TAG, "allsync.Response : Gson Exception");
+                  mProgressBar.setVisibility(View.GONE);
+                }
+              }
+            }
+          });
+        }
+      });
     } catch (Exception e) {
-      Log.i(TAG, e.toString());
+      Log.d(TAG, e.toString());
+      Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.error_etc), Toast.LENGTH_SHORT).show();
     }
   }
-
-
-
-
-
 }

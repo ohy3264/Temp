@@ -20,6 +20,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hw.oh.sqlite.DBManager;
 import com.hw.oh.temp.ApplicationClass;
 import com.hw.oh.temp.R;
 import com.hw.oh.utility.HYFont;
@@ -29,40 +30,92 @@ import com.tistory.whdghks913.croutonhelper.CroutonHelper;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+
 
 /**
  * Created by oh on 2015-02-01.
  */
-public class Fragment_Duty extends Fragment implements AdapterView.OnItemSelectedListener {
+public class Fragment_Duty extends BaseFragment implements AdapterView.OnItemSelectedListener {
   public static final String TAG = "Fragment_Duty";
   public static final boolean DBUG = true;
   public static final boolean INFO = true;
-  //Crouton
-  private View mCroutonView;
-  private TextView mTxtCrouton;
-  private CroutonHelper mCroutonHelper;
 
-  //View
-  private EditText mEdtMonthPay;
-  private LinearLayout mBtnCal;
-  private TextView mTxtMonthPay1;
-  private TextView mTxtMonthPay2, mTxtYearPay2;
-  private TextView mTxtWorkerDutyMinus3, mTxtWorkerDutyMinus3_1, mTxtWorkerDutyMinus3_2, mTxtWorkerDutyMinus3_3, mTxtWorkerDutyMinus3_4;
-  private TextView mTxtWorkerDutyMinus4, mTxtWorkerDutyMinus4_1;
-  private TextView mTxtPersonMinus5, mTxtPersonMinus5_1;
-  private TextView mTxtInsuranceMinus6, mTxtInsuranceMinus6_1;
-  private TextView mTxtSpecialMinus7, mTxtSpecialMinus7_1;
-  private TextView mTxtDutyStandard8;
-  private TextView mTxtDutyCalculation9, mTxtDutyCalculation9_1;
-  private TextView mTxtDutyCalculationMinus10, mTxtDutyCalculationMinus10_1;
-  private TextView mTxtDutyYearResult11;
-  private TextView mTxtDutyMonthResult12;
-  ;
-  private TextView mTxtDutyResult1, mTxtDutyResult2, mTxtDutyResultTotal;
+  @BindView(R.id.edtInputMonthPay)
+  EditText mEdtMonthPay;
+
+  @BindView(R.id.txtMonthPay1)
+  TextView mTxtMonthPay1;
+  @BindView(R.id.txtMonthPay2)
+  TextView mTxtMonthPay2;
+  @BindView(R.id.txtYearPay2)
+  TextView mTxtYearPay2;
+
+  @BindView(R.id.txtWorkerDutyMinus3)
+  TextView mTxtWorkerDutyMinus3;
+  @BindView(R.id.txtWorkerDutyMinus3_1)
+  TextView mTxtWorkerDutyMinus3_1;
+  @BindView(R.id.txtWorkerDutyMinus3_2)
+  TextView mTxtWorkerDutyMinus3_2;
+  @BindView(R.id.txtWorkerDutyMinus3_3)
+  TextView mTxtWorkerDutyMinus3_3;
+  @BindView(R.id.txtWorkerDutyMinus3_4)
+  TextView mTxtWorkerDutyMinus3_4;
+
+  @BindView(R.id.txtWorkerDutyMinus4)
+  TextView mTxtWorkerDutyMinus4;
+  @BindView(R.id.txtWorkerDutyMinus4_1)
+  TextView mTxtWorkerDutyMinus4_1;
+
+  @BindView(R.id.txtPersonMinus5)
+  TextView mTxtPersonMinus5;
+  @BindView(R.id.txtPersonMinus5_1)
+  TextView mTxtPersonMinus5_1;
 
 
-  //View
-  private Spinner mSpinner1, mSpinner2;
+  @BindView(R.id.txtInsurance6)
+  TextView mTxtInsuranceMinus6;
+  @BindView(R.id.txtInsurance6_1)
+  TextView mTxtInsuranceMinus6_1;
+
+  @BindView(R.id.txtSpecialMinus7)
+  TextView mTxtSpecialMinus7;
+  @BindView(R.id.txtSpecialMinus7_1)
+  TextView mTxtSpecialMinus7_1;
+
+  @BindView(R.id.txtDutyStandard8)
+  TextView mTxtDutyStandard8;
+
+  @BindView(R.id.txtDutyCalculation9)
+  TextView mTxtDutyCalculation9;
+  @BindView(R.id.txtDutyCalculation9_1)
+  TextView mTxtDutyCalculation9_1;
+
+  @BindView(R.id.txtDutyCalculationMinus10)
+  TextView mTxtDutyCalculationMinus10;
+  @BindView(R.id.txtDutyCalculationMinus10_1)
+  TextView mTxtDutyCalculationMinus10_1;
+
+  @BindView(R.id.txtDutyYearResult11)
+  TextView mTxtDutyYearResult11;
+  @BindView(R.id.txtDutyMonthResult12)
+  TextView mTxtDutyMonthResult12;
+
+
+  @BindView(R.id.txtDutyResult1)
+  TextView mTxtDutyResult1;
+  @BindView(R.id.txtDutyResult2)
+  TextView mTxtDutyResult2;
+  @BindView(R.id.txtDutyResultTotal)
+  TextView mTxtDutyResultTotal;
+
+  @BindView(R.id.spinner)
+  Spinner mSpinner1;
+  @BindView(R.id.spinner2)
+  Spinner mSpinner2;
   private long mMonthPay, mYearPay;
 
   //Data
@@ -70,78 +123,30 @@ public class Fragment_Duty extends Fragment implements AdapterView.OnItemSelecte
   private String[] numbers_zero = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
   private int mPersonNumber1 = 1, mPersonNumber2 = 0;
 
-  //Util
-  private HYFont mFont;
-  private HYPreference mPref;
-  private NumberFormat mNumFomat = new DecimalFormat("###,###,###");
+  private Unbinder unbinder;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_duty1, container, false);
+    unbinder = ButterKnife.bind(this, rootView);
+    setFont(rootView);
+
     // 구글 통계
     Tracker mTracker = ((ApplicationClass) getActivity().getApplication()).getDefaultTracker();
     mTracker.setScreenName("근로소득공제");
     mTracker.send(new HitBuilders.AppViewBuilder().build());
-    //Util
-    mFont = new HYFont(getActivity());
-    mFont.setGlobalFont((ViewGroup) rootView);
-    mPref = new HYPreference(getActivity());
-    mFont.setGlobalFont((ViewGroup) rootView);
 
-    //Crouton
-    mCroutonHelper = new CroutonHelper(getActivity());
-    mCroutonView = getActivity().getLayoutInflater().inflate(
-        R.layout.crouton_custom_view, null);
-    mTxtCrouton = (TextView) mCroutonView.findViewById(R.id.txt_crouton);
+    mDB = new DBManager(getActivity());
+
 
     //View
-    mSpinner1 = (Spinner) rootView.findViewById(R.id.spinner);
-    mSpinner2 = (Spinner) rootView.findViewById(R.id.spinner2);
     mSpinner1.setAdapter(new com.hw.oh.adapter.SpinnerAdapter(getActivity(), R.layout.spinner_row_default, numbers));
     mSpinner2.setAdapter(new com.hw.oh.adapter.SpinnerAdapter(getActivity(), R.layout.spinner_row_default, numbers_zero));
 
     mSpinner1.setOnItemSelectedListener(this);
     mSpinner2.setOnItemSelectedListener(this);
 
-    mTxtMonthPay1 = (TextView) rootView.findViewById(R.id.txtMonthPay1);
 
-    mTxtMonthPay2 = (TextView) rootView.findViewById(R.id.txtMonthPay2);
-    mTxtYearPay2 = (TextView) rootView.findViewById(R.id.txtYearPay2);
-
-    mTxtWorkerDutyMinus3 = (TextView) rootView.findViewById(R.id.txtWorkerDutyMinus3);
-    mTxtWorkerDutyMinus3_1 = (TextView) rootView.findViewById(R.id.txtWorkerDutyMinus3_1);
-    mTxtWorkerDutyMinus3_2 = (TextView) rootView.findViewById(R.id.txtWorkerDutyMinus3_2);
-    mTxtWorkerDutyMinus3_3 = (TextView) rootView.findViewById(R.id.txtWorkerDutyMinus3_3);
-    mTxtWorkerDutyMinus3_4 = (TextView) rootView.findViewById(R.id.txtWorkerDutyMinus3_4);
-
-    mTxtWorkerDutyMinus4_1 = (TextView) rootView.findViewById(R.id.txtWorkerDutyMinus4_1);
-    mTxtWorkerDutyMinus4 = (TextView) rootView.findViewById(R.id.txtWorkerDutyMinus4);
-
-    mTxtPersonMinus5 = (TextView) rootView.findViewById(R.id.txtPersonMinus5);
-    mTxtPersonMinus5_1 = (TextView) rootView.findViewById(R.id.txtPersonMinus5_1);
-
-    mTxtInsuranceMinus6 = (TextView) rootView.findViewById(R.id.txtInsurance6);
-    mTxtInsuranceMinus6_1 = (TextView) rootView.findViewById(R.id.txtInsurance6_1);
-
-    mTxtSpecialMinus7 = (TextView) rootView.findViewById(R.id.txtSpecialMinus7);
-    mTxtSpecialMinus7_1 = (TextView) rootView.findViewById(R.id.txtSpecialMinus7_1);
-
-    mTxtDutyStandard8 = (TextView) rootView.findViewById(R.id.txtDutyStandard8);
-
-    mTxtDutyCalculation9 = (TextView) rootView.findViewById(R.id.txtDutyCalculation9);
-    mTxtDutyCalculation9_1 = (TextView) rootView.findViewById(R.id.txtDutyCalculation9_1);
-
-    mTxtDutyCalculationMinus10 = (TextView) rootView.findViewById(R.id.txtDutyCalculationMinus10);
-    mTxtDutyCalculationMinus10_1 = (TextView) rootView.findViewById(R.id.txtDutyCalculationMinus10_1);
-
-    mTxtDutyYearResult11 = (TextView) rootView.findViewById(R.id.txtDutyYearResult11);
-    mTxtDutyMonthResult12 = (TextView) rootView.findViewById(R.id.txtDutyMonthResult12);
-
-    mTxtDutyResult1 = (TextView) rootView.findViewById(R.id.txtDutyResult1);
-    mTxtDutyResult2 = (TextView) rootView.findViewById(R.id.txtDutyResult2);
-    mTxtDutyResultTotal = (TextView) rootView.findViewById(R.id.txtDutyResultTotal);
-
-    mEdtMonthPay = (EditText) rootView.findViewById(R.id.edtInputMonthPay);
     mEdtMonthPay.addTextChangedListener(new TextWatcher() {
       @Override
       public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -167,25 +172,20 @@ public class Fragment_Duty extends Fragment implements AdapterView.OnItemSelecte
     });
 
 
-    mBtnCal = (LinearLayout) rootView.findViewById(R.id.btnCalculation);
-    mBtnCal.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        Log.d(TAG, "클릭");
-        if (mMonthPay < 1060000) {
-          Toast.makeText(getActivity(), "월급여 1,060,000원 미만은 원천징수할 세금이 없습니다.", Toast.LENGTH_SHORT).show();
-        } else if (mMonthPay > 120000000) {
-          Toast.makeText(getActivity(), "오류 개발자에게 문의하세요.", Toast.LENGTH_SHORT).show();
-
-        } else {
-          calculation();
-
-        }
-
-      }
-    });
-
     return rootView;
+  }
+
+  @OnClick(R.id.btnCalculation)
+  public void onClick() {
+    Log.d(TAG, "클릭");
+    if (mMonthPay < 1060000) {
+      Toast.makeText(getActivity(), "월급여 1,060,000원 미만은 원천징수할 세금이 없습니다.", Toast.LENGTH_SHORT).show();
+    } else if (mMonthPay > 120000000) {
+      Toast.makeText(getActivity(), "오류 개발자에게 문의하세요.", Toast.LENGTH_SHORT).show();
+
+    } else {
+      calculation();
+    }
   }
 
   public void calculation() {

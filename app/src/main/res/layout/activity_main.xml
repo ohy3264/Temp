@@ -19,7 +19,12 @@
       android:gravity="bottom"
       android:orientation="vertical"/>
 
-  <android.support.v4.widget.DrawerLayout
+    <LinearLayout
+        style="?lebel"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"></LinearLayout>
+
+    <android.support.v4.widget.DrawerLayout
       android:layout_weight="9"
       android:id="@+id/drawer_layout"
       android:layout_width="match_parent"

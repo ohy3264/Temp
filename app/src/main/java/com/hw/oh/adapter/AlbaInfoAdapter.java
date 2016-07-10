@@ -56,6 +56,7 @@ public class AlbaInfoAdapter extends BaseAdapter {
     if (convertView == null) {
       ret = LayoutInflater.from(mContext).inflate(
           R.layout.row_alba_info1, null);
+
       holder = new ViewHolder();
       holder.mTxtInfo = (TextView) ret.findViewById(R.id.txtInfo);
 

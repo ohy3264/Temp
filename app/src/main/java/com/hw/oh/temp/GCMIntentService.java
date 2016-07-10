@@ -11,14 +11,12 @@ import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.hw.oh.temp.talk.TalkDetailActivity;
 import com.hw.oh.utility.Constant;
 import com.hw.oh.utility.HYPreference;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -113,7 +111,7 @@ public class GCMIntentService extends GCMBaseIntentService {
       try {
         JSONObject obj = new JSONObject(gcm_msg);
         Log.i(TAG, "BSEQ :: " + obj.getString("gcmBoardNum").toString());
-        mIntent = new Intent(context, DetailActivity.class).addFlags(
+        mIntent = new Intent(context, TalkDetailActivity.class).addFlags(
             Intent.FLAG_ACTIVITY_CLEAR_TOP);
         mIntent.putExtra("ID", obj.getString("gcmBoardNum").toString());
 

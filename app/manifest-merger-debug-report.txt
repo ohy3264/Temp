@@ -33,7 +33,7 @@ MERGED from com.android.support:support-v4:21.0.3:16:5
 		ADDED from AndroidManifest.xml:12:9
 	android:theme
 		ADDED from AndroidManifest.xml:14:9
-activity#com.hw.oh.temp.IntroActivity
+activity#com.hw.oh.temp.SplashActivity
 ADDED from AndroidManifest.xml:15:9
 	android:label
 		ADDED from AndroidManifest.xml:17:13
@@ -53,11 +53,11 @@ activity#com.hw.oh.temp.MainActivity
 ADDED from AndroidManifest.xml:24:9
 	android:name
 		ADDED from AndroidManifest.xml:24:19
-activity#com.hw.oh.temp.GenderActivity
+activity#com.hw.oh.temp.etc.GenderActivity
 ADDED from AndroidManifest.xml:25:9
 	android:name
 		ADDED from AndroidManifest.xml:25:19
-activity#com.hw.oh.temp.NewPostActivity
+activity#com.hw.oh.temp.talk.NewPostActivity
 ADDED from AndroidManifest.xml:26:9
 	android:windowSoftInputMode
 		ADDED from AndroidManifest.xml:27:19

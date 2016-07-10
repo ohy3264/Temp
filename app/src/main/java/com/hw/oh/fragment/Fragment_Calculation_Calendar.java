@@ -44,8 +44,8 @@ import com.hw.oh.model.WorkItem;
 import com.hw.oh.sqlite.DBConstant;
 import com.hw.oh.sqlite.DBManager;
 import com.hw.oh.temp.ApplicationClass;
-import com.hw.oh.temp.BarChartsActivity;
-import com.hw.oh.temp.NewWorkActivity;
+import com.hw.oh.temp.charts.BarChartsActivity;
+import com.hw.oh.temp.process.alba.NewWorkActivity;
 import com.hw.oh.temp.R;
 import com.hw.oh.utility.Constant;
 import com.hw.oh.utility.HYExcelWrite;
@@ -56,7 +56,6 @@ import com.nhaarman.listviewanimations.appearance.simple.AlphaInAnimationAdapter
 import com.nhaarman.listviewanimations.itemmanipulation.DynamicListView;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.undo.SimpleSwipeUndoAdapter;
-import com.tistory.whdghks913.croutonhelper.CroutonHelper;
 
 import jxl.write.WriteException;
 
@@ -77,13 +76,12 @@ import java.util.concurrent.CountDownLatch;
 /**
  * Created by oh on 2015-02-01.
  */
-public class Fragment_Calculation_Calendar extends Fragment implements View.OnClickListener {
+public class Fragment_Calculation_Calendar extends BaseFragment implements View.OnClickListener {
   public static final String TAG = "Fragment_Calculation_Calendar";
   public static final boolean DBUG = true;
   public static final boolean INFO = true;
   private static final int INITIAL_DELAY_MILLIS = 300;
 
-  private TextView mTxtGuide;
   private TextView mTxtTotalDay;
   private TextView mTxtTotalMoney;
   //ListView
@@ -100,10 +98,6 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
   private TextView mTxtDutyResult, mTxtInsurance1, mTxtInsurance2, mTxtInsurance3, mTxtInsurance4, mTxtInsuranceResult, mTxtTotalresult, mTxtAddTotalTime, mTxtRefreshTotalTime;
   // mTxtRefreshTotalTime, mTxtNightTotalTime, mTxtAddTotalTime,
 
-  //Crouton
-  private View mCroutonView;
-  private TextView mTxtCrouton;
-  private CroutonHelper mCroutonHelper;
 
   //Date Picker
   private int mTotalMoney;
@@ -125,8 +119,6 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
   private PartTimeInfo mPartInfoData;
 
   //Utill
-  private HYFont mFont;
-  private HYPreference mPref;
   private DBManager mDB;
 
   // Calendar
@@ -149,22 +141,13 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_calculation_calendar, container, false);
     //Utill
-    mFont = new HYFont(getActivity());
-    mFont.setGlobalFont((ViewGroup) rootView);
+    setFont(rootView);
     mDB = new DBManager(getActivity());
-    mPref = new HYPreference(getActivity());
 
    // 구글 통계
     Tracker mTracker = ((ApplicationClass) getActivity().getApplication()).getDefaultTracker();
     mTracker.setScreenName("알바 토탈 계산");
     mTracker.send(new HitBuilders.AppViewBuilder().build());
-
-    //Crouton
-    mCroutonHelper = new CroutonHelper(getActivity());
-    mCroutonView = getActivity().getLayoutInflater().inflate(
-        R.layout.crouton_custom_view, null);
-    mTxtCrouton = (TextView) mCroutonView.findViewById(R.id.txt_crouton);
-
 
     //View Set
     mListView = (DynamicListView) rootView.findViewById(R.id.mainlistView);
@@ -180,6 +163,7 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
     mTxtCalendarPeriodStart= (TextView) mlistViewHeader.findViewById(R.id.txt_calendar_period_start);
     mTxtCalendarPeriodEnd= (TextView) mlistViewHeader.findViewById(R.id.txt_calendar_period_end);
     mFont.setGlobalFont((ViewGroup) mlistViewHeader);
+    setFont(mlistViewHeader);
     mListView.addHeaderView(mlistViewHeader);
 
     mTxtTotalMoney = (TextView) mlistViewHeader.findViewById(R.id.txtTotalMoney);
@@ -208,9 +192,6 @@ public class Fragment_Calculation_Calendar extends Fragment implements View.OnCl
     header_inits();
 
     mTxtAlbaName.setText(mPartInfoData.getAlbaname());
-    mTxtGuide = (TextView) rootView.findViewById(R.id.txtGuide);
-    mTxtGuide.setText(Constant.GUIDE_MSG2);
-    mTxtGuide.setSelected(true);
     datePickerSet();
         /* Setup the adapter */
     setAdapter();

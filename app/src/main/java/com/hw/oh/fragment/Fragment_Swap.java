@@ -31,7 +31,7 @@ import java.util.ArrayList;
 /**
  * Created by oh on 2015-02-01.
  */
-public class Fragment_Swap extends android.app.Fragment implements DndListView.DragListener, DndListView.DropListener {
+public class Fragment_Swap extends BaseFragment implements DndListView.DragListener, DndListView.DropListener {
   public static final String TAG = "Fragment_Swap";
   public static final boolean DBUG = true;
   public static final boolean INFO = true;

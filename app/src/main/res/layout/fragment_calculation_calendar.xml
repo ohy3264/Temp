@@ -3,21 +3,8 @@
               android:orientation="vertical" android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/blue_gray_action">
-  <TextView
-      android:visibility="gone"
-      android:gravity="center_vertical"
-      android:elevation="5dp"
-      android:padding="1dp"
-      android:background="@color/material_red_action"
-      android:textColor="@color/white"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:textAppearance="?android:attr/textAppearanceSmall"
-      android:singleLine="true"
-      android:ellipsize="marquee"
-      android:textSize="11sp"
-      android:id="@+id/txtGuide"/>
-  <LinearLayout
+
+    <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:background="@android:color/transparent">

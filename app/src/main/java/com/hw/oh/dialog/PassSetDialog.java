@@ -178,6 +178,5 @@ public class PassSetDialog extends android.support.v4.app.DialogFragment impleme
       Log.d(TAG, "requestCallRest_Pass - exception :: " + e.toString());
 
     }
-
   }
 }

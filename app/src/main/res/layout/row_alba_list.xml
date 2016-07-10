@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
+    android:background="@color/material_white_2"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="4dp">
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
 
-  <LinearLayout
-      android:elevation="5dp"
-      android:background="@drawable/selector_list_row"
-      android:orientation="vertical"
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content">
 
     <LinearLayout
+        android:background="?android:attr/selectableItemBackground"
+        android:elevation="5dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -128,8 +124,8 @@
                   android:textSize="16sp"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:text=""
-                  style="?text_nomal"/>
+                  android:text="원"
+                  android:textColor="@color/dark_gray" />
 
 
             </LinearLayout>
@@ -319,6 +315,8 @@
               android:layout_height="fill_parent">
 
             <LinearLayout
+                android:padding="2dp"
+                android:gravity="center_vertical|right"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:orientation="horizontal"
@@ -327,7 +325,7 @@
 
               <ImageView
                   android:layout_marginRight="3dp"
-                  android:src="@drawable/icon_time"
+                  android:src="@drawable/ic_av_timer_black_24dp"
                   android:layout_width="13dp"
                   android:layout_height="13dp"
                   android:id="@+id/imageView5"/>
@@ -371,7 +369,4 @@
 
     </LinearLayout>
 
-
-  </LinearLayout>
-
-</LinearLayout>
+</FrameLayout>

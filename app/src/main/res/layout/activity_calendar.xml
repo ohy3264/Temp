@@ -18,6 +18,10 @@
       android:gravity="bottom"
       android:orientation="vertical"/>
 
+    <LinearLayout
+        style="?lebel"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"></LinearLayout>
   <FrameLayout
       android:layout_weight="9"
       android:id="@+id/container"

@@ -8,13 +8,13 @@
   <!-- Red theme. -->
 
   <style name="RedTheme" parent="ParentTheme">
-
     <item name="check_accent">@style/check_accent_re</item>
     <item name="lebel">@style/my_accent_re</item>
     <item name="text_nomal">@style/my_accent_re</item>
     <item name="button_nomal">@style/btn_nomal_re</item>
     <item name="light_back">@style/my_light_re</item>
     <item name="newalba_title_back">@style/alba_title_bg_re</item>
+    <item name="primary_back">@style/my_primary_re</item>
     <item name="background">@color/my_primary_red_light</item>
     <item name="colorPrimary">@color/my_primary_red</item>
     <item name="colorPrimaryDark">@color/my_primary_red_dark</item>
@@ -29,6 +29,7 @@
     <item name="button_nomal">@style/btn_nomal_bl</item>
     <item name="light_back">@style/my_light_bl</item>
     <item name="newalba_title_back">@style/alba_title_bg_bl</item>
+    <item name="primary_back">@style/my_primary_bl</item>
     <item name="background">@color/my_primary_blue_light</item>
     <item name="colorPrimary">@color/my_primary_blue</item>
     <item name="colorPrimaryDark">@color/my_primary_blue_dark</item>
@@ -38,12 +39,12 @@
   <!-- Green theme. -->
   <style name="GreenTheme" parent="ParentTheme">
     <item name="check_accent">@style/check_accent_gr</item>
-
     <item name="lebel">@style/my_accent_gr</item>
     <item name="text_nomal">@style/my_accent_gr</item>
     <item name="button_nomal">@style/btn_nomal_gr</item>
     <item name="light_back">@style/my_light_gr</item>
     <item name="newalba_title_back">@style/alba_title_bg_gr</item>
+    <item name="primary_back">@style/my_primary_gr</item>
     <item name="background">@color/my_primary_green_light</item>
     <item name="colorPrimary">@color/my_primary_green</item>
     <item name="colorPrimaryDark">@color/my_primary_green_dark</item>
@@ -92,6 +93,20 @@
   <style name="btn_nomal_gr">
     <item name="android:background">@drawable/button_nomal_green</item>
   </style>
+
+  <!-- custom primary style -->
+  <style name="my_primary_re">
+    <item name="android:background">@drawable/primary_red</item>
+  </style>
+
+  <style name="my_primary_bl">
+    <item name="android:background">@drawable/primary_blue</item>
+  </style>
+
+  <style name="my_primary_gr">
+    <item name="android:background">@drawable/primary_green</item>
+  </style>
+
 
   <!-- custom accent style -->
   <style name="my_accent_re">
@@ -177,6 +192,15 @@
   <style name="Animations.PopUpMenu.Reflect" parent="@style/Animations.PopUpMenu">
     <item name="android:windowEnterAnimation">@anim/pump_bottom</item>
     <item name="android:windowExitAnimation">@anim/disappear</item>
+  </style>
+
+  <style name="MyCheckBox" parent="Theme.AppCompat.NoActionBar">
+    <item name="colorControlNormal">@color/dark_gray</item>
+    <!-- normal border color change as you wish -->
+    <item name="colorControlActivated">@color/dark_gray</item>
+    <!-- activated color change as you wish -->
+    <item name="android:textColor">#FFFF3F3C</item>
+    <!-- checkbox text color -->
   </style>
 
   <!-- Progress Style -->

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,48 +27,45 @@ import com.tistory.whdghks913.croutonhelper.CroutonHelper;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+
 
 /**
  * Created by oh on 2015-02-01.
  */
-public class Fragment_insurance1 extends Fragment {
+public class Fragment_insurance1 extends BaseFragment {
   public static final String TAG = "Fragment_Info";
   public static final boolean DBUG = true;
   public static final boolean INFO = true;
 
-  //Crouton
-  private View mCroutonView;
-  private TextView mTxtCrouton;
-  private CroutonHelper mCroutonHelper;
-
   //View
-  private EditText mEdtWokerPay, mEdtOwnerPay, mEdtTotalPay, mEdtMonthPay;
-  private LinearLayout mBtnCal;
+  @BindView(R.id.edtWokerPay)
+  EditText mEdtWokerPay;
+  @BindView(R.id.edtonwerPay)
+  EditText mEdtOwnerPay;
+  @BindView(R.id.edtTotalPay)
+  EditText mEdtTotalPay;
+  @BindView(R.id.edtInputMonthPay)
+  EditText mEdtMonthPay;
 
   //Data
   private long mMonthPay;
-  //Utill
-  private HYFont mFont;
-  private HYPreference mPref;
-  private NumberFormat mNumFomat = new DecimalFormat("###,###,###");
+  private Unbinder unbinder;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_insurance1, container, false);
+    unbinder = ButterKnife.bind(this, rootView);
+    setFont(rootView);
     // 구글 통계
     Tracker mTracker = ((ApplicationClass) getActivity().getApplication()).getDefaultTracker();
     mTracker.setScreenName("연금보험");
     mTracker.send(new HitBuilders.AppViewBuilder().build());
 
-    //Util
-    mFont = new HYFont(getActivity());
-    mFont.setGlobalFont((ViewGroup) rootView);
-    mPref = new HYPreference(getActivity());
-
-    mFont.setGlobalFont((ViewGroup) rootView);
-
     //View
-    mEdtMonthPay = (EditText) rootView.findViewById(R.id.edtInputMonthPay);
     mEdtMonthPay.addTextChangedListener(new TextWatcher() {
       @Override
       public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -91,41 +89,28 @@ public class Fragment_insurance1 extends Fragment {
 
       }
     });
-    mEdtOwnerPay = (EditText) rootView.findViewById(R.id.edtonwerPay);
-    mEdtTotalPay = (EditText) rootView.findViewById(R.id.edtTotalPay);
-    mEdtWokerPay = (EditText) rootView.findViewById(R.id.edtWokerPay);
-
-    mBtnCal = (LinearLayout) rootView.findViewById(R.id.btnCalculation);
-    mBtnCal.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        Log.d(TAG, "클릭");
-        if (mEdtMonthPay.getText().toString().equals("")) {
-          Toast.makeText(getActivity(), "월 급여를 입력해 주세요", Toast.LENGTH_SHORT).show();
-        } else if (mMonthPay > 4210000) {
-          Toast.makeText(getActivity(), "기준 월 소득세액의 최고금액은 421만원 까지의 범위로 합니다. ", Toast.LENGTH_SHORT).show();
-          mMonthPay = 4210000;
-          mEdtMonthPay.setText(mNumFomat.format(mMonthPay));
-          calculation(mMonthPay);
-        } else if (mMonthPay < 270000) {
-          Toast.makeText(getActivity(), "기준 월 소득세액의 최소금액은 27만원 까지의 범위로 합니다. ", Toast.LENGTH_SHORT).show();
-          mMonthPay = 270000;
-          mEdtMonthPay.setText(mNumFomat.format(mMonthPay));
-          calculation(mMonthPay);
-        } else {
-          mEdtMonthPay.setText(mNumFomat.format(mMonthPay));
-          calculation(mMonthPay);
-        }
-      }
-    });
-
-    //Crouton
-    mCroutonHelper = new CroutonHelper(getActivity());
-    mCroutonView = getActivity().getLayoutInflater().inflate(
-        R.layout.crouton_custom_view, null);
-    mTxtCrouton = (TextView) mCroutonView.findViewById(R.id.txt_crouton);
 
     return rootView;
+  }
+
+  @OnClick(R.id.btnCalculation)
+  public void onClick() {
+    if (mEdtMonthPay.getText().toString().equals("")) {
+      Toast.makeText(getActivity(), "월 급여를 입력해 주세요", Toast.LENGTH_SHORT).show();
+    } else if (mMonthPay > 4210000) {
+      Toast.makeText(getActivity(), "기준 월 소득세액의 최고금액은 421만원 까지의 범위로 합니다. ", Toast.LENGTH_SHORT).show();
+      mMonthPay = 4210000;
+      mEdtMonthPay.setText(mNumFomat.format(mMonthPay));
+      calculation(mMonthPay);
+    } else if (mMonthPay < 270000) {
+      Toast.makeText(getActivity(), "기준 월 소득세액의 최소금액은 27만원 까지의 범위로 합니다. ", Toast.LENGTH_SHORT).show();
+      mMonthPay = 270000;
+      mEdtMonthPay.setText(mNumFomat.format(mMonthPay));
+      calculation(mMonthPay);
+    } else {
+      mEdtMonthPay.setText(mNumFomat.format(mMonthPay));
+      calculation(mMonthPay);
+    }
   }
 
   public void calculation(long monthPay) {

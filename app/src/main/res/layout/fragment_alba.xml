@@ -22,31 +22,26 @@
         android:layout_gravity="bottom|right"
         app:fabSize="normal"/>
 
+
     <ListView
-        android:padding="5dp"
+        android:drawSelectorOnTop="true"
         android:id="@+id/mainlistView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:drawSelectorOnTop="false"
         android:fastScrollEnabled="true"
         android:cacheColorHint="#00000000"
         android:layout_weight="1.0"
         />
 
-
-    <com.rey.material.widget.ProgressView
-        android:visibility="gone"
-        android:id="@+id/progressBar"
-        app:pv_progressStyle="@style/ColorsCircularProgressDrawableStyle"
-        app:pv_progressMode="indeterminate"
-        app:pv_autostart="true"
-        app:pv_circular="true"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal|center_vertical"
-        android:layout_marginTop="30dp"
-        android:indeterminate="false"/>
+      <ProgressBar
+          android:layout_gravity="center"
+          android:id="@+id/progress"
+          android:layout_width="50dp"
+          android:layout_height="50dp"
+          android:layout_weight="2"
+          android:indeterminate="true" />
     <LinearLayout
+        android:padding="5dp"
         android:visibility="gone"
         android:id="@+id/lin_guide"
         android:gravity="center_vertical|center"

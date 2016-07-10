@@ -1,5 +1,8 @@
 package com.hw.oh.temp;
 
+import com.github.ybq.android.spinkit.style.CubeGrid;
+import com.github.ybq.android.spinkit.style.FoldingCube;
+import com.github.ybq.android.spinkit.style.ThreeBounce;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
@@ -11,7 +14,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
@@ -22,6 +27,8 @@ import com.hw.oh.billing.IabResult;
 import com.hw.oh.billing.Inventory;
 import com.hw.oh.billing.Purchase;
 import com.hw.oh.sqlite.DBManager;
+import com.hw.oh.temp.etc.GenderActivity;
+import com.hw.oh.temp.etc.PassActivity;
 import com.hw.oh.utility.CommonUtil;
 import com.hw.oh.utility.Constant;
 import com.hw.oh.utility.JSONParserUtil;
@@ -89,7 +96,7 @@ public class SplashActivity extends BaseActivity {
         dbinit();
 
         // 인트로 애니메이션
-        introAnimation();
+        // introAnimation();
 
         // 구글 통계
         Tracker mTracker = ((ApplicationClass) getApplication()).getDefaultTracker();
@@ -98,6 +105,12 @@ public class SplashActivity extends BaseActivity {
 
         //시작분기
         init();
+
+
+        ProgressBar mProgressBar = (ProgressBar) findViewById(R.id.progress);
+        ThreeBounce threeBounce = new ThreeBounce();
+        threeBounce.setColor(getResources().getColor(R.color.white));
+        mProgressBar.setIndeterminateDrawable(threeBounce);
 
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
@@ -108,17 +121,18 @@ public class SplashActivity extends BaseActivity {
     }
 
 
-    public void init(){
+    public void init() {
         Log.i(TAG, "init");
-        if (NetworkUtil.isConnect(this)) {
-            Log.i(TAG, "네트워크 연결됨");
-            //requestCallRest_Guide();
-            requestUniqueID();
-        } else {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Log.i(TAG, "네트워크 연결안됨");
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Log.i(TAG, "네트워크 연결안됨");
+                if (NetworkUtil.isConnect(getApplicationContext())) {
+                    Log.i(TAG, "네트워크 연결됨");
+                    //requestCallRest_Guide();
+                    requestUniqueID();
+                } else {
 
                     if (mPref.getValue(mPref.KEY_PASS_STATE, false)) {
                         Log.i(TAG, "PassWord");
@@ -136,8 +150,8 @@ public class SplashActivity extends BaseActivity {
                         finish();
                     }
                 }
-            }, 3000);
-        }
+            }
+        }, 1500);
     }
 
     private void introAnimation() {
@@ -239,7 +253,6 @@ public class SplashActivity extends BaseActivity {
             Log.d(TAG, "requestUserInfoSend - exception :: " + e.toString());
 
         }
-
     }
 
     /**
@@ -298,38 +311,6 @@ public class SplashActivity extends BaseActivity {
             }
         }
     };
-
-
-    /**
-     * 가이드 메시지 호출
-     */
-    public void requestCallRest_Guide() {
-        if (INFO)
-            Log.i(TAG, "requestCallRest_Guide()");
-        String url = "http://ohy3264.cafe24.com/Anony/api/GuideMsgs.php";
-        try {
-            OkHttpClient client = new OkHttpClient();
-            RequestBody formBody = new FormBody.Builder()
-                    .add("MODE", "LoginCheck")
-                    .add("ANDROID_ID", CommonUtil.getAndroidID(this))
-                    .build();
-
-            Request request = new Request.Builder()
-                    .url(url)
-                    .post(formBody)
-                    .build();
-
-            Response response = client.newCall(request).execute();
-
-            JSONObject jsonObj = new JSONObject(response.body().toString());
-            Constant.GUIDE_MSG1 = jsonObj.get("talkMsg").toString();
-            Constant.GUIDE_MSG2 = jsonObj.get("calendarMsg").toString();
-            Constant.GUIDE_MSG3 = jsonObj.get("newworkMsg").toString();
-        } catch (Exception e) {
-            Log.d(TAG, "requestCall_HateState - exception :: " + e.toString());
-        }
-    }
-
 
     @Override
     public void onStart() {

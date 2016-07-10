@@ -15,7 +15,7 @@
       android:weightSum="1">
 
     <ImageView
-
+        android:src="@drawable/intro_img2"
         android:layout_marginTop="60dp"
         android:layout_width="130dp"
         android:layout_height="130dp"
@@ -38,18 +38,17 @@
         android:textSize="34sp"
         android:textStyle="bold"
         android:typeface="sans"/>
-    <com.rey.material.widget.ProgressView
-        android:id="@+id/intro_progressBar"
-        app:pv_progressStyle="@style/ColorsCircularProgressDrawableStyle"
-        app:pv_progressMode="indeterminate"
-        app:pv_autostart="true"
-        app:pv_circular="true"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/title"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:indeterminate="false"/>
+
+      <ProgressBar
+          android:layout_gravity="center"
+          android:id="@+id/progress"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_weight="2"
+          android:indeterminate="true"
+          android:layout_below="@+id/title"
+          android:layout_centerHorizontal="true"
+          android:layout_marginTop="44dp" />
 
     <TextView
         android:id="@+id/textView1"

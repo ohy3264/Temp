@@ -939,6 +939,16 @@ public class DBManager extends SQLiteOpenHelper {
   }
 
   // 데이터 전체 검색
+  public Cursor selectAllData(String table) {
+    if (INFO)
+      Log.i(TAG, "selectAllData DataBase");
+    SQLiteDatabase db = getWritableDatabase();
+    String sql = "select * from " + table + ";";
+    Cursor results = db.rawQuery(sql, null);
+    return results;
+  }
+
+  // 데이터 전체 검색
   public Cursor selectAllData(String table, String column, String data) {
     if (INFO)
       Log.i(TAG, "selectAllData DataBase");
@@ -946,9 +956,7 @@ public class DBManager extends SQLiteOpenHelper {
     String sql = "select * from " + table + " where " + column + " = '" + data
         + "';";
     Cursor results = db.rawQuery(sql, null);
-
     return results;
-
   }
 
   // 데이터 전체 검색

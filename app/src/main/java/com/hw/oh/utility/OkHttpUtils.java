@@ -6,6 +6,7 @@ import android.net.NetworkInfo;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.hw.oh.temp.R;
 
 import java.io.IOException;
@@ -32,7 +33,9 @@ public class OkHttpUtils {
 
     private static Toast toast;
     // HttpClient
-    public static OkHttpClient okHttpClient = new OkHttpClient().newBuilder().connectTimeout(5, TimeUnit.SECONDS).build();
+    public static OkHttpClient okHttpClient = new OkHttpClient().
+            newBuilder().addNetworkInterceptor(new StethoInterceptor()).
+            connectTimeout(5, TimeUnit.SECONDS).build();
 
     /**
      * 동기 요청 (GET, POST)

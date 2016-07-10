@@ -5,7 +5,7 @@
       <item android:bottom="1dp" android:right="1dp">
         <shape>
           <solid android:color="@color/my_primary_red"/>
-          <corners android:radius="10dip"/>
+          <corners android:radius="3dp" />
         </shape>
       </item>
     </layer-list>
@@ -16,7 +16,7 @@
       <item android:bottom="1dp" android:right="1dp">
         <shape>
           <solid android:color="@color/my_primary_red"/>
-          <corners android:radius="10dip"/>
+          <corners android:radius="3dp" />
 
         </shape>
       </item>

@@ -10,6 +10,14 @@
   <string name="hello_world">Hello world!</string>
   <string name="action_settings">Settings</string>
   <string name="action_send">Send</string>
+
+    <!-- 알림창 메세지 -->
+    <string name="alert_title">알림</string>
+    <string name="confirm_button">확인</string>
+    <string name="cancle_button">취소</string>
+    <string name="positive_button">예</string>
+    <string name="negative_button">아니요</string>
+
     <!-- Error 명칭 -->
     <string name="error_network">인터넷 연결상태를 확인해 주세요.</string>
     <string name="error_common">일시적인 오류입니다. 잠시 후에 다시 시도해 주세요.</string>

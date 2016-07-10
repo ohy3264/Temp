@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.hw.oh.model.PartTimeItem;
 import com.hw.oh.model.WorkItem;
 import com.hw.oh.temp.R;
 import com.hw.oh.utility.HYFont;
@@ -44,6 +45,7 @@ public class WorkDataAdapter extends ArrayAdapter<WorkItem> implements UndoAdapt
     mCalStart = Calendar.getInstance();
     mCalEnd = Calendar.getInstance();
   }
+
 
   @NonNull
   @Override

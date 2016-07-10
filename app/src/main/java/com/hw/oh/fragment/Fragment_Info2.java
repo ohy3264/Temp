@@ -18,45 +18,31 @@ import com.tistory.whdghks913.croutonhelper.CroutonHelper;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 
 /**
  * Created by oh on 2015-02-01.
  */
-public class Fragment_Info2 extends Fragment implements View.OnClickListener {
+public class Fragment_Info2 extends BaseFragment implements View.OnClickListener {
   public static final String TAG = "Fragment_Info";
   public static final boolean DBUG = true;
   public static final boolean INFO = true;
-  //Crouton
-  private View mCroutonView;
-  private TextView mTxtCrouton;
-  private CroutonHelper mCroutonHelper;
 
-  //View
-  private ListView mListView;
+    @BindView(R.id.mainlistView)
+    ListView mListView;
   private AlbaInfoAdapter mAlbaInfoAdapter;
   private ArrayList<String> mAlbaListData;
 
-  //Util
-  private HYFont mFont;
-  private HYPreference mPref;
+    private Unbinder unbinder;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_info1, container, false);
-    //Util
-    mFont = new HYFont(getActivity());
-    mFont.setGlobalFont((ViewGroup) rootView);
-    mPref = new HYPreference(getActivity());
-
-    mFont.setGlobalFont((ViewGroup) rootView);
-
-    //Crouton
-    mCroutonHelper = new CroutonHelper(getActivity());
-    mCroutonView = getActivity().getLayoutInflater().inflate(
-        R.layout.crouton_custom_view, null);
-    mTxtCrouton = (TextView) mCroutonView.findViewById(R.id.txt_crouton);
-
-    mListView = (ListView) rootView.findViewById(R.id.mainlistView);
+      unbinder = ButterKnife.bind(this, rootView);
+      setFont(rootView);
 
     mAlbaListData = new ArrayList<String>();/*
         mAlbaListData.add("학생들의 잘못된 알바");

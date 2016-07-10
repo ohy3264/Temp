@@ -4,13 +4,13 @@
 
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <!-- GCM permissions -->
     <permission
@@ -57,64 +57,66 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:name=".GenderActivity"
+            android:name=".etc.GenderActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".InsuranceActivity"
+            android:name=".leftmenu.InsuranceActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:name=".NewPostActivity"
+            android:name=".talk.NewPostActivity"
+
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
+            <intent-filter>
+                <action android:name="android.media.action.IMAGE_CAPTURE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
-            android:name=".CalculationActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity
-            android:name=".SettingActivity"
+            android:name=".leftmenu.SettingActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".TalkActivity"
+            android:name=".talk.TalkActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".NewAlbaActivity"
+            android:name=".process.alba.NewAlbaActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:name=".ImageClickActivity"
+            android:name=".talk.ImageClickActivity"
             android:hardwareAccelerated="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".DetailActivity"
+            android:name=".talk.TalkDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:name=".NewWorkActivity"
+            android:name=".process.alba.NewWorkActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:name=".CalendarActivity"
+            android:name=".process.alba.CalendarActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".AlbaInfoActivity" />
+        <activity android:name=".process.alba.AlbaInfoActivity" />
         <activity
-            android:name=".CalculationCalendarActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".PassActivity"
+            android:name=".process.alba.CalculationCalendarActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".NewCommentActivity"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+            android:name=".etc.PassActivity"
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".BarChartsActivity"
+            android:name=".process.alba.TotalCalendarActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".charts.BarChartsActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".DutyActivity"
+            android:name=".leftmenu.DutyActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity android:name=".LocationSelectActivity" >
+        <activity android:name=".etc.LocationSelectActivity">
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".SearchResultsActivity" />
@@ -122,7 +124,7 @@
         <activity
             android:name="com.hw.oh.dialog.AlarmPopupDialog"
             android:theme="@style/AppCompatAlertDialogStyle" />
-        <activity android:name=".SearchResultsActivity" >
+        <activity android:name=".etc.SearchResultsActivity">
 
             <!-- to identify this activity as "searchable" -->
             <intent-filter>
@@ -135,10 +137,10 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-        <activity android:name=".SwapActivity" >
+        <activity android:name=".etc.SwapActivity">
         </activity>
         <activity
-            android:name=".PieChartsActivity"
+            android:name=".charts.PieChartsActivity"
             android:screenOrientation="portrait" />
 
         <!-- GCM receiver, service 등록 -->
@@ -161,6 +163,9 @@
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="5878547dd29f0ecf7235baa3afe4e0f7ea685b90" />
     </application>
 
 </manifest>

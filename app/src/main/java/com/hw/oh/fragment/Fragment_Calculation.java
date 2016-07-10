@@ -24,10 +24,16 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.concurrent.CountDownLatch;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnItemSelected;
+import butterknife.Unbinder;
+
 /**
  * Created by oh on 2015-02-01.
  */
-public class Fragment_Calculation extends Fragment implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class Fragment_Calculation extends BaseFragment implements AdapterView.OnItemSelectedListener {
   public static final String TAG = "Fragment_Calculation";
   public static final boolean DBUG = true;
   public static final boolean INFO = true;
@@ -40,51 +46,31 @@ public class Fragment_Calculation extends Fragment implements AdapterView.OnItem
   private double mResult;
   private String mResult_st;
 
-  private TextView mTxtResult;
-  private EditText mEdtTimeMoney;
-  private Button mBtnCal;
-  private Button mBtnReCal;
-
   //spinner
-  private Spinner mSpChange;
-  private Spinner mSpDayMin;
-  private Spinner mSpDayHour;
-  private Spinner mSpMonthDay;
-  private Spinner mSpYearMonth;
-
-  //Crouton
-  private View mCroutonView;
-  private TextView mTxtCrouton;
-  private CroutonHelper mCroutonHelper;
+  @BindView(R.id.txtResult)
+  TextView mTxtResult;
+  @BindView(R.id.edtTimeMoney)
+  EditText mEdtTimeMoney;
+  @BindView(R.id.spChange)
+  Spinner mSpChange;
+  @BindView(R.id.spDayMin)
+  Spinner mSpDayMin;
+  @BindView(R.id.spDayHour)
+  Spinner mSpDayHour;
+  @BindView(R.id.spMonthDay)
+  Spinner mSpMonthDay;
+  @BindView(R.id.spYeatMonth)
+  Spinner mSpYearMonth;
 
   //Utill
   private NumberFormat mNumFomat = new DecimalFormat("###,###,###");
-  private HYFont mFont;
-  private CountDownLatch mCountDownLatch_BoardList;
-
+  private Unbinder unbinder;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_calculation, container, false);
-    //Utill
-    mFont = new HYFont(getActivity());
-
-    mFont.setGlobalFont((ViewGroup) rootView);
-
-    //Crouton
-    mCroutonHelper = new CroutonHelper(getActivity());
-    mCroutonView = getActivity().getLayoutInflater().inflate(
-        R.layout.crouton_custom_view, null);
-    mTxtCrouton = (TextView) mCroutonView.findViewById(R.id.txt_crouton);
-
-    //View Set
-    mEdtTimeMoney = (EditText) rootView.findViewById(R.id.edtTimeMoney);
-    mTxtResult = (TextView) rootView.findViewById(R.id.txtResult);
-    mSpChange = (Spinner) rootView.findViewById(R.id.spChange);
-    mSpDayMin = (Spinner) rootView.findViewById(R.id.spDayMin);
-    mSpDayHour = (Spinner) rootView.findViewById(R.id.spDayHour);
-    mSpMonthDay = (Spinner) rootView.findViewById(R.id.spMonthDay);
-    mSpYearMonth = (Spinner) rootView.findViewById(R.id.spYeatMonth);
+    unbinder = ButterKnife.bind(this, rootView);
+    setFont(rootView);
 
     String[] change = getActivity().getResources().getStringArray(R.array.change);
     mSpChange.setAdapter(new com.hw.oh.adapter.SpinnerAdapter(getActivity(), R.layout.spinner_row_default, change));
@@ -104,14 +90,10 @@ public class Fragment_Calculation extends Fragment implements AdapterView.OnItem
     mSpMonthDay.setOnItemSelectedListener(this);
     mSpYearMonth.setOnItemSelectedListener(this);
 
-    mBtnCal = (Button) rootView.findViewById(R.id.btnCalculation);
-    mBtnReCal = (Button) rootView.findViewById(R.id.btnReCal);
-    mBtnCal.setOnClickListener(this);
-    mBtnReCal.setOnClickListener(this);
     return rootView;
   }
 
-  @Override
+  @OnClick({R.id.btnCalculation, R.id.btnReCal})
   public void onClick(View v) {
     switch (v.getId()) {
       case R.id.btnCalculation:

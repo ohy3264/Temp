@@ -34,25 +34,20 @@
           android:layoutAnimation="@anim/anim_layout_controller"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
-          android:padding="5dp"
           android:id="@+id/mainlistView"
           android:scrollbars="none"/>
 
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <com.rey.material.widget.ProgressView
-        android:visibility="gone"
-        android:id="@+id/progressBar"
-        app:pv_progressStyle="@style/ColorsCircularProgressDrawableStyle"
-        app:pv_progressMode="indeterminate"
-        app:pv_autostart="true"
-        app:pv_circular="true"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal|center_vertical"
-        android:layout_marginTop="30dp"
-        android:indeterminate="false"/>
+
+        <ProgressBar
+            android:layout_gravity="center"
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:indeterminate="true" />
   </FrameLayout>
 
 
