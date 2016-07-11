@@ -1,3 +1,4 @@
+/*
 package com.hw.oh.temp;
 
 import com.google.android.gcm.GCMBaseIntentService;
@@ -24,6 +25,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+*/
 /**
  * <pre>
  *
@@ -31,7 +33,8 @@ import okhttp3.Response;
  * @Day : 2014. 10. 13.
  * @Time : 오전 10:21:45
  * @Explanation : GCMIntentService </pre>
- */
+ *//*
+
 public class GCMIntentService extends GCMBaseIntentService {
   private static final String TAG = "GCMIntentService";
   private String mGcm_msg = null;
@@ -46,60 +49,70 @@ public class GCMIntentService extends GCMBaseIntentService {
     Log.d(TAG, "GCM서비스 생성자 실행");
   }
 
-  /**
+  */
+/**
    * @author : oh
    * @MethodName : onError
    * @Day : 2014. 10. 13.
    * @Time : 오전 10:08:50
    * @Explanation : gcm 에러 발생시 action
-   */
+ *//*
+
   protected void onError(Context paramContext, String paramString) {
     Log.d(TAG, "onError()");
   }
 
-  /**
+  */
+/**
    * @author : oh
    * @MethodName : onMessage
    * @Day : 2014. 10. 13.
    * @Time : 오전 10:08:50
    * @Explanation : gcm 수신 message
-   */
+ *//*
+
   protected void onMessage(Context context, Intent intent) {
     Log.d(TAG, "수신 Message: " + intent.getExtras().getString("msg"));
     mGcm_msg = intent.getExtras().getString("msg");
     generateNotification(context, mGcm_msg);
   }
 
-  /**
+  */
+/**
    * @author : oh
    * @MethodName : onRegistered
    * @Day : 2014. 10. 13.
    * @Time : 오전 10:08:50
    * @Explanation : 해당 gcmProject에 registrationID 등록
-   */
+ *//*
+
   protected void onRegistered(Context paramContext, String paramString) {
     Log.d(TAG, "등록 ID:" + paramString);
     registerGCM(paramString);
   }
 
-  /**
+  */
+/**
    * @author : oh
    * @MethodName : onUnregistered
    * @Day : 2014. 10. 13.
    * @Time : 오전 10:08:50
    * @Explanation : 해당 gcmProject에 registrationID 등록 해지
-   */
+ *//*
+
   protected void onUnregistered(Context paramContext, String paramString) {
     Log.d(TAG, "해지 ID:" + paramString);
   }
 
-  /**
+  */
+/**
    * @author : oh
    * @MethodName : generateNotification
    * @Day : 2014. 10. 13.
    * @Time : 오전 10:08:50
    * @Explanation : 상태바에 알림 생성
-   */
+ *//*
+
   private void generateNotification(Context context, String gcm_msg) {
     this.mPref = new HYPreference(context);
     this.mVibrator = ((Vibrator) context.getSystemService(VIBRATOR_SERVICE));
@@ -140,14 +153,16 @@ public class GCMIntentService extends GCMBaseIntentService {
     }
   }
 
-  /**
+  */
+/**
    * @param regId : GCM 통신을 위한 유저 고유 regID
    * @author : oh
    * @MethodName : sendAPIkey
    * @Day : 2014. 10. 12.
    * @Time : 오후 5:03:52
    * @Explanation : regID 서버에 등록 요청
-   */
+ *//*
+
   public void registerGCM(final String regId) {
     String url = "http://ohy3264.cafe24.com/Anony/api/registerGCM.php";
     try {
@@ -170,4 +185,4 @@ public class GCMIntentService extends GCMBaseIntentService {
       Log.d(TAG, "senAPIkey.Response - exception :: " + e.toString());
     }
   }
-}
+}*/

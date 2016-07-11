@@ -1,8 +1,6 @@
 package com.hw.oh.fragment;
 
-import com.github.ybq.android.spinkit.style.CubeGrid;
 import com.github.ybq.android.spinkit.style.ThreeBounce;
-import com.google.android.gcm.GCMRegistrar;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;

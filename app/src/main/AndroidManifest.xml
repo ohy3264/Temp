@@ -144,21 +144,19 @@
             android:screenOrientation="portrait" />
 
         <!-- GCM receiver, service 등록 -->
-        <receiver
-            android:name="com.google.android.gcm.GCMBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND" >
+        <service android:name="com.hw.oh.fcm.MyFirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-
-                <category android:name="com.hw.oh.temp" />
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
-        </receiver>
+        </service>
 
-        <service android:name=".GCMIntentService" />
+        <service android:name="com.hw.oh.fcm.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
         <service android:name="com.hw.oh.service.AlarmService" />
-        <service android:name="com.hw.oh.service.BoardListService" />
-        <service android:name="com.hw.oh.service.BoardDetailService" />
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
