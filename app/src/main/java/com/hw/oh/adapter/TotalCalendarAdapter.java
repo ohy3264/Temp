@@ -1,0 +1,139 @@
+package com.hw.oh.adapter;
+
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.hw.oh.model.PartTimeItem;
+import com.hw.oh.temp.R;
+import com.hw.oh.temp.process.alba.NewAlbaActivity;
+import com.hw.oh.utility.HYFont;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class TotalCalendarAdapter extends BaseAdapter {
+    public static final String TAG = "TotalCalendarAdapter";
+    public static final boolean DBUG = true;
+    public static final boolean INFO = true;
+
+
+    private Context mContext;
+    private List<PartTimeItem> mAlbaDataList;
+    private NumberFormat mNumFomat = new DecimalFormat("###,###,###");
+    private HYFont mFont;
+
+    public TotalCalendarAdapter(Context context, ArrayList<PartTimeItem> objects) {
+        // TODO Auto-generated constructor stub
+        mContext = context;
+        mAlbaDataList = objects;
+        mFont = new HYFont(mContext);
+    }
+
+    public int getCount() {
+        // TODO Auto-generated method stub
+        return mAlbaDataList.size();
+    }
+
+    public Object getItem(int position) {
+        // TODO Auto-generated method stub
+        return mAlbaDataList.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        // TODO Auto-generated method stub
+        View ret;
+        ViewHolder holder;
+        if (convertView == null) {
+            ret = LayoutInflater.from(mContext).inflate(
+                    R.layout.row_total_alba_list, null);
+            holder = new ViewHolder();
+            holder.mTxtMoney = (TextView) ret.findViewById(R.id.txtMoney);
+            holder.mTxtStartTime = (TextView) ret.findViewById(R.id.txtStartTime);
+            holder.mTxtEndTime = (TextView) ret.findViewById(R.id.txtEndTime);
+            holder.mTxtMemo = (TextView) ret.findViewById(R.id.txtMemo);
+            holder.mTxtAlbaName = (TextView) ret.findViewById(R.id.txtAlbaName);
+
+            holder.mLinNightView = (LinearLayout) ret.findViewById(R.id.linNightView);
+            holder.mLinRefreshTime = (LinearLayout) ret.findViewById(R.id.linRefreshTime);
+            holder.mLinGabulMoney = (LinearLayout) ret.findViewById(R.id.linGabulView);
+            holder.mLinAddMoney = (LinearLayout) ret.findViewById(R.id.linAddView);
+            holder.mLinEtc = (LinearLayout) ret.findViewById(R.id.linEtc);
+            holder.mLinWeek = (LinearLayout) ret.findViewById(R.id.linWeek);
+
+            ret.setTag(holder);
+        } else {
+            ret = convertView;
+            holder = (ViewHolder) ret.getTag();
+        }
+        holder.mTxtAlbaName.setText(mAlbaDataList.get(position).getAlbaname());
+        holder.mTxtMoney.setText(mNumFomat.format(Double.parseDouble(mAlbaDataList.get(position).getWorkPayTotal())));
+        holder.mTxtStartTime.setText(mAlbaDataList.get(position).getStartTimeHour() + " 시 " + mAlbaDataList.get(position).getStartTimeMin() + " 분");
+        holder.mTxtEndTime.setText(mAlbaDataList.get(position).getEndTimeHour() + " 시 " + mAlbaDataList.get(position).getEndTimeMin() + " 분");
+        holder.mTxtMemo.setText(mAlbaDataList.get(position).getSimpleMemo());
+
+        if (Boolean.parseBoolean(mAlbaDataList.get(position).getWorkPayGabul())) {
+            //  holder.mLinGabulCheck.setBackgroundResource(R.drawable.circleview_gabul);
+            //holder.mTxtGabulMoney.setText("-"+mAlbaInfoList.get(position).getWorkPayGabulValue());
+            holder.mLinGabulMoney.setVisibility(View.VISIBLE);
+
+        } else {
+            // holder.mLinGabulCheck.setBackgroundResource(R.drawable.circleview_red);
+            holder.mLinGabulMoney.setVisibility(View.GONE);
+        }
+        if (Boolean.parseBoolean(mAlbaDataList.get(position).getWorkPayNight())) {
+            holder.mLinNightView.setVisibility(View.VISIBLE);
+        } else {
+            // holder.mLinNightView.setVisibility(View.INVISIBLE);
+            holder.mLinNightView.setVisibility(View.GONE);
+        }
+        if (Boolean.parseBoolean(mAlbaDataList.get(position).getWorkRefreshTime())) {
+            holder.mLinRefreshTime.setVisibility(View.VISIBLE);
+        } else {
+            holder.mLinRefreshTime.setVisibility(View.GONE);
+            // holder.mLinRefreshTime.setVisibility(View.GONE);
+        }
+        if (Boolean.parseBoolean(mAlbaDataList.get(position).getWorkPayAdd())) {
+            holder.mLinAddMoney.setVisibility(View.VISIBLE);
+        } else {
+            // holder.mLinAddMoney.setVisibility(View.INVISIBLE);
+            holder.mLinAddMoney.setVisibility(View.GONE);
+        }
+        if (Boolean.parseBoolean(mAlbaDataList.get(position).getWorkEtc())) {
+            holder.mLinEtc.setVisibility(View.VISIBLE);
+        } else {
+            holder.mLinEtc.setVisibility(View.GONE);
+        }
+        if (Boolean.parseBoolean(mAlbaDataList.get(position).getWorkPayWeek())) {
+            holder.mLinWeek.setVisibility(View.VISIBLE);
+        } else {
+            holder.mLinWeek.setVisibility(View.GONE);
+        }
+
+
+        mFont.setGlobalFont((ViewGroup) ret);
+        return ret;
+    }
+
+    public class ViewHolder {
+        private TextView mTxtMoney, mTxtStartTime, mTxtEndTime, mTxtMemo, mTxtAlbaName;
+        private LinearLayout mLinNightView, mLinRefreshTime, mLinGabulMoney, mLinAddMoney, mLinEtc, mLinWeek;
+    }
+}

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:visibility="visible"
+        android:id="@+id/mainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/material_white_1"
+        android:gravity="bottom"
+        android:orientation="vertical" />
+
+    <LinearLayout
+        style="?lebel"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"></LinearLayout>
+
+    <com.github.sundeepk.compactcalendarview.CompactCalendarView
+        android:layout_below="@+id/prev_button"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/compactcalendar_view"
+        android:layout_width="fill_parent"
+        android:layout_height="250dp"
+        app:compactCalendarTargetHeight="250dp"
+        app:compactCalendarTextSize="12sp"
+        app:compactCalendarBackgroundColor="#ffe95451"
+        app:compactCalendarTextColor="#fff"
+        app:compactCalendarCurrentSelectedDayBackgroundColor="#E57373"
+        app:compactCalendarCurrentDayBackgroundColor="#B71C1C"
+
+        />
+
+
+    <ListView
+        android:layout_marginTop="3dp"
+        android:id="@+id/bookings_listview"
+        android:layout_below="@+id/calendar_control_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></ListView>
+</LinearLayout>
